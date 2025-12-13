@@ -241,7 +241,7 @@ const BlogPostForm = () => {
                             placement: 'top-center',
                         }
                     )
-                    navigate('/app/blogs')
+                    navigate('/app/sales/blog-post-list')
                 }
             } else {
                 // Create new blog
@@ -260,7 +260,7 @@ const BlogPostForm = () => {
                             placement: 'top-center',
                         }
                     )
-                    navigate('/app/blogs')
+                    navigate('/app/sales/blog-post-list')
                 }
             }
         } catch (error: unknown) {

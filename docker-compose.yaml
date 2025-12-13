@@ -1,0 +1,68 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: finance_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - microservices-net
+    volumes:
+      - finance_redis_data:/data
+    command: redis-server --appendonly yes --requirepass "eYXX7EwVmmxKDCDmwMtyKVge8oLd2t86"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 256M
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8
+    container_name: finance_mysql
+    command: --max_allowed_packet=1024000000
+    environment:
+      # Giữ lại ROOT password và tên database. ROOT có thể cần để chạy file init
+      MYSQL_ROOT_PASSWORD: ComplexPa$$w0rd123@
+      MYSQL_DATABASE: finance
+      # Xóa: MYSQL_USER, MYSQL_PASSWORD, MYSQL_USER_HOST
+      MYSQL_ROOT_HOST: "%" 
+      TZ: "Asia/Ho_Chi_Minh"
+    ports:
+      - "3306:3306"
+    networks:
+      - microservices-net
+    volumes:
+      # Thêm: Mount thư mục khởi tạo SQL
+      - ./resource/mysql_init:/docker-entrypoint-initdb.d
+      - finance_mysql_data:/var/lib/mysql
+    healthcheck:
+      # Sử dụng tài khoản root cho healthcheck (hoặc tài khoản liquidape nếu bạn chắc chắn nó đã được tạo)
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 1s
+      timeout: 20s
+      retries: 10
+      start_period: 10s
+  
+  redisinsight:
+    image: redis/redisinsight:latest
+    restart: unless-stopped
+    container_name: finance_redisinsight
+    ports:
+      - "5540:5540"
+    volumes:
+      - finance_redis_insight:/data
+    environment:
+      - REDIS_HOSTS=redis://:eYXX7EwVmmxKDCDmwMtyKVge8oLd2t86@redis:6379
+    networks:
+      - microservices-net
+    depends_on:
+      - redis
+
+networks:
+  microservices-net:
+    external: true
+
+volumes:
+  finance_mysql_data:
+  finance_redis_data:
+  finance_redis_insight:

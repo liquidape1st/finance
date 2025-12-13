@@ -1,6 +1,6 @@
 spring:
   application:
-    name: nhang-thom-backend
+    name: finance
 
   datasource:
     host: mysql
@@ -50,5 +50,5 @@ aws:
 
 logging:
   level:
-    com.example.incense: DEBUG
+    com.example.finance: DEBUG
     org.springframework.security: DEBUG

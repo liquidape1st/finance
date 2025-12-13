@@ -6,6 +6,6 @@ export const signInUserData = [
         email: 'carolyn.p@elstar.com',
         authority: ['admin', 'user'],
         password: 'admin123',
-        accountUserName: 'admin@coinguon.vn',
+        accountUserName: 'liquidape@finance.com',
     },
 ]

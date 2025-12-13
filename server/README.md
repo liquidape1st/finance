@@ -18,7 +18,7 @@ cd backend
 curl http://localhost:8080/api/products
 ```
 
-**Default Admin**: `admin@coinguon.vn` / `admin123`
+**Default Admin**: `liquidape@finance.com` / `liquidape123@#`
 
 **Swagger UI**: http://localhost:8080/swagger-ui/index.html
 

@@ -26,7 +26,7 @@ public class S3Service {
     private static final Logger logger = LoggerFactory.getLogger(S3Service.class);
     private final S3Client s3Client;
     private final String bucketName = "s3s-bucket-aisuui";
-    private final String folderName = "incense";
+    private final String folderName = "finance";
     private final S3Presigner s3Presigner; // Yêu cầu S3Presigner bean phải được cấu hình
 
     public UploadFileResponse uploadFile(MultipartFile file) {

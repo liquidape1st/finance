@@ -7,6 +7,7 @@ import com.example.finance.pageable.PageableObject;
 import com.example.finance.repository.BlogPostCategoryRepository;
 import com.example.finance.repository.BlogPostRepository;
 import com.example.finance.schemas.request.BlogPostRequest;
+import com.example.finance.util.GenerateSlug;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -45,7 +45,7 @@ public class BlogPostService extends BaseService<BlogPost, UUID> implements ASer
         BlogPost post = new BlogPost();
         mapRequestToEntity(post, request);
         post.setBlogCategory(findBlogCategoryById(request.getBlogCategoryId()));
-        post.setSlug(generateSlug(request.getTitle()));
+        post.setSlug(GenerateSlug.generateSlug(request.getTitle()));
         post.setPublishedAt(LocalDateTime.now());
         return blogPostRepository.save(post);
     }
@@ -56,7 +56,7 @@ public class BlogPostService extends BaseService<BlogPost, UUID> implements ASer
         BlogPost post = findByIdOrThrow(id);
         mapRequestToEntity(post, request);
         post.setBlogCategory(findBlogCategoryById(request.getBlogCategoryId()));
-        post.setSlug(generateSlug(request.getTitle()));
+        post.setSlug(GenerateSlug.generateSlug(request.getTitle()));
         return blogPostRepository.save(post);
     }
 
@@ -104,24 +104,6 @@ public class BlogPostService extends BaseService<BlogPost, UUID> implements ASer
 
     private BlogPostCategory findBlogCategoryById(java.util.UUID blogCategoryId) {
         return blogPostCategoryRepository.findById(blogCategoryId).orElseThrow(() -> new EntityNotFoundException("Blog category", blogCategoryId));
-    }
-
-    private String generateSlug(String title) {
-        // Bước 1: Chuẩn hóa Unicode về dạng decomposed (vd: "ấ" → "a" + "̂")
-        String normalized = Normalizer.normalize(title, Normalizer.Form.NFD);
-
-        // Bước 2: Xóa toàn bộ dấu (combining marks)
-        String withoutAccents = normalized.replaceAll("\\p{M}", "");
-
-        // Bước 3: Convert dạng tiếng Việt đặc biệt như Đ, đ
-        withoutAccents = withoutAccents.replace("Đ", "D").replace("đ", "d");
-
-        // Bước 4: Slugify như trước
-        return withoutAccents.toLowerCase()
-                .replaceAll("[^a-z0-9\\s-]", "")
-                .replaceAll("\\s+", "-")
-                .replaceAll("-+", "-")
-                .trim();
     }
 }
 

@@ -66,25 +66,15 @@ public class DataInitializer implements CommandLineRunner {
                 "PERMISSION:UPDATE",
                 "PERMISSION:DELETE",
 
-                "ORDER_ITEM:READ",
-                "ORDER_ITEM:CREATE",
-                "ORDER_ITEM:UPDATE",
-                "ORDER_ITEM:DELETE",
+                "BLOG-POST:READ",
+                "BLOG-POST:CREATE",
+                "BLOG-POST:UPDATE",
+                "BLOG-POST:DELETE",
 
-                "PRODUCT:READ",
-                "PRODUCT:CREATE",
-                "PRODUCT:UPDATE",
-                "PRODUCT:DELETE",
-
-                "ORDER:READ",
-                "ORDER:CREATE",
-                "ORDER:UPDATE",
-                "ORDER:DELETE",
-
-                "BLOG:READ",
-                "BLOG:CREATE",
-                "BLOG:UPDATE",
-                "BLOG:DELETE",
+                "BLOG-CATEGORY:READ",
+                "BLOG-CATEGORY:CREATE",
+                "BLOG-CATEGORY:UPDATE",
+                "BLOG-CATEGORY:DELETE",
         };
 
         for (String permName : permissions) {
@@ -105,15 +95,9 @@ public class DataInitializer implements CommandLineRunner {
         userRole.setDescription("Regular user - can view products and create orders");
         Set<Permission> userPerms = new HashSet<>();
 
-        userPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
+        userPerms.add(findPermissionByName(allPermissions, "BLOG-POST:READ"));
 
-        userPerms.add(findPermissionByName(allPermissions, "ORDER:READ"));
-
-        userPerms.add(findPermissionByName(allPermissions, "PRODUCT:READ"));
-
-        userPerms.add(findPermissionByName(allPermissions, "PERMISSION:READ"));
-
-        userPerms.add(findPermissionByName(allPermissions, "USER:READ"));
+        userPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:READ"));
 
         userRole.setPermissions(userPerms);
         roleRepository.save(userRole);
@@ -124,21 +108,13 @@ public class DataInitializer implements CommandLineRunner {
         managerRole.setDescription("Manager - can manage products and orders");
         Set<Permission> managerPerms = new HashSet<>(userPerms);
 
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER_ITEM:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER_ITEM:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER_ITEM:UPDATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:UPDATE"));
 
-        managerPerms.add(findPermissionByName(allPermissions, "PRODUCT:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "PRODUCT:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "PRODUCT:UPDATE"));
-
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "ORDER:UPDATE"));
-
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG:UPDATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:UPDATE"));
 
         managerRole.setPermissions(managerPerms);
         roleRepository.save(managerRole);
@@ -159,11 +135,11 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void createSystemAdminAccount() {
-        User admin = userRepository.findByEmail("admin@coinguon.vn").orElse(new User());
+        User admin = userRepository.findByEmail("liquidape@finance.com").orElse(new User());
         if (admin.getId() == null) {
             // Set or update user properties
-            admin.setEmail("admin@coinguon.vn");
-            admin.setPassword(passwordEncoder.encode("admin123"));
+            admin.setEmail("liquidape@finance.com");
+            admin.setPassword(passwordEncoder.encode("liquidape123@#"));
             admin.setFullName("Administrator");
             admin.setPhone("0123456789");
             admin.setAddress("Vietnam");

@@ -32,39 +32,6 @@ export const publicRoutes: Routes = [
 
 export const protectedRoutes: Routes = [
     {
-        key: 'appsSales.dashboard',
-        path: `${APP_PREFIX_PATH}/sales/dashboard`,
-        component: lazy(() => import('@/views/sales/SalesDashboard')),
-        authority: [ADMIN, USER],
-    },
-    {
-        key: 'appsSales.productList',
-        path: `${APP_PREFIX_PATH}/sales/product-list`,
-        component: lazy(() => import('@/views/sales/ProductList')),
-        authority: [ADMIN, USER],
-    },
-    {
-        key: 'appsSales.productNew',
-        path: `${APP_PREFIX_PATH}/sales/product-new`,
-        component: lazy(() => import('@/views/sales/ProductNew')),
-        authority: [ADMIN, USER],
-        meta: {
-            header: 'Add New Product',
-        },
-    },
-    {
-        key: 'appsSales.orderList',
-        path: `${APP_PREFIX_PATH}/sales/order-list`,
-        component: lazy(() => import('@/views/sales/OrderList')),
-        authority: [ADMIN, USER],
-    },
-    {
-        key: 'appsSales.orderDetails',
-        path: `${APP_PREFIX_PATH}/sales/order-details/:orderId`,
-        component: lazy(() => import('@/views/sales/OrderDetails')),
-        authority: [ADMIN, USER],
-    },
-    {
         key: 'appsSales.blogPost',
         path: `${APP_PREFIX_PATH}/sales/blog-post-list`,
         component: lazy(() => import('@/views/blogs/BlogPostList/BlogPostList')),
