@@ -1,23 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import RichTextEditor from '@/components/shared/RichTextEditor'
-import type { FieldProps, FormikProps } from 'formik'
-import { Field, Form, Formik } from 'formik'
+import { FieldArray, FieldProps, FormikProps, getIn , Field, Form, Formik } from 'formik'
 import ReactHtmlParser from 'html-react-parser'
 import * as Yup from 'yup'
 import reducer, {
-    useAppSelector,
+    getBlogCategories,
     getBlogDetail,
     resetBlog,
     useAppDispatch,
-    getBlogCategories,
+    useAppSelector,
 } from '@/views/blogs/BlogForm/store'
 import { injectReducer } from '@/store'
-import { Card, Upload, Dialog, Select } from '@/components/ui'
+import { Card, Dialog, Select, Upload } from '@/components/ui'
 import { Container } from '@/components/shared'
-import { apiPostSystem, apiPostFormDataSystem, apiUpdateSystem } from '@/services/SalesService'
+import {
+    apiPostFormDataSystem,
+    apiPostSystem,
+    apiUpdateSystem,
+} from '@/services/SalesService'
 import { ApiResponse } from '@/@types/schema.common.response'
 import Cropper, { Area } from 'react-easy-crop'
 import Notification from '@/components/ui/Notification'
@@ -25,35 +28,16 @@ import toast from '@/components/ui/toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { HiX } from 'react-icons/hi'
 import BaseService from '@/services/BaseService'
-import type { BlogPostCategoryEntityResponse } from '@/@types/schema.blog.post.category.respone'
+import type { BlogCategory } from '@/@types/schema.blog.category.respone'
 import type { AxiosResponse } from 'axios'
-
-type FormModel = {
-    title: string
-    content: string
-    excerpt: string
-    image: string
-    author: string
-    estimatedReadTime: number
-    blogCategoryId: string
-}
-
-type BlogPostRequest = {
-    title: string
-    content: string
-    excerpt: string
-    image: string
-    estimatedReadTime: number
-    author: string
-    blogCategoryId: string
-}
+import { BlogRequest } from '@/@types/schema.blog.request'
 
 type UploadImageResponse = {
     key: string
     presignedUrl: string
 }
 
-type SelectOption = BlogPostCategoryEntityResponse & {
+type SelectOption = BlogCategory & {
     value: string
     label: string
 }
@@ -63,33 +47,52 @@ type CropState = {
     y: number
 }
 
-const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title required'),
-    excerpt: Yup.string().required('Excerpt required'),
-    content: Yup.string().required('Content required'),
-    author: Yup.string().required('Author required'),
-    estimatedReadTime: Yup.number().required('Estimated read time required'),
-    image: Yup.string().required('Image required'),
-    blogCategoryId: Yup.string().required('Category required'),
+const validationSchema = Yup.object({
+    featured: Yup.boolean(),
+    image: Yup.string().required(),
+    estimatedReadTime: Yup.number().min(1),
+    category: Yup.object({
+        id: Yup.string().required('Chọn category'),
+    }),
+    translations: Yup.array()
+        .of(
+            Yup.object({
+                langCode: Yup.string().required(),
+                slug: Yup.string().required(),
+                title: Yup.string().required(),
+                content: Yup.string().required(),
+                excerpt: Yup.string(),
+            }),
+        )
+        .min(1),
 })
 
 injectReducer('blogFormSlice', reducer)
 const BlogPostForm = () => {
+    // Param
     const { id } = useParams<{ id?: string }>()
     const isEditMode = !!id
-    const blog = useAppSelector((state) => state.blogFormSlice.data.blog)
-    const blogCategories = useAppSelector((state) => state.blogFormSlice.data.blogCategories)
-    const loading = useAppSelector((state) => state.blogFormSlice.data.loading)
-    const dispatch = useAppDispatch()
+    // Navigate
     const navigate = useNavigate()
+    // Dispatch
+    const dispatch = useAppDispatch()
+    const blogCategories = useAppSelector(
+        (state) => state.blogFormSlice.data.blogCategories,
+    )
+    const loading = useAppSelector((state) => state.blogFormSlice.data.loading)
+    const blog = useAppSelector((state) => state.blogFormSlice.data.blog)
+    // UseState
     const [previewFiles, setPreviewFiles] = useState<File[]>([])
     const [cropDialogOpen, setCropDialogOpen] = useState<boolean>(false)
     const [cropImageSrc, setCropImageSrc] = useState<string>('')
     const [crop, setCrop] = useState<CropState>({ x: 0, y: 0 })
     const [zoom, setZoom] = useState<number>(1)
-    const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(
+        null,
+    )
     const [pendingFile, setPendingFile] = useState<File | null>(null)
-    const [pendingForm, setPendingForm] = useState<FormikProps<FormModel> | null>(null)
+    const [pendingForm, setPendingForm] =
+        useState<FormikProps<BlogRequest> | null>(null)
     const [cropping, setCropping] = useState<boolean>(false)
     const [uploading, setUploading] = useState<boolean>(false)
     const [previewImageUrl, setPreviewImageUrl] = useState<string>('')
@@ -129,7 +132,7 @@ const BlogPostForm = () => {
                 setPreviewImageUrl('')
             }
         }
-        loadPreviewImage()
+        loadPreviewImage().then(() => {})
     }, [blog.image, blog.id, isEditMode])
 
     const readFileAsDataUrl = (file: File): Promise<string> => {
@@ -146,7 +149,7 @@ const BlogPostForm = () => {
             const image = new Image()
             image.addEventListener('load', () => resolve(image))
             image.addEventListener('error', () =>
-                reject(new Error('IMAGE_LOAD_ERROR'))
+                reject(new Error('IMAGE_LOAD_ERROR')),
             )
             image.setAttribute('crossOrigin', 'anonymous')
             image.src = url
@@ -157,7 +160,7 @@ const BlogPostForm = () => {
         imageSrc: string,
         cropPixels: Area,
         fileName: string,
-        fileType: string
+        fileType: string,
     ): Promise<File> => {
         const image = await createImage(imageSrc)
         const canvas = document.createElement('canvas')
@@ -179,7 +182,7 @@ const BlogPostForm = () => {
             0,
             0,
             cropPixels.width,
-            cropPixels.height
+            cropPixels.height,
         )
 
         return new Promise<File>((resolve, reject) => {
@@ -192,44 +195,37 @@ const BlogPostForm = () => {
                     resolve(new File([blob], fileName, { type: fileType }))
                 },
                 fileType,
-                1
+                1,
             )
         })
     }
 
-    const uploadImage = async (file: File): Promise<AxiosResponse<ApiResponse<UploadImageResponse>>> => {
+    const uploadImage = async (
+        file: File,
+    ): Promise<AxiosResponse<ApiResponse<UploadImageResponse>>> => {
         const formData = new FormData()
         formData.append('file', file)
 
-        return await apiPostFormDataSystem<ApiResponse<UploadImageResponse>, FormData>(
-            '/s3/upload',
-            formData,
-        )
+        return await apiPostFormDataSystem<
+            ApiResponse<UploadImageResponse>,
+            FormData
+        >('/s3/upload', formData)
     }
 
     const onComplete = async (
-        value: FormModel,
+        value: BlogRequest,
         setSubmitting: (isSubmitting: boolean) => void,
     ): Promise<void> => {
         setSubmitting(true)
         try {
-            const requestData: BlogPostRequest = {
-                title: value.title,
-                content: value.content,
-                excerpt: value.excerpt,
-                image: value.image,
-                author: value.author,
-                estimatedReadTime: value.estimatedReadTime,
-                blogCategoryId: value.blogCategoryId
-            }
-
             let response
             if (isEditMode && id) {
                 // Update existing blog
-                response = await apiUpdateSystem<
-                    ApiResponse<unknown>,
-                    BlogPostRequest
-                >('posts/update', requestData, id)
+                response = await apiUpdateSystem<ApiResponse, BlogRequest>(
+                    'blogs/update',
+                    value,
+                    id,
+                )
 
                 if (response.data) {
                     toast.push(
@@ -239,16 +235,16 @@ const BlogPostForm = () => {
                         />,
                         {
                             placement: 'top-center',
-                        }
+                        },
                     )
                     navigate('/app/sales/blog-post-list')
                 }
             } else {
                 // Create new blog
-                response = await apiPostSystem<
-                    ApiResponse<unknown>,
-                    BlogPostRequest
-                >('posts/create', requestData)
+                response = await apiPostSystem<ApiResponse, BlogRequest>(
+                    'blogs/create',
+                    value,
+                )
 
                 if (response.data) {
                     toast.push(
@@ -258,30 +254,40 @@ const BlogPostForm = () => {
                         />,
                         {
                             placement: 'top-center',
-                        }
+                        },
                     )
                     navigate('/app/sales/blog-post-list')
                 }
             }
         } catch (error: unknown) {
-            console.error(`Error ${isEditMode ? 'updating' : 'creating'} blog:`, error)
+            console.error(
+                `Error ${isEditMode ? 'updating' : 'creating'} blog:`,
+                error,
+            )
             toast.push(
                 <Notification
-                    title={isEditMode ? 'Cập nhật blog thất bại' : 'Tạo blog thất bại'}
+                    title={
+                        isEditMode
+                            ? 'Cập nhật blog thất bại'
+                            : 'Tạo blog thất bại'
+                    }
                     type="danger"
                 >
                     Vui lòng thử lại sau.
                 </Notification>,
                 {
                     placement: 'top-center',
-                }
+                },
             )
         } finally {
             setSubmitting(false)
         }
     }
 
-    const openCropDialog = async (file: File, form: FormikProps<FormModel>): Promise<void> => {
+    const openCropDialog = async (
+        file: File,
+        form: FormikProps<BlogRequest>,
+    ): Promise<void> => {
         try {
             const imgSrc = await readFileAsDataUrl(file)
             setCropImageSrc(imgSrc)
@@ -294,15 +300,12 @@ const BlogPostForm = () => {
         } catch (error: unknown) {
             console.error(error)
             toast.push(
-                <Notification
-                    title="Lỗi đọc file"
-                    type="danger"
-                >
+                <Notification title="Lỗi đọc file" type="danger">
                     Không thể đọc file ảnh.
                 </Notification>,
                 {
                     placement: 'top-center',
-                }
+                },
             )
         }
     }
@@ -319,7 +322,12 @@ const BlogPostForm = () => {
     }
 
     const handleCropConfirm = async (): Promise<void> => {
-        if (!pendingFile || !croppedAreaPixels || !cropImageSrc || !pendingForm) {
+        if (
+            !pendingFile ||
+            !croppedAreaPixels ||
+            !cropImageSrc ||
+            !pendingForm
+        ) {
             return
         }
         setCropping(true)
@@ -328,14 +336,11 @@ const BlogPostForm = () => {
                 cropImageSrc,
                 croppedAreaPixels,
                 pendingFile.name,
-                pendingFile.type
+                pendingFile.type,
             )
 
             setUploading(true)
             const uploadResponse = await uploadImage(croppedFile)
-            if (!uploadResponse) {
-                throw new Error('UPLOAD_FAILED')
-            }
 
             // Lưu key (filename) vào form field, presignedUrl chỉ dùng để preview
             const imageKey = uploadResponse.data.data.key
@@ -346,36 +351,37 @@ const BlogPostForm = () => {
 
             closeCropDialog()
             toast.push(
-                <Notification
-                    title="Upload ảnh thành công"
-                    type="success"
-                />,
+                <Notification title="Upload ảnh thành công" type="success" />,
                 {
                     placement: 'top-center',
-                }
+                },
             )
         } catch (error: unknown) {
             console.error(error)
             toast.push(
-                <Notification
-                    title="Upload ảnh thất bại"
-                    type="danger"
-                >
+                <Notification title="Upload ảnh thất bại" type="danger">
                     Không thể upload ảnh, vui lòng thử lại.
                 </Notification>,
                 {
                     placement: 'top-center',
-                }
+                },
             )
         } finally {
             setCropping(false)
             setUploading(false)
         }
     }
-    const beforeUpload = (files: FileList | null, fileList: File[]): string | boolean => {
+    const beforeUpload = (
+        files: FileList | null,
+        fileList: File[],
+    ): string | boolean => {
         let valid: string | boolean = true
         const maxUpload: number = 1
-        const allowedFileType: string[] = ['image/jpeg', 'image/png', 'image/jpg']
+        const allowedFileType: string[] = [
+            'image/jpeg',
+            'image/png',
+            'image/jpg',
+        ]
         const maxFileSize: number = 10 * 1024 * 1024 // 10MB
         if (files) {
             for (const f of files) {
@@ -398,11 +404,13 @@ const BlogPostForm = () => {
     // Đợi data load xong khi edit mode
     if (isEditMode && (loading || !blog.id)) {
         return (
-            <Container className={' h-[85svh]'}>
+            <Container className={'h-[85svh]'}>
                 <div className="flex items-center justify-center h-full">
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-                        <p className="mt-4 text-gray-600">Đang tải dữ liệu...</p>
+                        <p className="mt-4 text-gray-600">
+                            Đang tải dữ liệu...
+                        </p>
                     </div>
                 </div>
             </Container>
@@ -410,68 +418,62 @@ const BlogPostForm = () => {
     }
 
     return (
-        <Container className={' h-[85svh]'}>
+        <div className={'mx-auto h-[85svh] !w-[90%]'}>
             <Formik
                 key={isEditMode ? `edit-${blog.id || 'loading'}` : 'new-blog'}
                 enableReinitialize={true}
                 initialValues={{
-                    title: blog.title || '',
-                    content: blog.content || '',
-                    excerpt: blog.excerpt || '',
-                    author: blog.author || '',
+                    featured: blog.featured || false,
                     image: blog.image || '',
                     estimatedReadTime: blog.estimatedReadTime || 5,
-                    blogCategoryId: blog?.blogCategory?.id || ''
+                    category: { id: blog?.category?.id || '' },
+                    translations: [
+                        {
+                            langCode: 'en',
+                            id: blog?.translations[0]?.id || '',
+                            slug: blog?.translations[0]?.slug || '',
+                            title: blog?.translations[0]?.title || '',
+                            content: blog?.translations[0]?.content || '',
+                            excerpt: blog?.translations[0]?.excerpt || ''
+                        },
+                        {
+                            langCode: 'vi',
+                            id: blog?.translations[1]?.id || '',
+                            slug: blog?.translations[1]?.slug || '',
+                            title: blog?.translations[1]?.title || '',
+                            content: blog?.translations[1]?.content || '',
+                            excerpt: blog?.translations[1]?.excerpt || ''
+                        },
+                    ],
                 }}
                 validationSchema={validationSchema}
-                onSubmit={async (values: FormModel, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }): Promise<void> => {
+                onSubmit={async (
+                    values: BlogRequest,
+                    {
+                        setSubmitting,
+                    }: { setSubmitting: (isSubmitting: boolean) => void },
+                ): Promise<void> => {
                     await onComplete(values, setSubmitting)
                 }}
             >
-                {({ values, touched, errors, isSubmitting }: FormikProps<FormModel>) => (
+                {({
+                    values,
+                    touched,
+                    errors,
+                    isSubmitting,
+                }: FormikProps<BlogRequest>) => (
                     <Form className={'h-full'}>
                         <div className={'grid grid-cols-12 gap-10'}>
                             <Card
-                                className={
-                                    'col-span-6 h-[90svh] overflow-auto'
-                                }
+                                className={'col-span-4 h-[90svh] overflow-auto'}
                             >
-                                <FormItem
-                                    label="Title"
-                                    invalid={errors.title && touched.title}
-                                    errorMessage={errors.title}
-                                >
-                                    <Field
-                                        autoComplete="off"
-                                        name="title"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="Excerpt"
-                                    invalid={errors.excerpt && touched.excerpt}
-                                    errorMessage={errors.excerpt}
-                                >
-                                    <Field
-                                        autoComplete="off"
-                                        name="excerpt"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="Author"
-                                    invalid={errors.author && touched.author}
-                                    errorMessage={errors.author}
-                                >
-                                    <Field
-                                        autoComplete="off"
-                                        name="author"
-                                        component={Input}
-                                    />
-                                </FormItem>
+                                <h4>Form</h4>
                                 <FormItem
                                     label="Estimated Read Time"
-                                    invalid={errors.estimatedReadTime && touched.estimatedReadTime}
+                                    invalid={
+                                        errors.estimatedReadTime &&
+                                        touched.estimatedReadTime
+                                    }
                                     errorMessage={errors.estimatedReadTime}
                                 >
                                     <Field
@@ -480,18 +482,161 @@ const BlogPostForm = () => {
                                         component={Input}
                                     />
                                 </FormItem>
+                                <FieldArray name="translations">
+                                    {() =>
+                                        values.translations.map((t, index) => {
+                                            const slugError = getIn(
+                                                errors,
+                                                `translations.${index}.slug`,
+                                            )
+                                            const slugTouched = getIn(
+                                                touched,
+                                                `translations.${index}.slug`,
+                                            )
+
+                                            const titleError = getIn(
+                                                errors,
+                                                `translations.${index}.title`,
+                                            )
+                                            const titleTouched = getIn(
+                                                touched,
+                                                `translations.${index}.title`,
+                                            )
+
+                                            const contentError = getIn(
+                                                errors,
+                                                `translations.${index}.content`,
+                                            )
+                                            const contentTouched = getIn(
+                                                touched,
+                                                `translations.${index}.content`,
+                                            )
+
+                                            const excerptError = getIn(
+                                                errors,
+                                                `translations.${index}.excerpt`,
+                                            )
+                                            const excerptTouched = getIn(
+                                                touched,
+                                                `translations.${index}.excerpt`,
+                                            )
+
+                                            return (
+                                                <div key={t.langCode}>
+                                                    <h4>
+                                                        {t.langCode.toUpperCase()}
+                                                    </h4>
+
+                                                    <FormItem
+                                                        label="Slug"
+                                                        invalid={
+                                                            !!(
+                                                                slugTouched &&
+                                                                slugError
+                                                            )
+                                                        }
+                                                        errorMessage={slugError}
+                                                    >
+                                                        <Field
+                                                            name={`translations.${index}.slug`}
+                                                            component={Input}
+                                                        />
+                                                    </FormItem>
+
+                                                    <FormItem
+                                                        label="Title"
+                                                        invalid={
+                                                            !!(
+                                                                titleTouched &&
+                                                                titleError
+                                                            )
+                                                        }
+                                                        errorMessage={
+                                                            titleError
+                                                        }
+                                                    >
+                                                        <Field
+                                                            name={`translations.${index}.title`}
+                                                            component={Input}
+                                                        />
+                                                    </FormItem>
+
+                                                    <FormItem
+                                                        label="Content"
+                                                        invalid={
+                                                            !!(
+                                                                contentTouched &&
+                                                                contentError
+                                                            )
+                                                        }
+                                                        errorMessage={
+                                                            contentError
+                                                        }
+                                                    >
+                                                        <Field
+                                                            className={'bg-yellow-900'}
+                                                            name={`translations.${index}.content`}
+                                                        >
+                                                            {({ field, form }: FieldProps<string, BlogRequest>) => (
+                                                                <RichTextEditor
+                                                                    value={field.value}
+                                                                    onChange={(val: string) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            val,
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItem>
+
+                                                    <FormItem
+                                                        label="Excerpt"
+                                                        invalid={
+                                                            !!(
+                                                                excerptTouched &&
+                                                                excerptError
+                                                            )
+                                                        }
+                                                        errorMessage={
+                                                            excerptError
+                                                        }
+                                                    >
+                                                        <Field
+                                                            as="textarea"
+                                                            name={`translations.${index}.excerpt`}
+                                                            component={Input}
+                                                        />
+                                                    </FormItem>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </FieldArray>
                                 <FormItem
                                     label="Category"
-                                    invalid={errors.blogCategoryId && touched.blogCategoryId}
-                                    errorMessage={errors.blogCategoryId}
+                                    invalid={
+                                        errors?.category?.id &&
+                                        touched?.category?.id
+                                    }
+                                    errorMessage={errors?.category?.id}
                                 >
-                                    <Field name="blogCategoryId">
-                                        {({ field, form }: FieldProps<string, FormModel>) => {
-                                            const transformedData: SelectOption[] = blogCategories.map((item: BlogPostCategoryEntityResponse) => ({
-                                                ...item,
-                                                value: item.id,
-                                                label: item.name,
-                                            }));
+                                    <Field name="category.id">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: SelectOption[] =
+                                                blogCategories.map(
+                                                    (item: BlogCategory) => ({
+                                                        ...item,
+                                                        value: item.id,
+                                                        label: item
+                                                            ?.translations[0]
+                                                            ?.name,
+                                                    }),
+                                                )
                                             return (
                                                 <Select
                                                     placeholder="Category"
@@ -501,12 +646,15 @@ const BlogPostForm = () => {
                                                     value={transformedData.filter(
                                                         (s: SelectOption) =>
                                                             s.id ===
-                                                            values.blogCategoryId
+                                                            values?.category
+                                                                ?.id,
                                                     )}
-                                                    onChange={(s: SelectOption | null) =>
+                                                    onChange={(
+                                                        s: SelectOption | null,
+                                                    ) =>
                                                         form.setFieldValue(
                                                             field.name,
-                                                            s?.id || ''
+                                                            s?.id || '',
                                                         )
                                                     }
                                                 />
@@ -523,32 +671,49 @@ const BlogPostForm = () => {
                                         {({
                                             field,
                                             form,
-                                        }: FieldProps<string, FormModel>) => {
+                                        }: FieldProps<string, BlogRequest>) => {
                                             return (
                                                 <div>
                                                     {form.values.image ? (
                                                         <div className="space-y-4">
                                                             <div className="relative inline-block w-full">
-                                                                <div className='rounded border-gray-300 dark:border-gray-600 border flex items-center gap-2'>
+                                                                <div className="rounded border-gray-300 dark:border-gray-600 border flex items-center gap-2">
                                                                     <img
-                                                                        src={previewImageUrl || form.values.image}
+                                                                        src={
+                                                                            previewImageUrl ||
+                                                                            form
+                                                                                .values
+                                                                                .image
+                                                                        }
                                                                         alt="Preview"
                                                                         className="max-w-full max-h-24"
                                                                     />
                                                                     <div>
                                                                         {
-                                                                            form.values.image
+                                                                            form
+                                                                                .values
+                                                                                .image
                                                                         }
                                                                     </div>
                                                                     <button
                                                                         type="button"
                                                                         className="absolute right-2 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-lg"
-                                                                        disabled={uploading || cropDialogOpen}
+                                                                        disabled={
+                                                                            uploading ||
+                                                                            cropDialogOpen
+                                                                        }
                                                                         title="Xóa ảnh"
                                                                         onClick={async (): Promise<void> => {
-                                                                            await form.setFieldValue(field.name, '')
-                                                                            setPreviewFiles([])
-                                                                            setPreviewImageUrl('')
+                                                                            await form.setFieldValue(
+                                                                                field.name,
+                                                                                '',
+                                                                            )
+                                                                            setPreviewFiles(
+                                                                                [],
+                                                                            )
+                                                                            setPreviewImageUrl(
+                                                                                '',
+                                                                            )
                                                                         }}
                                                                     >
                                                                         <HiX className="" />
@@ -556,74 +721,98 @@ const BlogPostForm = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="text-sm text-gray-600 dark:text-gray-400">
-                                                                Hoặc chọn ảnh khác:
+                                                                Hoặc chọn ảnh
+                                                                khác:
                                                             </div>
                                                             <Upload
                                                                 key={`upload-${form.values.image}`}
                                                                 draggable
                                                                 fileList={[]}
-                                                                beforeUpload={beforeUpload}
+                                                                beforeUpload={
+                                                                    beforeUpload
+                                                                }
                                                                 showList={false}
-                                                                disabled={uploading || cropDialogOpen}
-                                                                onChange={async (files: File[]): Promise<void> => {
-                                                                    if (files && files.length > 0) {
-                                                                        await openCropDialog(files[0], form)
+                                                                disabled={
+                                                                    uploading ||
+                                                                    cropDialogOpen
+                                                                }
+                                                                onChange={async (
+                                                                    files: File[],
+                                                                ): Promise<void> => {
+                                                                    if (
+                                                                        files &&
+                                                                        files.length >
+                                                                            0
+                                                                    ) {
+                                                                        await openCropDialog(
+                                                                            files[0],
+                                                                            form,
+                                                                        )
                                                                     }
                                                                 }}
                                                                 onFileRemove={async (): Promise<void> => {
-                                                                    await form.setFieldValue(field.name, '')
-                                                                    setPreviewFiles([])
-                                                                    setPreviewImageUrl('')
+                                                                    await form.setFieldValue(
+                                                                        field.name,
+                                                                        '',
+                                                                    )
+                                                                    setPreviewFiles(
+                                                                        [],
+                                                                    )
+                                                                    setPreviewImageUrl(
+                                                                        '',
+                                                                    )
                                                                 }}
                                                             />
                                                         </div>
                                                     ) : (
                                                         <Upload
-                                                            key={blog.id || 'upload-new'}
+                                                            key={
+                                                                blog.id ||
+                                                                'upload-new'
+                                                            }
                                                             draggable
-                                                            fileList={previewFiles}
-                                                            beforeUpload={beforeUpload}
+                                                            fileList={
+                                                                previewFiles
+                                                            }
+                                                            beforeUpload={
+                                                                beforeUpload
+                                                            }
                                                             showList={false}
-                                                            disabled={uploading || cropDialogOpen}
-                                                            onChange={async (files: File[]): Promise<void> => {
-                                                                if (files && files.length > 0) {
-                                                                    await openCropDialog(files[0], form)
+                                                            disabled={
+                                                                uploading ||
+                                                                cropDialogOpen
+                                                            }
+                                                            onChange={async (
+                                                                files: File[],
+                                                            ): Promise<void> => {
+                                                                if (
+                                                                    files &&
+                                                                    files.length >
+                                                                        0
+                                                                ) {
+                                                                    await openCropDialog(
+                                                                        files[0],
+                                                                        form,
+                                                                    )
                                                                 }
                                                             }}
                                                             onFileRemove={async (): Promise<void> => {
-                                                                await form.setFieldValue(field.name, '')
-                                                                setPreviewFiles([])
-                                                                setPreviewImageUrl('')
+                                                                await form.setFieldValue(
+                                                                    field.name,
+                                                                    '',
+                                                                )
+                                                                setPreviewFiles(
+                                                                    [],
+                                                                )
+                                                                setPreviewImageUrl(
+                                                                    '',
+                                                                )
                                                             }}
                                                         />
                                                     )}
                                                 </div>
                                             )
                                         }}
-                                    </Field>
-                                </FormItem>
-                                <FormItem
-                                    label="Content"
-                                    className="mb-0  overflow-auto max-h-full"
-                                    labelClass="!justify-start"
-                                    invalid={errors.content && touched.content}
-                                    errorMessage={errors.content}
-                                >
-                                    <Field
-                                        name="content"
-                                        className={'bg-yellow-900'}
-                                    >
-                                        {({ field, form }: FieldProps<string, FormModel>) => (
-                                            <RichTextEditor
-                                                value={field.value}
-                                                onChange={(val: string) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        val,
-                                                    )
-                                                }
-                                            />
-                                        )}
                                     </Field>
                                 </FormItem>
                                 <div className="mt-4 flex justify-end">
@@ -636,14 +825,36 @@ const BlogPostForm = () => {
                                 </div>
                             </Card>
                             <Card
-                                className={'col-span-6 h-[90svh] overflow-auto'}
+                                className={'col-span-4 h-[90svh] overflow-auto'}
                             >
+                                <h4>VI</h4>
                                 <div>
                                     <div className={'max-h-full'}>
-                                        <h4 className="">{values.title}</h4>
+                                        <h4 className="">
+                                            {values?.translations[1]?.title}
+                                        </h4>
                                         <div className="prose dark:prose-invert max-w-none">
                                             {ReactHtmlParser(
-                                                values.content || '',
+                                                values?.translations[1]
+                                                    ?.content || '',
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </Card>
+                            <Card
+                                className={'col-span-4 h-[90svh] overflow-auto'}
+                            >
+                                <h4>EN</h4>
+                                <div>
+                                    <div className={'max-h-full'}>
+                                        <h4 className="">
+                                            {values?.translations[0]?.title}
+                                        </h4>
+                                        <div className="prose dark:prose-invert max-w-none">
+                                            {ReactHtmlParser(
+                                                values?.translations[0]
+                                                    ?.content || '',
                                             )}
                                         </div>
                                     </div>
@@ -666,7 +877,10 @@ const BlogPostForm = () => {
                                         aspect={16 / 9}
                                         onCropChange={setCrop}
                                         onZoomChange={setZoom}
-                                        onCropComplete={(_: Area, areaPixels: Area): void =>
+                                        onCropComplete={(
+                                            _: Area,
+                                            areaPixels: Area,
+                                        ): void =>
                                             setCroppedAreaPixels(areaPixels)
                                         }
                                     />
@@ -683,7 +897,9 @@ const BlogPostForm = () => {
                                     step={0.1}
                                     value={zoom}
                                     className="w-full accent-blue-500"
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setZoom(Number(e.target.value))}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>,
+                                    ) => setZoom(Number(e.target.value))}
                                 />
                             </div>
                             <div className="flex justify-end gap-2 mt-6">
@@ -709,7 +925,7 @@ const BlogPostForm = () => {
                     </Form>
                 )}
             </Formik>
-        </Container>
+        </div>
     )
 }
 

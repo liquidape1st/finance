@@ -12,11 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogPostRequest {
-    @NotBlank(message = "Language code is required")
-    private String langCode; // vi, en, ja, fr...
+    private UUID id;
 
-    @NotBlank(message = "Slug is required")
-    private String slug;
+    private Boolean featured = false;
 
     @NotBlank(message = "Title is required")
     private String title;

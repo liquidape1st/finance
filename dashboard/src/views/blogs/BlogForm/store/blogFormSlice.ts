@@ -1,33 +1,27 @@
-import { BlogPostEntityResponse } from '@/@types/schema.blog.post.respone'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiDetailSystem, apiGetSystem } from '@/services/SalesService'
 import { ApiResponse } from '@/@types/schema.common.response'
-import { BlogPostCategoryEntityResponse } from '@/@types/schema.blog.post.category.respone'
+import { BlogCategory } from '@/@types/schema.blog.category.respone'
+import { BlogResponse } from '@/@types/schema.blog.respone'
 
 export const  SLICE_NAME = "blogFormSlice";
 
 export type BlogFormState = {
-    blogCategories: BlogPostCategoryEntityResponse[]
-    blog: BlogPostEntityResponse
+    blogCategories: BlogCategory[]
+    blog: BlogResponse
     loading: boolean
 }
 
 const initState: BlogFormState = {
     blogCategories: [],
     blog: {
-        author: "",
-        content: "",
-        title: "",
-        excerpt: "",
-        createdAt: 0,
         image: "",
-        slug: "",
-        blogCategory: {
+        category: {
             id: '',
-            name: ""
         },
-        publishedAt: 0,
-        updatedAt: 0,
+        featured: false,
+        estimatedReadTime: 5,
+        translations: [],
         id: ""
     },
     loading: false
@@ -36,8 +30,8 @@ const initState: BlogFormState = {
 export const getBlogDetail = createAsyncThunk(
     SLICE_NAME + '/getBlogDetail',
     async (uuid: string) => {
-        const response = await apiDetailSystem<ApiResponse<BlogPostEntityResponse>>(
-            'posts/detail',
+        const response = await apiDetailSystem<ApiResponse<BlogResponse>>(
+            'blogs/detail',
             uuid
         )
         // API trả về response.data.data
@@ -48,8 +42,8 @@ export const getBlogDetail = createAsyncThunk(
 export const getBlogCategories = createAsyncThunk(
     SLICE_NAME + '/getBlogCategories',
     async () => {
-        const response = await apiGetSystem<ApiResponse<BlogPostCategoryEntityResponse[]>>(
-            'blog-categories/search'
+        const response = await apiGetSystem<ApiResponse<BlogCategory[]>>(
+            'categories/search'
         )
         // API trả về response.data.data
         return response.data

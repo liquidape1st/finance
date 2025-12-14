@@ -1,13 +1,13 @@
-import { BlogPostEntityResponse } from '@/@types/schema.blog.post.respone'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TableQueries } from '@/@types/common'
 import { apiGetSystem } from '@/services/SalesService'
 import { ApiResponse } from '@/@types/schema.common.response'
+import { BlogResponse } from '@/@types/schema.blog.respone'
 
 export const SLICE_NAME = 'salesBlogPostList'
 
 export type BlogSliceState = {
-    blogs: BlogPostEntityResponse[]
+    blogs: BlogResponse[]
     tableData: TableQueries
 }
 const initialState: BlogSliceState = {
@@ -28,8 +28,8 @@ export const searchBlogPosts = createAsyncThunk(
     SLICE_NAME + '/searchBlogPosts',
     async () => {
         const response =
-            await apiGetSystem<ApiResponse<BlogPostEntityResponse[]>>(
-                'posts/search',
+            await apiGetSystem<ApiResponse<BlogResponse[]>>(
+                'blogs/search',
             )
         return response.data
     },
