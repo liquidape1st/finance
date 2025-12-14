@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ResourcesPage } from "./pages/ResourcesPage";
 import { Navbar } from "./components/Navbar";
@@ -12,6 +12,7 @@ import imgImage1 from "figma:asset/92ed7407e1ea241277ee1cb9c161bc12787080a5.png"
 import imgImage2 from "figma:asset/80fa1841d31e58a1221a9df85d34fcd265c74760.png";
 import imgImage3 from "figma:asset/64fd296dc0cbbcfa14675f3011d4d1b7eab3ee5b.png";
 import imgImage4 from "figma:asset/dad619fc22331a397a147e42615c283ec555017b.png";
+import { useTranslation } from "react-i18next";
 
 function HomePage() {
   const stats = [
@@ -65,9 +66,11 @@ function HomePage() {
     },
   ];
 
+  const { t } = useTranslation()
+  
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Navbar currentPage="home" />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12">
@@ -92,7 +95,7 @@ function HomePage() {
 
           <div className="flex-1">
             <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-2.5">
-              <span className="text-white text-sm sm:text-base">Tìm hiểu về tài chính cá nhân</span>
+              <span className="text-white text-sm sm:text-base">{t('nav.find_out_about_personal_finance')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
               Nơi Chia Sẻ và Học Hỏi
@@ -331,35 +334,11 @@ function HomePage() {
 }
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'blogs' | 'resources'>('home');
-
-  // Update navigation in Navbar component
-  const handleNavigation = (page: 'home' | 'blogs' | 'resources') => {
-    setCurrentPage(page);
-  };
-
-  // Create navigation wrapper
-  const NavigationWrapper = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <div onClick={(e) => {
-        const target = e.target as HTMLElement;
-        const link = target.closest('a');
-        if (link && link.getAttribute('href')?.startsWith('/')) {
-          e.preventDefault();
-          const page = link.getAttribute('href')?.slice(1) as 'home' | 'blogs' | 'resources';
-          setCurrentPage(page || 'home');
-        }
-      }}>
-        {children}
-      </div>
-    );
-  };
-
   return (
-    <NavigationWrapper>
-      {currentPage === 'home' && <HomePage />}
-      {currentPage === 'blogs' && <BlogsPage />}
-      {currentPage === 'resources' && <ResourcesPage />}
-    </NavigationWrapper>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/blogs" element={<BlogsPage />} />
+      <Route path="/resources" element={<ResourcesPage />} />
+    </Routes>
   );
 }

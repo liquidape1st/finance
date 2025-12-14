@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
-
-interface NavbarProps {
-  currentPage?: 'home' | 'blogs' | 'resources';
-}
-
-export function Navbar({ currentPage = 'home' }: NavbarProps) {
+import i18n from 'i18next'
+export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const getCurrentPage = (): 'home' | 'blogs' | 'resources' => {
+    if (location.pathname === '/') return 'home';
+    if (location.pathname === '/blogs') return 'blogs';
+    if (location.pathname === '/resources') return 'resources';
+    return 'home';
+  };
+  
+  const currentPage = getCurrentPage();
 
   return (
     <>
@@ -27,7 +34,7 @@ export function Navbar({ currentPage = 'home' }: NavbarProps) {
       <nav className="bg-[#1a1a1a] border-b border-neutral-800 w-full sticky top-0 z-50">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-5 flex items-center justify-between">
           {/* Finance Blog Logo */}
-          <a href="/" className="flex items-center gap-2 sm:gap-3">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <div className="relative size-10 sm:size-12 bg-gradient-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 flex-shrink-0">
               <svg className="size-full" viewBox="0 0 32 32" fill="none">
                 {/* Chart bars going up */}
@@ -48,18 +55,18 @@ export function Navbar({ currentPage = 'home' }: NavbarProps) {
               </div>
               <p className="text-[#666666] text-xs tracking-wide hidden sm:block">Nền Tảng Kiến Thức Tài Chính</p>
             </div>
-          </a>
+          </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <a href="/" className={`text-sm transition-colors ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
+            <Link to="/" className={`text-sm transition-colors ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
               Trang Chủ
-            </a>
-            <a href="/blogs" className={`text-sm transition-colors ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
+            </Link>
+            <Link to="/blogs" className={`text-sm transition-colors ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
               Blog
-            </a>
-            <a 
-              href="/resources" 
+            </Link>
+            <Link 
+              to="/resources" 
               className={`px-[18px] py-2.5 rounded-md text-sm transition-colors ${
                 currentPage === 'resources' 
                   ? 'bg-[#262626] border border-[#333333] text-white' 
@@ -67,7 +74,7 @@ export function Navbar({ currentPage = 'home' }: NavbarProps) {
               }`}
             >
               Tài Nguyên
-            </a>
+            </Link>
           </div>
 
           {/* Desktop CTA Button */}
@@ -89,22 +96,22 @@ export function Navbar({ currentPage = 'home' }: NavbarProps) {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-neutral-800 bg-[#1a1a1a]">
             <div className="px-4 py-4 flex flex-col gap-4">
-              <a 
-                href="/" 
+              <Link 
+                to="/" 
                 className={`text-sm transition-colors py-2 ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Trang Chủ
-              </a>
-              <a 
-                href="/blogs" 
+              </Link>
+              <Link 
+                to="/blogs" 
                 className={`text-sm transition-colors py-2 ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Blog
-              </a>
-              <a 
-                href="/resources" 
+              </Link>
+              <Link 
+                to="/resources" 
                 className={`px-4 py-2.5 rounded-md text-sm transition-colors text-center ${
                   currentPage === 'resources' 
                     ? 'bg-[#262626] border border-[#333333] text-white' 
@@ -113,7 +120,7 @@ export function Navbar({ currentPage = 'home' }: NavbarProps) {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Tài Nguyên
-              </a>
+              </Link>
               <button className="bg-[#ffd11a] px-4 py-2.5 rounded-md text-[#141414] text-sm w-full">
                 Liên Hệ
               </button>

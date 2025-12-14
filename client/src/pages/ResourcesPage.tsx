@@ -136,7 +136,7 @@ export function ResourcesPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Navbar currentPage="resources" />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12">

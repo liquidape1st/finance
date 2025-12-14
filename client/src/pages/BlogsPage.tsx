@@ -90,7 +90,7 @@ export function BlogsPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Navbar currentPage="blogs" />
+      <Navbar />
 
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
