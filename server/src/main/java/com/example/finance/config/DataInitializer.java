@@ -11,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -46,11 +44,23 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void createBlogPostCategories () {
-        String[] categories = {"Văn hóa", "Sản phẩm", "Làng nghề", "Phong thủy", "Sức khỏe"};
-//        for (String categoryName : categories) {
-//            Category category = new Category();
-//            blogPostCategoryRepository.save(category);
-//        }
+        Map<String, String[]> categories = new HashMap<>();
+        categories.put("vi", new String[]{"Tiền điện tử", "Forex"});
+        categories.put("en", new String[]{"Cryptocurrency", "Forex"});
+
+        int n = categories.get("vi").length;
+
+        for (int i = 0; i < n; i++) {
+            Category category = new Category();
+            for (String lang : categories.keySet()) {
+                CategoryTranslation translation = new CategoryTranslation();
+                translation.setLangCode(lang);
+                translation.setName(categories.get(lang)[i]);
+                translation.setCategory(category);
+                category.getTranslations().add(translation);
+            }
+            categoryRepository.save(category);
+        }
     }
 
     private void createPermissions() {
@@ -65,15 +75,25 @@ public class DataInitializer implements CommandLineRunner {
                 "PERMISSION:UPDATE",
                 "PERMISSION:DELETE",
 
-                "BLOG-POST:READ",
-                "BLOG-POST:CREATE",
-                "BLOG-POST:UPDATE",
-                "BLOG-POST:DELETE",
+                "BLOG:READ",
+                "BLOG:CREATE",
+                "BLOG:UPDATE",
+                "BLOG:DELETE",
 
-                "BLOG-CATEGORY:READ",
-                "BLOG-CATEGORY:CREATE",
-                "BLOG-CATEGORY:UPDATE",
-                "BLOG-CATEGORY:DELETE",
+                "CATEGORY:READ",
+                "CATEGORY:CREATE",
+                "CATEGORY:UPDATE",
+                "CATEGORY:DELETE",
+
+                "BLOG-TRANSLATION:READ",
+                "BLOG-TRANSLATION:CREATE",
+                "BLOG-TRANSLATION:UPDATE",
+                "BLOG-TRANSLATION:DELETE",
+
+                "CATEGORY-TRANSLATION:READ",
+                "CATEGORY-TRANSLATION:CREATE",
+                "CATEGORY-TRANSLATION:UPDATE",
+                "CATEGORY-TRANSLATION:DELETE",
         };
 
         for (String permName : permissions) {
@@ -94,9 +114,13 @@ public class DataInitializer implements CommandLineRunner {
         userRole.setDescription("Regular user - can view products and create orders");
         Set<Permission> userPerms = new HashSet<>();
 
-        userPerms.add(findPermissionByName(allPermissions, "BLOG-POST:READ"));
+        userPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
 
-        userPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:READ"));
+        userPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:READ"));
+
+        userPerms.add(findPermissionByName(allPermissions, "CATEGORY:READ"));
+
+        userPerms.add(findPermissionByName(allPermissions, "CATEGORY-TRANSLATION:READ"));
 
         userRole.setPermissions(userPerms);
         roleRepository.save(userRole);
@@ -107,13 +131,21 @@ public class DataInitializer implements CommandLineRunner {
         managerRole.setDescription("Manager - can manage products and orders");
         Set<Permission> managerPerms = new HashSet<>(userPerms);
 
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-POST:UPDATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG:UPDATE"));
 
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:READ"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:CREATE"));
-        managerPerms.add(findPermissionByName(allPermissions, "BLOG-CATEGORY:UPDATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:UPDATE"));
+
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:UPDATE"));
+
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY-TRANSLATION:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY-TRANSLATION:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "CATEGORY-TRANSLATION:UPDATE"));
 
         managerRole.setPermissions(managerPerms);
         roleRepository.save(managerRole);

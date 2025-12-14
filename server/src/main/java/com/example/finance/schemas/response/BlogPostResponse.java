@@ -15,7 +15,7 @@ public class BlogPostResponse {
     private String image;
     private String author;
     private Integer estimatedReadTime;
-    private BlogPostCategoryResponse blogCategory;
+    private CategoryResponse blogCategory;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
