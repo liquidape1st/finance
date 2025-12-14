@@ -1,25 +1,5 @@
 import { Pageable, Sort } from '@/@types/common'
 
-export enum OrderStatusEnum {
-    PENDING = 'PENDING',
-    CONFIRMED = 'CONFIRMED',
-    PROCESSING = 'PROCESSING',
-    SHIPPED = 'SHIPPED',
-    DELIVERED = 'DELIVERED',
-    CANCELLED = 'CANCELLED',
-}
-export enum OrderPaymentStatusEnum {
-    PENDING = 'PENDING',
-    PAID = 'PAID',
-    FAILED = 'FAILED',
-    REFUNDED = 'REFUNDED',
-}
-
-export enum OrderPaymentMethodEnum {
-    CASH = 'CASH',
-    BANK = 'BANK',
-}
-
 export type ApiResponse<T = unknown> = {
     type: string
     title: string

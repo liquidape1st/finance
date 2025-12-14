@@ -4,6 +4,7 @@ import com.example.finance.converter.EpochToLocalDateTimeDeserializer;
 import com.example.finance.converter.LocalDateTimeConverter;
 import com.example.finance.converter.LocalDateTimeToEpochSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
@@ -14,46 +15,27 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "blog_posts")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogPost {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String title;
-
-    @Column(unique = true, nullable = false)
-    private String slug;
-
-    @Column(columnDefinition = "TEXT")
-    private String content;
-
-    @Column(columnDefinition = "TEXT")
-    private String excerpt;
-
-    private String image;
-
-    private String author;
-
-    private Integer estimatedReadTime = 5;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private BlogPostCategory blogCategory;
-
-    @Column(name = "published_at")
-    @Convert(converter = LocalDateTimeConverter.class)
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    @JsonSerialize(using = LocalDateTimeToEpochSerializer.class)
-    @JsonDeserialize(using = EpochToLocalDateTimeDeserializer.class)
-    private LocalDateTime publishedAt;
+    @JsonManagedReference
+    @OneToMany(
+            mappedBy = "category",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<CategoryTranslation> translations = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -71,4 +53,3 @@ public class BlogPost {
     @JsonDeserialize(using = EpochToLocalDateTimeDeserializer.class)
     private LocalDateTime updatedAt;
 }
-

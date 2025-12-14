@@ -1,7 +1,7 @@
 package com.example.finance.config;
 
 import com.example.finance.model.*;
-import com.example.finance.repository.BlogPostCategoryRepository;
+import com.example.finance.repository.CategoryRepository;
 import com.example.finance.repository.PermissionRepository;
 import com.example.finance.repository.RoleRepository;
 import com.example.finance.repository.UserRepository;
@@ -23,7 +23,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BlogPostCategoryRepository blogPostCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     @Transactional
@@ -38,7 +38,7 @@ public class DataInitializer implements CommandLineRunner {
             createRoles();
         }
 
-        if (blogPostCategoryRepository.count() == 0) {
+        if (categoryRepository.count() == 0) {
             createBlogPostCategories();
         }
         // Create or update default admin user
@@ -47,11 +47,10 @@ public class DataInitializer implements CommandLineRunner {
 
     private void createBlogPostCategories () {
         String[] categories = {"Văn hóa", "Sản phẩm", "Làng nghề", "Phong thủy", "Sức khỏe"};
-        for (String categoryName : categories) {
-            BlogPostCategory blogPostCategory = new BlogPostCategory();
-            blogPostCategory.setName(categoryName);
-            blogPostCategoryRepository.save(blogPostCategory);
-        }
+//        for (String categoryName : categories) {
+//            Category category = new Category();
+//            blogPostCategoryRepository.save(category);
+//        }
     }
 
     private void createPermissions() {

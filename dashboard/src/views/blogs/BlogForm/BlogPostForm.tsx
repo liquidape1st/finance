@@ -330,20 +330,20 @@ const BlogPostForm = () => {
                 pendingFile.name,
                 pendingFile.type
             )
-            
+
             setUploading(true)
             const uploadResponse = await uploadImage(croppedFile)
             if (!uploadResponse) {
                 throw new Error('UPLOAD_FAILED')
             }
-            
+
             // Lưu key (filename) vào form field, presignedUrl chỉ dùng để preview
             const imageKey = uploadResponse.data.data.key
             const previewUrl = uploadResponse.data.data.presignedUrl
             await pendingForm.setFieldValue('image', imageKey)
             setPreviewImageUrl(previewUrl)
             setPreviewFiles([croppedFile])
-            
+
             closeCropDialog()
             toast.push(
                 <Notification
@@ -433,7 +433,7 @@ const BlogPostForm = () => {
                         <div className={'grid grid-cols-12 gap-10'}>
                             <Card
                                 className={
-                                    'col-span-6 bg-gray-50 h-[90svh] overflow-auto'
+                                    'col-span-6 h-[90svh] overflow-auto'
                                 }
                             >
                                 <FormItem
@@ -486,7 +486,7 @@ const BlogPostForm = () => {
                                     errorMessage={errors.blogCategoryId}
                                 >
                                     <Field name="blogCategoryId">
-                                        {({field, form}: FieldProps<string, FormModel>) => {
+                                        {({ field, form }: FieldProps<string, FormModel>) => {
                                             const transformedData: SelectOption[] = blogCategories.map((item: BlogPostCategoryEntityResponse) => ({
                                                 ...item,
                                                 value: item.id,
@@ -528,25 +528,32 @@ const BlogPostForm = () => {
                                                 <div>
                                                     {form.values.image ? (
                                                         <div className="space-y-4">
-                                                            <div className="relative inline-block">
-                                                                <img
-                                                                    src={previewImageUrl || form.values.image}
-                                                                    alt="Preview"
-                                                                    className="max-w-full max-h-64 rounded border"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition-colors shadow-lg"
-                                                                    disabled={uploading || cropDialogOpen}
-                                                                    title="Xóa ảnh"
-                                                                    onClick={async (): Promise<void> => {
-                                                                        await form.setFieldValue(field.name, '')
-                                                                        setPreviewFiles([])
-                                                                        setPreviewImageUrl('')
-                                                                    }}
-                                                                >
-                                                                    <HiX className="w-4 h-4" />
-                                                                </button>
+                                                            <div className="relative inline-block w-full">
+                                                                <div className='rounded border-gray-300 dark:border-gray-600 border flex items-center gap-2'>
+                                                                    <img
+                                                                        src={previewImageUrl || form.values.image}
+                                                                        alt="Preview"
+                                                                        className="max-w-full max-h-24"
+                                                                    />
+                                                                    <div>
+                                                                        {
+                                                                            form.values.image
+                                                                        }
+                                                                    </div>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="absolute right-2 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-lg"
+                                                                        disabled={uploading || cropDialogOpen}
+                                                                        title="Xóa ảnh"
+                                                                        onClick={async (): Promise<void> => {
+                                                                            await form.setFieldValue(field.name, '')
+                                                                            setPreviewFiles([])
+                                                                            setPreviewImageUrl('')
+                                                                        }}
+                                                                    >
+                                                                        <HiX className="" />
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                             <div className="text-sm text-gray-600 dark:text-gray-400">
                                                                 Hoặc chọn ảnh khác:

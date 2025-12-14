@@ -6,7 +6,7 @@ import com.example.finance.pageable.PageableObject;
 import com.example.finance.schemas.request.BlogPostCategoryRequest;
 import com.example.finance.schemas.response.BlogPostCategoryResponse;
 import com.example.finance.schemas.response.ResponsePayload;
-import com.example.finance.service.BlogPostCategoryService;
+import com.example.finance.service.CategoryService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.MessageSource;
@@ -20,19 +20,19 @@ import java.util.UUID;
 @RequestMapping("/api/blog-categories")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogPostCategoryController extends BaseController implements AController<BlogPostCategoryRequest, UUID, PageableObject> {
-    BlogPostCategoryService blogPostCategoryService;
+    CategoryService categoryService;
     BlogPostCategoryResponseMapper mapper;
 
-    public BlogPostCategoryController(MessageSource messageSource, BlogPostCategoryService blogPostCategoryService, BlogPostCategoryResponseMapper mapper) {
+    public BlogPostCategoryController(MessageSource messageSource, CategoryService categoryService, BlogPostCategoryResponseMapper mapper) {
         super(messageSource);
-        this.blogPostCategoryService = blogPostCategoryService;
+        this.categoryService = categoryService;
         this.mapper = mapper;
     }
 
     @Override
     @PostMapping(value = "/search")
     public ResponseEntity<ResponsePayload> search(PageableObject pageableObject) {
-        CustomPage<BlogPostCategoryResponse> result = new CustomPage<>(blogPostCategoryService.searchEntities(pageableObject).map(mapper::toDTO));
+        CustomPage<BlogPostCategoryResponse> result = new CustomPage<>(categoryService.searchEntities(pageableObject).map(mapper::toDTO));
         return createResponse(
                 result,
                 "category.search.success.title",
@@ -45,7 +45,7 @@ public class BlogPostCategoryController extends BaseController implements AContr
     @GetMapping(value = "/search")
     public ResponseEntity<ResponsePayload> search() {
         return createResponse(
-                blogPostCategoryService.findAllEntities().stream().map(mapper::toDTO),
+                categoryService.findAllEntities().stream().map(mapper::toDTO),
                 "category.search.success.title",
                 "category.search.success.detail",
                 HttpStatus.OK
@@ -56,7 +56,7 @@ public class BlogPostCategoryController extends BaseController implements AContr
     @PostMapping(value = "/create")
     public ResponseEntity<ResponsePayload> create(BlogPostCategoryRequest request) {
         return createResponse(
-                mapper.toDTO(blogPostCategoryService.createEntity(request)),
+                mapper.toDTO(categoryService.createEntity(request)),
                 "category.create.success.title",
                 "category.create.success.detail",
                 HttpStatus.OK
@@ -67,7 +67,7 @@ public class BlogPostCategoryController extends BaseController implements AContr
     @PutMapping(value = "/update/{uuid}")
     public ResponseEntity<ResponsePayload> update(@PathVariable UUID uuid, BlogPostCategoryRequest request) {
         return createResponse(
-                mapper.toDTO(blogPostCategoryService.updateEntityById(uuid, request)),
+                mapper.toDTO(categoryService.updateEntityById(uuid, request)),
                 "category.update.success.title",
                 "category.update.success.detail",
                 HttpStatus.OK
@@ -78,7 +78,7 @@ public class BlogPostCategoryController extends BaseController implements AContr
     @GetMapping(value = "/detail/{uuid}")
     public ResponseEntity<ResponsePayload> detail(@PathVariable UUID uuid) {
         return createResponse(
-                mapper.toDTO(blogPostCategoryService.findEntityById(uuid)),
+                mapper.toDTO(categoryService.findEntityById(uuid)),
                 "category.get.success.title",
                 "category.get.success.detail",
                 HttpStatus.OK
@@ -88,7 +88,7 @@ public class BlogPostCategoryController extends BaseController implements AContr
     @Override
     @DeleteMapping(value = "/delete/{uuid}")
     public ResponseEntity<ResponsePayload> delete(@PathVariable UUID uuid) {
-        blogPostCategoryService.removeEntityById(uuid);
+        categoryService.removeEntityById(uuid);
         return createResponse(
                 null,
                 "category.delete.success.title",
