@@ -7,12 +7,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BlogTranslationResponseMapper extends AMapperBasic<BlogTranslation, BlogTranslationResponse> {
-    @Override
-    @Mapping(source = "post.id", target = "postId")
-    BlogTranslationResponse toDTO(BlogTranslation entity);
 
-    @Override
-    @Mapping(target = "post", ignore = true)
-    BlogTranslation toEntity(BlogTranslationResponse dto);
 }
 

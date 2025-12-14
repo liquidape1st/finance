@@ -6,7 +6,9 @@ export type BlogResponse = {
     category: {
         id: string // UUID
     }
-    translations: BlogTranslationResponse[]
+    translations: BlogTranslationResponse[],
+    publishedAt: number
+    author: string
 }
 
 export type LangCode = 'vi' | 'en'

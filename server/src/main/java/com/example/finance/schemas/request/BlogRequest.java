@@ -1,36 +1,37 @@
 package com.example.finance.schemas.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.example.finance.group.CreateMethod;
+import com.example.finance.group.UpdateMethod;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogPostRequest {
-    private UUID id;
+public class BlogRequest {
+    @Data
+    public static class BlogCategoryRequest {
+        @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+        private UUID id;
+    }
 
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private Boolean featured = false;
 
-    @NotBlank(message = "Title is required")
-    private String title;
-
-    @NotBlank(message = "Content is required")
-    private String content;
-
-    @NotNull(message = "Blog category ID is required")
-    private UUID blogCategoryId;
-
-    private String excerpt;
-
-    private Integer estimatedReadTime;
-
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String image;
 
-    private String author;
-}
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private Integer estimatedReadTime;
 
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private BlogCategoryRequest category;
+
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private List<BlogTranslationRequest> translations;
+}

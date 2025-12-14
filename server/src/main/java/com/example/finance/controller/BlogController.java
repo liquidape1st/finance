@@ -1,11 +1,13 @@
 package com.example.finance.controller;
 
+import com.example.finance.group.CreateMethod;
+import com.example.finance.group.UpdateMethod;
 import com.example.finance.mapper.BlogResponseMapper;
 import com.example.finance.mapper.BlogTranslationResponseMapper;
 import com.example.finance.pageable.CustomPage;
 import com.example.finance.pageable.PageableObject;
-import com.example.finance.schemas.request.BlogPostRequest;
-import com.example.finance.schemas.response.BlogPostResponse;
+import com.example.finance.schemas.request.BlogRequest;
+import com.example.finance.schemas.response.BlogResponse;
 import com.example.finance.schemas.response.ResponsePayload;
 import com.example.finance.service.BlogService;
 import jakarta.validation.Valid;
@@ -15,14 +17,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/blogs")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class BlogController extends BaseController implements AController<BlogPostRequest, UUID, PageableObject> {
+public class BlogController extends BaseController implements AController<BlogRequest, UUID, PageableObject> {
 
     BlogService blogService;
     BlogResponseMapper mapper;
@@ -39,7 +42,7 @@ public class BlogController extends BaseController implements AController<BlogPo
     @PostMapping(value = "/search")
     @PreAuthorize("hasAuthority('BLOG:READ')")
     public ResponseEntity<ResponsePayload> search(@Valid @RequestBody PageableObject pageableObject) {
-        CustomPage<BlogPostResponse> result = new CustomPage<>(blogService.searchEntities(pageableObject).map(mapper::toDTO));
+        CustomPage<BlogResponse> result = new CustomPage<>(blogService.searchEntities(pageableObject).map(mapper::toDTO));
         return createResponse(
                 result,
                 "blog.search.success.title",
@@ -63,7 +66,7 @@ public class BlogController extends BaseController implements AController<BlogPo
     @Override
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('BLOG:CREATE')")
-    public ResponseEntity<ResponsePayload> create(@Valid @RequestBody BlogPostRequest request) {
+    public ResponseEntity<ResponsePayload> create(@Validated(CreateMethod.class) @RequestBody BlogRequest request) {
         return createResponse(
                 mapper.toDTO(blogService.createEntity(request)),
                 "blog.create.success.title",
@@ -75,7 +78,7 @@ public class BlogController extends BaseController implements AController<BlogPo
     @Override
     @PutMapping(value = "/update/{uuid}")
     @PreAuthorize("hasAuthority('BLOG:UPDATE')")
-    public ResponseEntity<ResponsePayload> update(@PathVariable UUID uuid, @Valid @RequestBody BlogPostRequest request) {
+    public ResponseEntity<ResponsePayload> update(@PathVariable UUID uuid, @Validated(UpdateMethod.class) @RequestBody BlogRequest request) {
         return createResponse(
                 mapper.toDTO(blogService.updateEntityById(uuid, request)),
                 "blog.update.success.title",
@@ -110,17 +113,6 @@ public class BlogController extends BaseController implements AController<BlogPo
         );
     }
 
-    // Additional endpoints for multi-language support
-    @GetMapping(value = "/{uuid}/translations")
-    @PreAuthorize("hasAuthority('BLOG-TRANSLATION:READ')")
-    public ResponseEntity<ResponsePayload> getTranslationsByPostId(@PathVariable UUID uuid) {
-        return createResponse(
-                blogService.findTranslationsByPostId(uuid).stream().map(translationMapper::toDTO).toList(),
-                "blog.translation.get.success.title",
-                "blog.translation.get.success.detail",
-                HttpStatus.OK
-        );
-    }
 
     @GetMapping(value = "/{uuid}/lang/{langCode}")
     @PreAuthorize("hasAuthority('BLOG:READ')")
@@ -136,15 +128,6 @@ public class BlogController extends BaseController implements AController<BlogPo
         );
     }
 
-    @GetMapping(value = "/lang/{langCode}")
-    @PreAuthorize("hasAuthority('BLOG:READ')")
-    public ResponseEntity<ResponsePayload> getPostsByLangCode(@PathVariable String langCode) {
-        return createResponse(
-                blogService.findByLangCode(langCode).stream().map(mapper::toDTO).toList(),
-                "blog.search.success.title",
-                "blog.search.success.detail",
-                HttpStatus.OK
-        );
-    }
+
 }
 

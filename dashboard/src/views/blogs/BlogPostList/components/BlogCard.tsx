@@ -1,10 +1,10 @@
-import { BlogPostEntityResponse } from '@/@types/schema.blog.post.respone'
 import { Card, Button } from '@/components/ui'
 import { useEffect, useState } from 'react'
 import isEmpty from 'lodash/isEmpty'
 import BaseService from '@/services/BaseService'
 import { Link } from 'react-router-dom'
 import { HiPencil } from 'react-icons/hi'
+import { BlogResponse } from '@/@types/schema.blog.respone'
 
 const BlogImage = ({ filename }: { filename: string; size?: number }) => {
     const [previewUrl, setPreviewUrl] = useState('')
@@ -35,22 +35,22 @@ const BlogImage = ({ filename }: { filename: string; size?: number }) => {
     )
 }
 
-const BlogCard = ({ blog }: { blog: BlogPostEntityResponse }) => {
+const BlogCard = ({ blog }: { blog: BlogResponse }) => {
     return (
         <Card>
             <div className="flex flex-col gap-4">
                 {blog.image && (
-                    <div className="w-full h-48 overflow-hidden rounded-xl">
+                    <div className="w-full h-64 overflow-hidden rounded-xl">
                         <BlogImage filename={blog.image} />
                     </div>
                 )}
 
                 <div className="flex flex-col gap-2">
                     <h2 className="text-xl font-semibold text-gray-900 line-clamp-2">
-                        {blog.title}
+                        {blog.translations[0]?.title}
                     </h2>
                     <p className="text-gray-500 text-sm line-clamp-3">
-                        {blog.excerpt}
+                        {blog.translations[0]?.excerpt}
                     </p>
                 </div>
 

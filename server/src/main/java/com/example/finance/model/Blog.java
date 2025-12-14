@@ -29,7 +29,6 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
     @Column(name = "featured", nullable = false)
     private Boolean featured = false;
 
@@ -46,7 +45,7 @@ public class Blog {
 
     @JsonManagedReference
     @OneToMany(
-            mappedBy = "post",
+            mappedBy = "blog",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
@@ -55,7 +54,7 @@ public class Blog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private Category blogCategory;
+    private Category category;
 
 
     @Column(name = "published_at")

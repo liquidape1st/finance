@@ -1,6 +1,8 @@
 package com.example.finance.schemas.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.example.finance.group.CreateMethod;
+import com.example.finance.group.UpdateMethod;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,19 +13,22 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogTranslationRequest {
-    @NotBlank(message = "Language code is required")
-    private String langCode; // vi, en, ja, fr...
+    @NotNull(groups = {UpdateMethod.class})
+    private UUID id;
 
-    @NotBlank(message = "Slug is required")
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private String langCode;
+
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String slug;
 
-    @NotBlank(message = "Title is required")
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String title;
 
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String content;
 
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String excerpt;
-
-    private UUID postId; // Optional, used when creating translation for existing post
 }
 

@@ -17,7 +17,6 @@ public class BlogTranslationResponse {
     private String title;
     private String content;
     private String excerpt;
-    private UUID postId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -72,6 +72,8 @@ const BlogPostForm = () => {
     // Param
     const { id } = useParams<{ id?: string }>()
     const isEditMode = !!id
+    // Language
+    const [selectedLang, setSelectedLang] = useState<string>("vi")
     // Navigate
     const navigate = useNavigate()
     // Dispatch
@@ -482,7 +484,7 @@ const BlogPostForm = () => {
                                         component={Input}
                                     />
                                 </FormItem>
-                                <FieldArray name="translations">
+                                <FieldArray key={selectedLang} name="translations">
                                     {() =>
                                         values.translations.map((t, index) => {
                                             const slugError = getIn(
@@ -522,12 +524,12 @@ const BlogPostForm = () => {
                                             )
 
                                             return (
-                                                <div key={t.langCode}>
+                                                <div key={t.langCode} className={`${selectedLang === t.langCode ? "" : "hidden"}`}>
                                                     <h4>
                                                         {t.langCode.toUpperCase()}
                                                     </h4>
-
                                                     <FormItem
+
                                                         label="Slug"
                                                         invalid={
                                                             !!(
@@ -825,7 +827,8 @@ const BlogPostForm = () => {
                                 </div>
                             </Card>
                             <Card
-                                className={'col-span-4 h-[90svh] overflow-auto'}
+                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "vi" ? "!border-red-400 !border": ""}`}
+                                onClick={() => setSelectedLang("vi")}
                             >
                                 <h4>VI</h4>
                                 <div>
@@ -843,7 +846,8 @@ const BlogPostForm = () => {
                                 </div>
                             </Card>
                             <Card
-                                className={'col-span-4 h-[90svh] overflow-auto'}
+                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "en" ? "!border-red-400 !border": ""}`}
+                                onClick={() => setSelectedLang("en")}
                             >
                                 <h4>EN</h4>
                                 <div>

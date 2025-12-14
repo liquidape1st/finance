@@ -21,7 +21,7 @@ import java.util.UUID;
 @Table(
         name = "blog_translations",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"post_id", "lang_code"}),
+                @UniqueConstraint(columnNames = {"blog_id", "lang_code"}),
                 @UniqueConstraint(columnNames = {"lang_code", "slug"})
         },
         indexes = {
@@ -61,8 +61,8 @@ public class BlogTranslation {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Blog post;
+    @JoinColumn(name = "blog_id", nullable = false)
+    private Blog blog;
 
 
     @CreationTimestamp

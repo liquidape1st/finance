@@ -3,19 +3,17 @@ package com.example.finance.schemas.response;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
-public class BlogPostResponse {
+public class BlogResponse {
     private UUID id;
-    private String title;
-    private String slug;
-    private String content;
-    private String excerpt;
     private String image;
     private String author;
     private Integer estimatedReadTime;
-    private CategoryResponse blogCategory;
+    private MinCategoryResponse category;
+    private List<BlogTranslationResponse> translations;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
