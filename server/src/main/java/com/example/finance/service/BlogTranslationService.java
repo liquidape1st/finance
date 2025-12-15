@@ -9,13 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogTranslationService {
     BlogTranslationRepository blogTranslationRepository;
 
-    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String langCode, Pageable pageable){
-        return blogTranslationRepository.findPageBlogTranslation(langCode, pageable);
+    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable){
+        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, pageable);
     }
 }

@@ -6,14 +6,15 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+
+import java.time.Duration;
+import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/s3")
@@ -68,17 +69,22 @@ public class S3Controller extends BaseController {
     }
 
     @GetMapping("/stream")
-    public ResponseEntity<?> getStream(@RequestParam("fileName") String fileName) {
+    public ResponseEntity<Resource> getStream(@RequestParam("fileName") String fileName) {
         ResponseInputStream<GetObjectResponse> s3Stream = s3Service.getStream(fileName);
-
         GetObjectResponse meta = s3Stream.response();
 
         MediaType mediaType = meta.contentType() != null
                 ? MediaType.parseMediaType(meta.contentType())
                 : MediaType.APPLICATION_OCTET_STREAM;
 
+        String etag = meta.eTag(); // S3 ETag
+        Instant lastModified = meta.lastModified(); // S3 last-modified
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + fileName + "\"")
+                .cacheControl(CacheControl.maxAge(Duration.ofDays(30)).cachePublic())
+                .eTag(etag)
+                .lastModified(lastModified.toEpochMilli())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
                 .contentType(mediaType)
                 .contentLength(meta.contentLength())
                 .body(new InputStreamResource(s3Stream));

@@ -26,9 +26,11 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     b.author,
                     b.featured,
                     b.estimatedReadTime,
-                    new com.example.finance.schemas.response.CategoryClientResponse(
-                        c.id,
-                        ct.name
+                    new com.example.finance.schemas.response.CategoryTranslationClientResponse(
+                        ct.id,
+                        ct.langCode,
+                        ct.name,
+                        c.id
                     ),
                     bt.createdAt,
                     bt.updatedAt
@@ -39,6 +41,13 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                 JOIN c.translations ct
                 WHERE bt.langCode = :langCode
                 AND ct.langCode = :langCode
+                AND (
+                    :category IS NULL OR b.category.id = :category
+                )
+                AND (
+                    LOWER(bt.title) LIKE LOWER(CONCAT('%', :query, '%'))
+                    OR LOWER(bt.excerpt) LIKE LOWER(CONCAT('%', :query, '%'))
+                )
             """)
-    Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("langCode") String langCode, Pageable pageable);
+    Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("query") String query, @Param("langCode") String langCode, @Param("category") UUID category, Pageable pageable);
 }

@@ -23,7 +23,7 @@ public class BlogTranslationClientResponse {
     private String author;
     private Boolean featured;
     private Integer estimatedReadTime;
-    private CategoryClientResponse category;
+    private CategoryTranslationClientResponse category;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

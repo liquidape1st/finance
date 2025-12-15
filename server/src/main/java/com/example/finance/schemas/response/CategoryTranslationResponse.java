@@ -14,7 +14,6 @@ public class CategoryTranslationResponse {
     private UUID id;
     private String langCode;
     private String name;
-    private UUID categoryId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

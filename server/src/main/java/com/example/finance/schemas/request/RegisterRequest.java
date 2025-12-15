@@ -2,6 +2,7 @@ package com.example.finance.schemas.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -18,7 +19,10 @@ public class RegisterRequest {
     @NotBlank(message = "Full name is required")
     private String fullName;
 
+    @NotNull(message = "Phone is required")
     private String phone;
+
+    @NotNull(message = "Address is required")
     private String address;
 }
 

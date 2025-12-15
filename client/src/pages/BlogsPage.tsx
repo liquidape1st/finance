@@ -15,6 +15,10 @@ export function BlogsPage() {
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const [search, setSearch] = useState('')
 
+  // Stable URL that stays cacheable but changes when the image is updated
+  const getBlogImageUrl = (fileName: string, updatedAt: string) =>
+    `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`
+
   const debouncedSearch = useMemo(
     () =>
       debounce((value: string) => {
@@ -110,9 +114,10 @@ export function BlogsPage() {
               {/* Image */}
               <div className="relative h-[185px] rounded-[10px] overflow-hidden mb-4">
                 <img
-                  src={`${appConfig.apiPrefix}/s3/stream?fileName=${blog.image}`}
-                  // src={blog.image} 
-                  // alt={blog.title}
+                  src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                  loading="lazy"
+                  decoding="async"
+                  alt={blog.title}
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
