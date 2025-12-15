@@ -4,17 +4,19 @@ import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18n from "../locales/locales";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
-import { setLang, useAppDispatch } from "@/store";
+import { setLang, useAppDispatch, useAppSelector } from "@/store";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
-  
+  const currentLang = useAppSelector((state) => state.locale.currentLang)
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
     dispatch(setLang(lng))
+    window.location.reload()
   };
   
   const getCurrentPage = (): 'home' | 'blogs' | 'resources' => {
@@ -93,17 +95,17 @@ export function Navbar() {
               <button
                 onClick={() => changeLanguage('vi')}
                 className={`px-3.5 py-2.5 text-sm transition-colors ${
-                  i18n.language === 'vi' 
+                  currentLang === 'vi' 
                     ? 'bg-[#ffd11a] text-[#141414]' 
                     : 'text-[#98989a] hover:text-white'
                 }`}
               >
-                VN
+                VI
               </button>
               <button
                 onClick={() => changeLanguage('en')}
                 className={`px-3.5 py-2.5 text-sm transition-colors ${
-                  i18n.language === 'en' 
+                  currentLang === 'en' 
                     ? 'bg-[#ffd11a] text-[#141414]' 
                     : 'text-[#98989a] hover:text-white'
                 }`}

@@ -35,6 +35,7 @@ export function BlogsPage() {
   }, [debouncedSearch])
 
   useEffect(() => {
+    console.log('currentLang: ', currentLang)
     dispatch(getListClientCategoryTranslation())
     dispatch(getClientBlogTranslationPage(tableData))
   }, [dispatch, currentLang])
@@ -91,7 +92,7 @@ export function BlogsPage() {
           </button>
           {category_translation.map((category) => (
             <button
-              key={category.id}
+              key={`${currentLang}-${category.id}`}
               className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${tableData.category === category.categoryId
                 ? 'bg-[#FFD11A] text-[#141414]'
                 : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
@@ -111,7 +112,7 @@ export function BlogsPage() {
             <Link
               to={`/blogs/${blog.slug}`}
               state={{ blog }}
-              key={blog.id}
+              key={`${currentLang}-${blog.id}`}
               className="group flex flex-col cursor-pointer"
             >
               <article className="flex flex-col h-full">

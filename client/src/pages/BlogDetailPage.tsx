@@ -1,13 +1,14 @@
+import { BlogTranslationClient } from "@/@types/blog.translation.client";
+import { ApiResponse } from "@/@types/common";
 import appConfig from "@/configs/app.config";
+import { apiGetSystem } from "@/services/SystemService";
+import { useAppSelector } from "@/store";
+import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { ApiResponse } from "@/@types/common";
-import { BlogTranslationClient } from "@/@types/blog.translation.client";
-import { apiGetSystem } from "@/services/SystemService";
-import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
-import { useEffect, useMemo, useState, useCallback } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 type LocationState = {
   blog?: BlogTranslationClient;
@@ -21,6 +22,9 @@ export function BlogDetailPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+
+  const { blog_translation } = useAppSelector((state) => state.finance)
+  const currentLang = useAppSelector((state) => state.locale.currentLang)
 
   const initialBlog = (location.state as LocationState | null)?.blog;
   const [blog, setBlog] = useState<BlogTranslationClient | null>(initialBlog ?? null);
@@ -133,7 +137,7 @@ export function BlogDetailPage() {
                 />
               </div>
 
-              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-[#d1d1d1] leading-7 space-y-4">
+              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4">
                 <div
                   className="prose prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
@@ -141,7 +145,75 @@ export function BlogDetailPage() {
               </article>
             </div>
             <div className="col-span-1">
-                
+              <div className="grid grid-cols-1 gap-4">
+
+                {blog_translation.map((blog) => (
+                  <Link
+                    to={`/blogs/${blog.slug}`}
+                    state={{ blog }}
+                    key={`${currentLang}-${blog.id}`}
+                    className="group flex flex-col cursor-pointer"
+                  >
+                    <article className="flex flex-col h-full">
+                      {/* Image */}
+                      <div className="relative h-[185px] rounded-[10px] overflow-hidden mb-4">
+                        <img
+                          src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                          loading="lazy"
+                          decoding="async"
+                          alt={blog.title}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex flex-col gap-2.5 flex-1">
+                        {/* Title & Category */}
+                        <div className="flex flex-col gap-1">
+                          <h3 className="text-white text-[16px] leading-[1.5] tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                            {blog.title}
+                          </h3>
+                          <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            {blog.category.name}
+                          </p>
+                        </div>
+
+                        {/* Stats & Button */}
+                        <div className="flex items-center gap-[50px]">
+                          {/* Stats Pills */}
+                          <div className="flex items-center gap-2">
+                            {/* Views */}
+                            <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                              <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
+                              <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                                {blog.view}
+                              </span>
+                            </div>
+
+                            {/* Comments
+                      <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                        <MessageCircle className="size-5 text-[#666666]" strokeWidth={1.5} />
+                        <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                          {blog.comments}
+                        </span>
+                      </div> */}
+                          </div>
+
+                          {/* Read More Button */}
+                          <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
+                            <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
+                              {t('blogs.readMore')}
+                            </span>
+                            <svg className="size-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
+                              <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}
