@@ -173,40 +173,25 @@ export function BlogDetailPage() {
                           <h3 className="text-white text-[16px] leading-[1.5] tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
                             {blog.title}
                           </h3>
-                          <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                            {blog.category.name}
-                          </p>
-                        </div>
-
-                        {/* Stats & Button */}
-                        <div className="flex items-center gap-[50px]">
-                          {/* Stats Pills */}
-                          <div className="flex items-center gap-2">
-                            {/* Views */}
-                            <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                              <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
-                              <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                                {blog.view}
-                              </span>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                {blog.category.name}
+                              </p>
                             </div>
-
-                            {/* Comments
-                      <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                        <MessageCircle className="size-5 text-[#666666]" strokeWidth={1.5} />
-                        <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                          {blog.comments}
-                        </span>
-                      </div> */}
-                          </div>
-
-                          {/* Read More Button */}
-                          <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
-                            <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
-                              {t('blogs.readMore')}
-                            </span>
-                            <svg className="size-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
-                              <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
-                            </svg>
+                            {/* Stats & Button */}
+                            <div className="flex items-center gap-[50px]">
+                              {/* Stats Pills */}
+                              <div className="flex items-center gap-2">
+                                {/* Views */}
+                                <div className="flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                                  <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
+                                  <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                                    {blog.view}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
