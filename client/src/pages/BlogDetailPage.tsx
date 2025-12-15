@@ -1,188 +1,25 @@
-import { BlogTranslationClient } from "@/@types/blog.translation.client";
-import { ApiResponse, Paginated, TableQueries } from "@/@types/common";
 import appConfig from "@/configs/app.config";
-import { apiGetSystem, apiPostSystem } from "@/services/SystemService";
 import { useAppSelector } from "@/store";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AffiliateBanner } from "../components/AffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { AffiliateBanner } from "../components/AffiliateBanner";
 
-type LocationState = {
-  blog?: BlogTranslationClient;
-};
+
 
 const getBlogImageUrl = (fileName: string, updatedAt: string) =>
   `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`;
 
 export function BlogDetailPage() {
-  const { slug } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const { t } = useTranslation();
 
-  const currentLang = useAppSelector((state) => state.locale.currentLang);
-  const [relatedBlogs, setRelatedBlogs] = useState<BlogTranslationClient[]>([]);
-  const [relatedPage, setRelatedPage] = useState(1);
-  const [relatedHasMore, setRelatedHasMore] = useState(true);
-  const [relatedLoading, setRelatedLoading] = useState(false);
-  const relatedObserverRef = useRef<HTMLDivElement | null>(null);
-  const affiliateBannerRef = useRef<HTMLDivElement | null>(null);
-  const detailRef = useRef<HTMLDivElement | null>(null);
-  const relatedRef = useRef<HTMLDivElement | null>(null);
+  const currentLang = useAppSelector((state) => state.locale.currentLang)
+  const blog_translation = useAppSelector((state) => state.finance.blog_translation)
+  const blog = blog_translation[0]
 
-  const initialBlog = (location.state as LocationState | null)?.blog;
-  const [blog, setBlog] = useState<BlogTranslationClient | null>(initialBlog ?? null);
-  const [loading, setLoading] = useState(!initialBlog);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchBlog = useCallback(async (isActive: () => boolean) => {
-    if (!slug) {
-      if (isActive()) {
-        setError("Missing article identifier.");
-        setLoading(false);
-      }
-      return;
-    }
-
-    if (isActive()) {
-      setLoading(true);
-      setError(null);
-    }
-
-    try {
-      const response = await apiGetSystem<ApiResponse<BlogTranslationClient>>(`/blog-translations/${slug}`);
-      if (isActive()) {
-        setBlog(response.data.data);
-      }
-    } catch {
-      if (isActive()) {
-        setError("Unable to load the article. Please try again.");
-      }
-    } finally {
-      if (isActive()) {
-        setLoading(false);
-      }
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    if (!initialBlog) {
-      let active = true;
-      fetchBlog(() => active);
-      return () => {
-        active = false;
-      };
-    }
-  }, [fetchBlog, initialBlog]);
-
-  const fetchRelatedBlogs = useCallback(
-    async (page: number) => {
-      if (relatedLoading || !relatedHasMore) return;
-
-      setRelatedLoading(true);
-      try {
-        const query: TableQueries = {
-          pageIndex: page,
-          pageSize: 3,
-          query: "",
-          sort: { key: "", order: "asc" },
-          category: "",
-        };
-
-        const response = await apiPostSystem<ApiResponse<Paginated<BlogTranslationClient>>, TableQueries>(
-          "/blog-translations/search",
-          query
-        );
-
-        const pageData = response.data.data;
-        const content = pageData.content ?? [];
-
-        if (content.length === 0) {
-          setRelatedHasMore(false);
-          return;
-        }
-
-        setRelatedBlogs((prev) => {
-          const existingIds = new Set(prev.map((b) => b.id));
-          const merged = [...prev];
-          content.forEach((item) => {
-            if (!existingIds.has(item.id)) {
-              merged.push(item);
-            }
-          });
-          return merged;
-        });
-
-        const pageNumber = pageData.pageable?.pageNumber ?? 0;
-        const pageSize = pageData.pageable?.pageSize ?? query.pageSize;
-        const totalElements = pageData.totalElements;
-        if (typeof totalElements === "number" && typeof pageSize === "number") {
-          const loaded = (pageNumber + 1) * pageSize;
-          if (loaded >= totalElements) {
-            setRelatedHasMore(false);
-          }
-        }
-      } catch {
-        setRelatedHasMore(false);
-      } finally {
-        setRelatedLoading(false);
-      }
-    },
-    [relatedHasMore, relatedLoading]
-  );
-
-  useEffect(() => {
-    setRelatedBlogs([]);
-    setRelatedPage(1);
-    setRelatedHasMore(true);
-  }, [currentLang]);
-
-  useEffect(() => {
-    fetchRelatedBlogs(relatedPage);
-  }, [fetchRelatedBlogs, relatedHasMore, relatedPage]);
-
-  // Stop loading more if related column exceeds detail column height
-  useEffect(() => {
-    if (!detailRef.current || !relatedRef.current || !affiliateBannerRef.current) return;
-    const detailH = detailRef.current.getBoundingClientRect().height;
-    const relatedH = relatedRef.current.getBoundingClientRect().height;
-    const affiliateH = affiliateBannerRef.current.getBoundingClientRect().height;
-
-    if (detailH && relatedH && affiliateH && relatedH + affiliateH + 285 >= detailH) {
-      setRelatedHasMore(false);
-    }
-  }, [relatedBlogs]);
-
-  useEffect(() => {
-    if (!relatedObserverRef.current || !relatedHasMore) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting && !relatedLoading && relatedHasMore) {
-          setRelatedPage((prev) => prev + 1);
-        }
-      },
-      { root: null, rootMargin: "0px", threshold: 1.0 }
-    );
-
-    observer.observe(relatedObserverRef.current);
-    return () => observer.disconnect();
-  }, [relatedHasMore, relatedLoading]);
-
-  const formattedDate = useMemo(() => {
-    if (!blog?.updatedAt && !blog?.createdAt) return "";
-    const dateString = blog.updatedAt || blog.createdAt;
-    return new Intl.DateTimeFormat("en", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(dateString));
-  }, [blog]);
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
@@ -197,29 +34,9 @@ export function BlogDetailPage() {
           <span>{t("blogs.back", { defaultValue: "Back to blogs" })}</span>
         </button>
 
-        {loading ? (
-          <div className="animate-pulse space-y-4">
-            <div className="h-6 w-36 bg-[#1f1f1f] rounded" />
-            <div className="h-10 w-3/4 bg-[#1f1f1f] rounded" />
-            <div className="h-6 w-1/2 bg-[#1f1f1f] rounded" />
-            <div className="h-[360px] bg-[#1f1f1f] rounded-xl" />
-            <div className="space-y-3">
-              <div className="h-4 w-full bg-[#1f1f1f] rounded" />
-              <div className="h-4 w-[90%] bg-[#1f1f1f] rounded" />
-              <div className="h-4 w-[80%] bg-[#1f1f1f] rounded" />
-            </div>
-          </div>
-        ) : error ? (
-          <div className="bg-[#1a1a1a] border border-[#262626] rounded-xl p-6 text-[#d1d1d1]">
-            {error}
-          </div>
-        ) : !blog ? (
-          <div className="bg-[#1a1a1a] border border-[#262626] rounded-xl p-6 text-[#d1d1d1]">
-            {t("blogs.notFound", { defaultValue: "Article not found." })}
-          </div>
-        ) : (
+  
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="col-span-2" id="blog-detail" ref={detailRef}>
+            <div className="col-span-2" id="blog-detail">
               <div className="mb-6">
                 <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
                   <Tag className="size-4 text-[#FFD11A]" />
@@ -234,10 +51,10 @@ export function BlogDetailPage() {
               </h1>
 
               <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
-                {formattedDate && (
+                {blog.createdAt && (
                   <span className="inline-flex items-center gap-2">
                     <Clock className="size-4" />
-                    {formattedDate}
+                    {blog.createdAt}
                   </span>
                 )}
                 <span className="inline-flex items-center gap-2">
@@ -264,7 +81,7 @@ export function BlogDetailPage() {
               </article>
             </div>
             <div className="col-span-1 space-y-6">
-              <div id="affiliateBannerRef" ref={affiliateBannerRef}>
+              <div id="affiliateBannerRef">
                 <AffiliateBanner
                   title="Nhận hoàn phí giao dịch lên đến 30%"
                   description="Đăng ký tài khoản qua link đối tác để nhận hoàn phí giao dịch và nhiều ưu đãi độc quyền khác."
@@ -277,8 +94,8 @@ export function BlogDetailPage() {
                   hideBackgroundPattern
                 />
               </div>
-              <div className="grid grid-cols-1 gap-4" id="blog-related" ref={relatedRef}>
-                {relatedBlogs.map((blog) => (
+              <div className="grid grid-cols-1 gap-4" id="blog-related">
+                {blog_translation.map((blog) => (
                   <Link
                     to={`/blogs/${blog.slug}`}
                     state={{ blog }}
@@ -304,7 +121,7 @@ export function BlogDetailPage() {
                           <div className="flex items-center justify-between">
                             <div>
                               <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                {blog.category.name}
+                                {blog?.category?.name}
                               </p>
                             </div>
                             <div className="flex items-center gap-[50px]">
@@ -323,18 +140,9 @@ export function BlogDetailPage() {
                     </article>
                   </Link>
                 ))}
-
-                <div ref={relatedObserverRef} className="h-6 w-full">
-                  {relatedLoading && (
-                    <span className="text-[#666666] text-xs">
-                      {t("blogs.loadingMore", { defaultValue: "Loading more..." })}
-                    </span>
-                  )}
-                </div>
               </div>
             </div>
           </div>
-        )}
       </main>
 
       <Footer />
