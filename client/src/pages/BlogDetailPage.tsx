@@ -24,7 +24,7 @@ export function BlogDetailPage() {
   const location = useLocation();
   const { t } = useTranslation();
 
-  const currentLang = useAppSelector((state) => state.locale.currentLang)
+  const currentLang = useAppSelector((state) => state.locale.currentLang);
   const [relatedBlogs, setRelatedBlogs] = useState<BlogTranslationClient[]>([]);
   const [relatedPage, setRelatedPage] = useState(1);
   const [relatedHasMore, setRelatedHasMore] = useState(true);
@@ -39,27 +39,43 @@ export function BlogDetailPage() {
   const [loading, setLoading] = useState(!initialBlog);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchBlog = useCallback(async () => {
+  const fetchBlog = useCallback(async (isActive: () => boolean) => {
     if (!slug) {
-      setError("Missing article identifier.");
-      setLoading(false);
+      if (isActive()) {
+        setError("Missing article identifier.");
+        setLoading(false);
+      }
       return;
     }
-    setLoading(true);
-    setError(null);
+
+    if (isActive()) {
+      setLoading(true);
+      setError(null);
+    }
+
     try {
       const response = await apiGetSystem<ApiResponse<BlogTranslationClient>>(`/blog-translations/${slug}`);
-      setBlog(response.data.data);
-    } catch (err) {
-      setError("Unable to load the article. Please try again.");
+      if (isActive()) {
+        setBlog(response.data.data);
+      }
+    } catch {
+      if (isActive()) {
+        setError("Unable to load the article. Please try again.");
+      }
     } finally {
-      setLoading(false);
+      if (isActive()) {
+        setLoading(false);
+      }
     }
   }, [slug]);
 
   useEffect(() => {
     if (!initialBlog) {
-      fetchBlog();
+      let active = true;
+      fetchBlog(() => active);
+      return () => {
+        active = false;
+      };
     }
   }, [fetchBlog, initialBlog]);
 
@@ -71,12 +87,9 @@ export function BlogDetailPage() {
       try {
         const query: TableQueries = {
           pageIndex: page,
-          pageSize: 30,
+          pageSize: 3,
           query: "",
-          sort: {
-            key: "",
-            order: "asc",
-          },
+          sort: { key: "", order: "asc" },
           category: "",
         };
 
@@ -86,8 +99,9 @@ export function BlogDetailPage() {
         );
 
         const pageData = response.data.data;
+        const content = pageData.content ?? [];
 
-        if (!pageData.content || pageData.content.length === 0) {
+        if (content.length === 0) {
           setRelatedHasMore(false);
           return;
         }
@@ -95,7 +109,7 @@ export function BlogDetailPage() {
         setRelatedBlogs((prev) => {
           const existingIds = new Set(prev.map((b) => b.id));
           const merged = [...prev];
-          pageData.content.forEach((item) => {
+          content.forEach((item) => {
             if (!existingIds.has(item.id)) {
               merged.push(item);
             }
@@ -113,6 +127,7 @@ export function BlogDetailPage() {
           }
         }
       } catch {
+        setRelatedHasMore(false);
       } finally {
         setRelatedLoading(false);
       }
@@ -127,10 +142,8 @@ export function BlogDetailPage() {
   }, [currentLang]);
 
   useEffect(() => {
-    if (relatedBlogs.length === 0 && relatedHasMore && !relatedLoading) {
-      fetchRelatedBlogs(1);
-    }
-  }, [fetchRelatedBlogs, relatedBlogs.length, relatedHasMore, relatedLoading]);
+    fetchRelatedBlogs(relatedPage);
+  }, [fetchRelatedBlogs, relatedHasMore, relatedPage]);
 
   // Stop loading more if related column exceeds detail column height
   useEffect(() => {
@@ -138,13 +151,8 @@ export function BlogDetailPage() {
     const detailH = detailRef.current.getBoundingClientRect().height;
     const relatedH = relatedRef.current.getBoundingClientRect().height;
     const affiliateH = affiliateBannerRef.current.getBoundingClientRect().height;
-    
-    console.log('detailH: ', detailH);
-    console.log('relatedH + affiliateH: ', relatedH + affiliateH);
 
-    if (detailH && relatedH && affiliateH && (relatedH + affiliateH + 285) >= detailH) {
-
-      console.log('relatedH >= detailH');
+    if (detailH && relatedH && affiliateH && relatedH + affiliateH + 285 >= detailH) {
       setRelatedHasMore(false);
     }
   }, [relatedBlogs]);
@@ -156,24 +164,15 @@ export function BlogDetailPage() {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting && !relatedLoading && relatedHasMore) {
-          const nextPage = relatedPage + 1;
-          setRelatedPage(nextPage);
-          fetchRelatedBlogs(nextPage);
+          setRelatedPage((prev) => prev + 1);
         }
       },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
-      }
+      { root: null, rootMargin: "0px", threshold: 1.0 }
     );
 
     observer.observe(relatedObserverRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [fetchRelatedBlogs, relatedHasMore, relatedLoading, relatedPage]);
+    return () => observer.disconnect();
+  }, [relatedHasMore, relatedLoading]);
 
   const formattedDate = useMemo(() => {
     if (!blog?.updatedAt && !blog?.createdAt) return "";
