@@ -52,3 +52,40 @@ export type TableQueries = {
 export type DetailParamObject = {
     uuid: string
 }
+
+export type ApiResponse<T = unknown> = {
+    type: string
+    title: string
+    status: number
+    detail: string
+    instance: string
+    timestamp: string
+    traceId: string
+    data: T
+    name: string
+}
+export type Sort = {
+    key: string
+    order: "asc" | "desc" | ""
+}
+export type Pageable = {
+    pageNumber: number
+    pageSize: number
+    sort: Sort
+    offset: number
+    paged: boolean
+    unpaged: boolean
+}
+export type Paginated<T = unknown> = {
+    content: T[]
+    pageable: Pageable
+    last: boolean
+    totalPages: number
+    totalElements: number
+    size: number
+    number: number
+    sort: Sort
+    first: boolean
+    numberOfElements: number
+    empty: boolean
+}

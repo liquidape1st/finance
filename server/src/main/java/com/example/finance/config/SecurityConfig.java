@@ -41,21 +41,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/products/**").permitAll()
-                        .requestMatchers("/api/blog/**").permitAll()
-                        .requestMatchers("/api/posts/**").permitAll()
-                        .requestMatchers("/api/contact").permitAll()
-                        .requestMatchers("/api/newsletter/**").permitAll()
-                        .requestMatchers("/api/categories/**").permitAll()
-                        .requestMatchers("/api/address/**").permitAll()
+                        .requestMatchers("/api/blog-translations/**").permitAll()
+                        .requestMatchers("/api/blogs/**").permitAll()
                         .requestMatchers("/api/s3/**").permitAll()
-                        .requestMatchers("/api/cart/**").permitAll()
-                        .requestMatchers("/api/orders").permitAll() // Allow POST for guest orders
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/manager/**").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/actuator/health").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -71,6 +62,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:6866",  // Client app
+                "http://localhost:3000",
                 "http://localhost:8268",
                 "https://huongtramhaiyen.com",
                 "https://www.huongtramhaiyen.com"

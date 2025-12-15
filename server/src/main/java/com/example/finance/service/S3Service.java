@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -106,6 +107,15 @@ public class S3Service {
                 .build()).toString();
         logger.info("Generated URL: {}", url);
         return url;
+    }
+
+    public ResponseInputStream<GetObjectResponse> getStream(String fileName) {
+        return s3Client.getObject(
+                GetObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(fileName)
+                        .build()
+        );
     }
 
     public void deleteFile(String fileName) {

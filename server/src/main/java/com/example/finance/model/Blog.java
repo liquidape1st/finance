@@ -35,9 +35,9 @@ public class Blog {
 
     private String image;
 
-
     private String author;
 
+    private Integer view = 0;
 
     @Column(name = "estimated_read_time")
     private Integer estimatedReadTime = 5;

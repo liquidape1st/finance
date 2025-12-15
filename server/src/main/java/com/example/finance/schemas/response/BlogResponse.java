@@ -13,7 +13,7 @@ public class BlogResponse {
     private String author;
     private Integer estimatedReadTime;
     private MinCategoryResponse category;
-    private List<BlogTranslationResponse> translations;
+    private List<BlogTranslationClientResponse> translations;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

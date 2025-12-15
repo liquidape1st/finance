@@ -1,6 +1,12 @@
 {
     "nav": {
         "find_out_about_personal_finance": "Find out about personal finance",
+        "home": "Home",
+        "blog": "Blog",
+        "resources": "Resources",
+        "contact": "Contact",
+        "newsletter": "Subscribe to newsletter to receive updates on new articles and resources",
+        "platform": "Financial Knowledge Platform",
         "apps": "Apps",
         "appDashboard": {
             "analytics": "Analytics",
@@ -375,5 +381,106 @@
     "mailbox.faq.q8.question": "Do you keep and renew your domain used by this service?",
     "mailbox.faq.q8.answer": "Yes, we always continue to renew our domain and they will not disappear.",
     "mailbox.faq.q9.question": "I forgot my password, is there a way you can reset my password?",
-    "mailbox.faq.q9.answer": "No, there is no way we can reset your password. Your password is being generated in your browser and it is being stored encrypted."
+    "mailbox.faq.q9.answer": "No, there is no way we can reset your password. Your password is being generated in your browser and it is being stored encrypted.",
+    "home": {
+        "title": "Financial Knowledge",
+        "subtitle": "A Place to Share and Learn",
+        "description": "Discover articles and knowledge about personal finance, from managing expenses and savings to understanding basic investment concepts. Content is for educational purposes only, not financial advice.",
+        "daily": "Daily",
+        "dailyDescription": "Updates on financial knowledge articles, from basic concepts about budgeting and saving to market overviews. The goal is to help you gain more financial understanding to make decisions that suit you.",
+        "stats": {
+            "resources": "Available Resources",
+            "downloads": "Total Downloads",
+            "users": "Active Users",
+            "countries": "Countries Accessed"
+        },
+        "features": {
+            "basic": {
+                "title": "Basic Knowledge",
+                "description": "Articles introducing stocks, bonds, investment funds and basic financial concepts like leverage and margin."
+            },
+            "market": {
+                "title": "Market News",
+                "description": "Updates on market information and trends, indicators like NFP and CPI to give you a better overview of the economy."
+            },
+            "rebate": {
+                "title": "Trading Fee Rebate",
+                "description": "Receive trading fee rebates (spread, commission) when registering through referral links. Save costs, increase profits."
+            }
+        },
+        "articles": {
+            "title": "Learn More",
+            "heading": "Articles and Knowledge",
+            "tabs": {
+                "whitepapers": "In-Depth Articles",
+                "learning": "Learning Materials",
+                "guides": "Guides"
+            },
+            "downloadPdf": "Download PDF Now",
+            "publicationDate": "Publication Date",
+            "category": "Category",
+            "author": "Author"
+        },
+        "ebooks": {
+            "viewMore": "View More",
+            "readNow": "Read Now"
+        },
+        "whitepapers": {
+            "crypto": {
+                "title": "Understanding Cryptocurrency",
+                "description": "An overview of cryptocurrency, blockchain technology and basic concepts you should know.",
+                "shortDesc": "Basic concepts about Bitcoin, Ethereum and how cryptocurrency works.",
+                "category": "Cryptocurrency"
+            },
+            "forex": {
+                "title": "Forex for Beginners",
+                "description": "A basic guide to the foreign exchange market, how to trade currency pairs and manage risk when trading Forex.",
+                "shortDesc": "Learn about the Forex market, currency pairs, pip, spread and foreign exchange trading concepts.",
+                "category": "Forex"
+            }
+        },
+        "ebooksList": {
+            "personal": {
+                "title": "Personal Financial Management",
+                "description": "Tips and knowledge about budgeting, tracking expenses and saving effectively."
+            },
+            "realEstate": {
+                "title": "Understanding Real Estate",
+                "description": "A basic introduction to the real estate market and what you need to know when exploring this field."
+            },
+            "planning": {
+                "title": "Long-Term Planning",
+                "description": "Learn about savings methods and financial planning for the future."
+            }
+        },
+        "affiliate": {
+            "title": "🚀 Start Your Trading Journey",
+            "description": "Open a free demo account and practice risk-free trading. Learn how to use analysis tools and risk management before real trading.",
+            "cta": "Open Demo Account"
+        }
+    },
+    "blogs": {
+        "badge": "Blog & Insights",
+        "title": "Financial Knowledge",
+        "description": "Discover in-depth articles about crypto, forex and personal finance",
+        "searchPlaceholder": "Search articles...",
+        "categories": {
+            "all": "All",
+            "defi": "DeFi",
+            "cryptocurrency": "Cryptocurrency",
+            "forex": "Forex",
+            "personalFinance": "Personal Finance",
+            "marketAnalysis": "Market Analysis",
+            "technicalAnalysis": "Technical Analysis"
+        },
+        "readMore": "Read More",
+        "loadMore": "Load More Articles",
+        "newsletter": {
+            "title": "Don't Miss Any Knowledge",
+            "description": "Receive weekly newsletter with market analysis, trading guides and insights from experts",
+            "emailPlaceholder": "Your email",
+            "subscribe": "Subscribe",
+            "footer": "Free • Cancel anytime • We respect your privacy"
+        }
+    }
 }

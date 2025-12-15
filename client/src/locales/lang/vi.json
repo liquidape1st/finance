@@ -1,6 +1,12 @@
 {
     "nav": {
-        "find_out_about_personal_finance": "Find out about personal finance",
+        "find_out_about_personal_finance": "Tìm hiểu về tài chính cá nhân",
+        "home": "Trang Chủ",
+        "blog": "Blog",
+        "resources": "Tài Nguyên",
+        "contact": "Liên Hệ",
+        "newsletter": "Đăng ký nhận bản tin để cập nhật bài viết và tài liệu mới",
+        "platform": "Nền Tảng Kiến Thức Tài Chính",
         "apps": "Ứng dụng",
         "appDashboard": {
             "analytics": "Phân tích",
@@ -375,5 +381,106 @@
     "mailbox.faq.q8.question": "Bạn có giữ và gia hạn tên miền của mình được sử dụng bởi dịch vụ này không?",
     "mailbox.faq.q8.answer": "Có, chúng tôi luôn tiếp tục gia hạn tên miền của mình và chúng sẽ không biến mất.",
     "mailbox.faq.q9.question": "Tôi quên mật khẩu, có cách nào để bạn có thể đặt lại mật khẩu không?",
-    "mailbox.faq.q9.answer": "Không, không có cách nào chúng tôi có thể đặt lại mật khẩu của bạn. Mật khẩu của bạn đang được tạo ra trong trình duyệt của bạn và nó đang được lưu trữ mã hóa."
+    "mailbox.faq.q9.answer": "Không, không có cách nào chúng tôi có thể đặt lại mật khẩu của bạn. Mật khẩu của bạn đang được tạo ra trong trình duyệt của bạn và nó đang được lưu trữ mã hóa.",
+    "home": {
+        "title": "Kiến Thức Tài Chính",
+        "subtitle": "Nơi Chia Sẻ và Học Hỏi",
+        "description": "Khám phá các bài viết và kiến thức về tài chính cá nhân, từ cách quản lý chi tiêu, tiết kiệm đến hiểu biết về các khái niệm đầu tư cơ bản. Nội dung chỉ mang tính chia sẻ kiến thức, không phải lời khuyên tài chính.",
+        "daily": "Hàng Ngày",
+        "dailyDescription": "Cập nhật các bài viết về kiến thức tài chính, từ những khái niệm cơ bản về ngân sách, tiết kiệm, đến các thông tin tổng quan về thị trường. Mục đích là để bạn có thêm hiểu biết về tài chính, giúp đưa ra quyết định phù hợp với bản thân.",
+        "stats": {
+            "resources": "Tài Nguyên Có Sẵn",
+            "downloads": "Tổng Lượt Tải Xuống",
+            "users": "Người Dùng Hoạt Động",
+            "countries": "Quốc Gia Truy Cập"
+        },
+        "features": {
+            "basic": {
+                "title": "Kiến Thức Cơ Bản",
+                "description": "Các bài viết giới thiệu về cổ phiếu, trái phiếu, quỹ đầu tư và những khái niệm tài chính cơ bản như đòn bẩy, ký quỹ."
+            },
+            "market": {
+                "title": "Tin Tức Thị Trường",
+                "description": "Cập nhật thông tin và diễn biến thị trường, các chỉ số như NFP, CPI để bạn có cái nhìn tổng quan hơn về kinh tế."
+            },
+            "rebate": {
+                "title": "Hoàn Phí Giao Dịch",
+                "description": "Nhận hoàn lại phí giao dịch (spread, commission) khi đăng ký qua link giới thiệu. Tiết kiệm chi phí, tăng lợi nhuận."
+            }
+        },
+        "articles": {
+            "title": "Tìm Hiểu Thêm",
+            "heading": "Bài Viết và Kiến Thức",
+            "tabs": {
+                "whitepapers": "Bài Viết Chuyên Sâu",
+                "learning": "Tài Liệu Học",
+                "guides": "Hướng Dẫn"
+            },
+            "downloadPdf": "Tải PDF Ngay",
+            "publicationDate": "Ngày Xuất Bản",
+            "category": "Danh Mục",
+            "author": "Tác Giả"
+        },
+        "ebooks": {
+            "viewMore": "Xem Thêm",
+            "readNow": "Đọc Ngay"
+        },
+        "whitepapers": {
+            "crypto": {
+                "title": "Tìm Hiểu Về Tiền Điện Tử",
+                "description": "Giới thiệu tổng quan về tiền điện tử, công nghệ blockchain và các khái niệm cơ bản bạn nên biết.",
+                "shortDesc": "Các khái niệm cơ bản về Bitcoin, Ethereum và cách thức hoạt động của tiền điện tử.",
+                "category": "Tiền Điện Tử"
+            },
+            "forex": {
+                "title": "Forex Cho Người Mới Bắt Đầu",
+                "description": "Hướng dẫn cơ bản về thị trường ngoại hối, cách giao dịch cặp tiền tệ và quản lý rủi ro khi tham gia Forex.",
+                "shortDesc": "Tìm hiểu về thị trường Forex, cặp tiền tệ, pip, spread và các khái niệm giao dịch ngoại hối.",
+                "category": "Forex"
+            }
+        },
+        "ebooksList": {
+            "personal": {
+                "title": "Quản Lý Tài Chính Cá Nhân",
+                "description": "Các mẹo và kiến thức về lập ngân sách, theo dõi chi tiêu và tiết kiệm hiệu quả."
+            },
+            "realEstate": {
+                "title": "Hiểu Biết Về Bất Động Sản",
+                "description": "Giới thiệu cơ bản về thị trường bất động sản và những điều cần biết khi tìm hiểu lĩnh vực này."
+            },
+            "planning": {
+                "title": "Lập Kế Hoạch Dài Hạn",
+                "description": "Tìm hiểu về các phương pháp tiết kiệm và lập kế hoạch tài chính cho tương lai."
+            }
+        },
+        "affiliate": {
+            "title": "🚀 Bắt Đầu Hành Trình Giao Dịch Của Bạn",
+            "description": "Mở tài khoản demo miễn phí và thực hành giao dịch không rủi ro. Học cách sử dụng các công cụ phân tích và quản lý rủi ro trước khi giao dịch thật.",
+            "cta": "Mở Tài Khoản Demo"
+        }
+    },
+    "blogs": {
+        "badge": "Blog & Insights",
+        "title": "Kiến Thức Tài Chính",
+        "description": "Khám phá các bài viết chuyên sâu về crypto, forex và tài chính cá nhân",
+        "searchPlaceholder": "Tìm kiếm bài viết...",
+        "categories": {
+            "all": "Tất Cả",
+            "defi": "DeFi",
+            "cryptocurrency": "Cryptocurrency",
+            "forex": "Forex",
+            "personalFinance": "Tài Chính Cá Nhân",
+            "marketAnalysis": "Phân Tích Thị Trường",
+            "technicalAnalysis": "Phân Tích Kỹ Thuật"
+        },
+        "readMore": "Đọc Thêm",
+        "loadMore": "Xem Thêm Bài Viết",
+        "newsletter": {
+            "title": "Đừng Bỏ Lỡ Bất Kỳ Kiến Thức Nào",
+            "description": "Nhận bản tin hàng tuần với phân tích thị trường, hướng dẫn trading và insights từ chuyên gia",
+            "emailPlaceholder": "Email của bạn",
+            "subscribe": "Đăng Ký",
+            "footer": "Miễn phí • Hủy bất cứ lúc nào • Chúng tôi tôn trọng quyền riêng tư của bạn"
+        }
+    }
 }

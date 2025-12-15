@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18n from "../locales/locales";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
-import i18n from 'i18next'
+import { setLang, useAppDispatch } from "@/store";
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch()
+  
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    dispatch(setLang(lng))
+  };
   
   const getCurrentPage = (): 'home' | 'blogs' | 'resources' => {
     if (location.pathname === '/') return 'home';
@@ -22,7 +32,7 @@ export function Navbar() {
       <div className="bg-[#141414] border-b border-neutral-800 w-full">
         <div className="flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3">
           <p className="text-[#98989a] text-xs sm:text-sm tracking-tight text-center">
-            Đăng ký nhận bản tin để cập nhật bài viết và tài liệu mới
+            {t('nav.newsletter')}
           </p>
           <svg className="ml-2 size-4 sm:size-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
             <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#FFD11A" fillRule="evenodd" />
@@ -53,17 +63,17 @@ export function Navbar() {
                 </h1>
                 <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>Pulse</span>
               </div>
-              <p className="text-[#666666] text-xs tracking-wide hidden sm:block">Nền Tảng Kiến Thức Tài Chính</p>
+              <p className="text-[#666666] text-xs tracking-wide hidden sm:block">{t('nav.platform')}</p>
             </div>
           </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link to="/" className={`text-sm transition-colors ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
-              Trang Chủ
+              {t('nav.home')}
             </Link>
             <Link to="/blogs" className={`text-sm transition-colors ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
-              Blog
+              {t('nav.blog')}
             </Link>
             <Link 
               to="/resources" 
@@ -73,14 +83,38 @@ export function Navbar() {
                   : 'bg-[#141414] border border-[#333333] text-white hover:bg-[#1a1a1a]'
               }`}
             >
-              Tài Nguyên
+              {t('nav.resources')}
             </Link>
           </div>
 
-          {/* Desktop CTA Button */}
-          <button className="hidden md:block bg-[#ffd11a] px-3.5 py-2.5 rounded-md text-[#141414] text-sm hover:bg-[#ffdb4d] transition-colors">
-            Liên Hệ
-          </button>
+          {/* Language Switcher & CTA Button */}
+          <div className="hidden md:flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-md overflow-hidden">
+              <button
+                onClick={() => changeLanguage('vi')}
+                className={`px-3.5 py-2.5 text-sm transition-colors ${
+                  i18n.language === 'vi' 
+                    ? 'bg-[#ffd11a] text-[#141414]' 
+                    : 'text-[#98989a] hover:text-white'
+                }`}
+              >
+                VN
+              </button>
+              <button
+                onClick={() => changeLanguage('en')}
+                className={`px-3.5 py-2.5 text-sm transition-colors ${
+                  i18n.language === 'en' 
+                    ? 'bg-[#ffd11a] text-[#141414]' 
+                    : 'text-[#98989a] hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+            <button className="bg-[#ffd11a] px-3.5 py-2.5 rounded-md text-[#141414] text-sm hover:bg-[#ffdb4d] transition-colors">
+              {t('nav.contact')}
+            </button>
+          </div>
 
           {/* Mobile Menu Button */}
           <button 
@@ -101,14 +135,14 @@ export function Navbar() {
                 className={`text-sm transition-colors py-2 ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Trang Chủ
+                {t('nav.home')}
               </Link>
               <Link 
                 to="/blogs" 
                 className={`text-sm transition-colors py-2 ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Blog
+                {t('nav.blog')}
               </Link>
               <Link 
                 to="/resources" 
@@ -119,10 +153,32 @@ export function Navbar() {
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Tài Nguyên
+                {t('nav.resources')}
               </Link>
+              <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-md overflow-hidden">
+                <button
+                  onClick={() => changeLanguage('vi')}
+                  className={`flex-1 px-3 py-2 text-xs transition-colors ${
+                    i18n.language === 'vi' 
+                      ? 'bg-[#ffd11a] text-[#141414]' 
+                      : 'text-[#98989a] hover:text-white'
+                  }`}
+                >
+                  VN
+                </button>
+                <button
+                  onClick={() => changeLanguage('en')}
+                  className={`flex-1 px-3 py-2 text-xs transition-colors ${
+                    i18n.language === 'en' 
+                      ? 'bg-[#ffd11a] text-[#141414]' 
+                      : 'text-[#98989a] hover:text-white'
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
               <button className="bg-[#ffd11a] px-4 py-2.5 rounded-md text-[#141414] text-sm w-full">
-                Liên Hệ
+                {t('nav.contact')}
               </button>
             </div>
           </div>

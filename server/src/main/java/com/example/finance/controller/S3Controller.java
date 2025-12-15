@@ -5,10 +5,15 @@ import com.example.finance.service.S3Service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 @RestController
 @RequestMapping("/api/s3")
@@ -60,6 +65,23 @@ public class S3Controller extends BaseController {
                 "product.search.success.detail",
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping("/stream")
+    public ResponseEntity<?> getStream(@RequestParam("fileName") String fileName) {
+        ResponseInputStream<GetObjectResponse> s3Stream = s3Service.getStream(fileName);
+
+        GetObjectResponse meta = s3Stream.response();
+
+        MediaType mediaType = meta.contentType() != null
+                ? MediaType.parseMediaType(meta.contentType())
+                : MediaType.APPLICATION_OCTET_STREAM;
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"" + fileName + "\"")
+                .contentType(mediaType)
+                .contentLength(meta.contentLength())
+                .body(new InputStreamResource(s3Stream));
     }
 
     @DeleteMapping

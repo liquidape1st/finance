@@ -10,13 +10,21 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogTranslationResponse {
+public class BlogTranslationClientResponse {
     private UUID id;
     private String langCode;
     private String slug;
     private String title;
     private String content;
     private String excerpt;
+
+    private Integer view;
+    private String image;
+    private String author;
+    private Boolean featured;
+    private Integer estimatedReadTime;
+    private CategoryClientResponse category;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

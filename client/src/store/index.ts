@@ -6,3 +6,4 @@ export * from './hook'
 
 // Re-export auth actions separately to avoid conflicts
 export * from './slices/locale'
+export * from './slices/finance'
