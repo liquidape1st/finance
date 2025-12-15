@@ -165,7 +165,7 @@ export function BlogsPage() {
                       <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
                         {t('blogs.readMore')}
                       </span>
-                      <svg className="size-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
+                      <svg className="size-5 shrink-0" fill="none" viewBox="0 0 20 20">
                         <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
                       </svg>
                     </div>
@@ -187,14 +187,14 @@ export function BlogsPage() {
 
       {/* Newsletter CTA */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-20 sm:py-24 border-t border-[#262626]">
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#FFD11A] via-[#FFD11A] to-[#FFA500] rounded-2xl p-12 sm:p-16">
+        <div className="relative overflow-hidden bg-linear-to-br from-[#FFD11A] via-[#FFD11A] to-[#FFA500] rounded-2xl p-12 sm:p-16">
           <div className="absolute inset-0 opacity-[0.15]">
             {/* Premium Gradient Orbs */}
-            <div className="absolute top-10 right-10 size-[500px] bg-gradient-to-br from-white via-white/80 to-transparent rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }}></div>
-            <div className="absolute bottom-10 left-10 size-[450px] bg-gradient-to-tr from-black via-black/60 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+            <div className="absolute top-10 right-10 size-[500px] bg-linear-to-br from-white via-white/80 to-transparent rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }}></div>
+            <div className="absolute bottom-10 left-10 size-[450px] bg-linear-to-tr from-black via-black/60 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
 
             {/* Accent Orbs */}
-            <div className="absolute top-1/3 left-1/4 size-[300px] bg-gradient-to-r from-orange-500/40 to-yellow-400/40 rounded-full blur-[80px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
+            <div className="absolute top-1/3 left-1/4 size-[300px] bg-linear-to-r from-orange-500/40 to-yellow-400/40 rounded-full blur-[80px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
             <div className="absolute bottom-1/3 right-1/4 size-[250px] bg-white/60 rounded-full blur-[90px]"></div>
 
             {/* Subtle Grid Pattern */}
