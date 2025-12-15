@@ -46,7 +46,8 @@ export type TableQueries = {
     sort?: {
         order: 'asc' | 'desc' | ''
         key: string | number
-    }
+    },
+    category: string
 }
 
 export type DetailParamObject = {

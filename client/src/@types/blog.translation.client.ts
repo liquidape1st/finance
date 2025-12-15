@@ -1,3 +1,5 @@
+import { CategoryTranslation } from "./blog.category.client";
+
 export type BlogTranslationClient = {
     id: string;
     langCode: string;
@@ -13,9 +15,4 @@ export type BlogTranslationClient = {
     category: CategoryTranslation;
     createdAt: string;   // ISO datetime
     updatedAt: string;   // ISO datetime
-}
-
-export interface CategoryTranslation {
-  id: string;
-  name: string;
 }

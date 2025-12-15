@@ -1,31 +1,43 @@
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { Eye, MessageCircle, ArrowRight, Search } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { getClientBlogTranslationPage, useAppDispatch, useAppSelector } from "@/store";
 import appConfig from "@/configs/app.config";
-import { useEffect } from "react";
+import { getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector } from "@/store";
+import { ArrowRight, Eye, Search } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import { setTableData } from "@/store/slices/finance/financeSlice";
+import { debounce } from "lodash";
 
 export function BlogsPage() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
-  const { blog_translation, tableData } = useAppSelector((state) => state.finance)
+  const { blog_translation, category_translation, tableData } = useAppSelector((state) => state.finance)
+  const currentLang = useAppSelector((state) => state.locale.currentLang)
+  const [search, setSearch] = useState('')
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        dispatch(setTableData({ ...tableData, query: value }))
+      }, 500),
+    [dispatch]
+  )
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel()
+    }
+  }, [debouncedSearch])
+
+  useEffect(() => {
+    dispatch(getListClientCategoryTranslation())
+    dispatch(getClientBlogTranslationPage(tableData))
+  }, [dispatch, currentLang])
+
 
   useEffect(() => {
     dispatch(getClientBlogTranslationPage(tableData))
-  }, [dispatch])
-
-
-
-  const categories = [
-    { key: "all", label: t('blogs.categories.all') },
-    { key: "defi", label: t('blogs.categories.defi') },
-    { key: "cryptocurrency", label: t('blogs.categories.cryptocurrency') },
-    { key: "forex", label: t('blogs.categories.forex') },
-    { key: "personalFinance", label: t('blogs.categories.personalFinance') },
-    { key: "marketAnalysis", label: t('blogs.categories.marketAnalysis') },
-    { key: "technicalAnalysis", label: t('blogs.categories.technicalAnalysis') }
-  ];
+  }, [tableData.category, tableData.pageIndex, tableData.query])
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
@@ -51,6 +63,11 @@ export function BlogsPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#666666]" />
           <input
             type="text"
+            value={search}
+            onChange={e => {
+              setSearch(e.target.value)
+              debouncedSearch(e.target.value)
+            }}
             placeholder={t('blogs.searchPlaceholder')}
             className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg pl-12 pr-4 py-3.5 text-white placeholder:text-[#666666] focus:border-[#FFD11A]/40 focus:outline-none transition-colors"
           />
@@ -58,15 +75,25 @@ export function BlogsPage() {
 
         {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((category, index) => (
+          <button
+            className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${tableData.category === ""
+              ? 'bg-[#FFD11A] text-[#141414]'
+              : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
+              }`}
+            onClick={() => dispatch(setTableData({ ...tableData, category: "" }))}
+          >
+            {t('blogs.categories.all')}
+          </button>
+          {category_translation.map((category) => (
             <button
-              key={category.key}
-              className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${index === 0
-                  ? 'bg-[#FFD11A] text-[#141414]'
-                  : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
+              key={category.id}
+              className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${tableData.category === category.categoryId
+                ? 'bg-[#FFD11A] text-[#141414]'
+                : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
                 }`}
+              onClick={() => dispatch(setTableData({ ...tableData, category: category.categoryId }))}
             >
-              {category.label}
+              {category.name}
             </button>
           ))}
         </div>
