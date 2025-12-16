@@ -9,7 +9,7 @@ export function TermsPage() {
     <div className="bg-[#0f0f0f] min-h-screen w-full text-white">
       <Navbar />
 
-      <main className="max-w-[1100px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24">
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24">
         <div className="mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 bg-linear-to-r from-[#1a1a1a] to-[#1f1f1f] border border-[#262626] px-3 py-1.5 rounded-full mb-4 shadow-[0_6px_30px_rgba(0,0,0,0.25)]">
             <div className="size-1.5 bg-[#FFD11A] rounded-full" />

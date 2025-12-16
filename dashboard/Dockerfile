@@ -2,7 +2,7 @@ FROM node:18-alpine AS build
 
 FROM node:18-alpine
 
-WORKDIR /incense/frontend/incense_dashboard
+WORKDIR /dashboard
 
 # Cài đặt tzdata để hỗ trợ timezone
 RUN apk add --no-cache tzdata
@@ -13,7 +13,7 @@ ENV TZ=Asia/Ho_Chi_Minh
 RUN npm install -g serve
 
 # Copy the build files
-COPY ./incense/frontend/incense_dashboard/build ./build
+COPY ./dashboard/build ./build
 
 EXPOSE 8268
 
