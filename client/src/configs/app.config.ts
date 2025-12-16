@@ -6,8 +6,8 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    // apiPrefix: 'https://api.ph4ntoms.org/gateway',
-    apiPrefix: 'http://localhost:8886/api',
+    apiPrefix: 'https://api.goincome.net/gateway',
+    // apiPrefix: 'http://localhost:8886/api',
     unAuthenticatedEntryPath: '/sign-in',
     authenticatedEntryPath: '/',
     locale: 'vi',
