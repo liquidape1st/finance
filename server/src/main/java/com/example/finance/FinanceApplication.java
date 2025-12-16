@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.TimeZone;
 
 @EnableCaching
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 public class FinanceApplication {
 

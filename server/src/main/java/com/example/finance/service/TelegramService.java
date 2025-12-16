@@ -17,11 +17,11 @@ import java.util.Map;
 public class TelegramService {
 
     RestTemplate restTemplate = new RestTemplate();
-    String token = "8207001177:AAG9X8lur5jX3LsU0BQbmwjmVZd_jdyxsuM";
+    String token = "8318891409:AAHWPjMDY_N3LefmMRJfqIVxhsZzE_8VHfw";
 
     public void sendMessage(String text) {
         Map<String, Object> payload = new HashMap<>();
-        payload.put("chat_id", "-5021362628");
+        payload.put("chat_id", "-5015559536");
         payload.put("text", text);
 
         HttpHeaders headers = new HttpHeaders();
@@ -39,7 +39,7 @@ public class TelegramService {
     public void sendBackupFile(File file, String caption) {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("chat_id", "-5021362628");
+        body.add("chat_id", "-5015559536");
         body.add("caption", caption);
         body.add("document", new FileSystemResource(file));
 
