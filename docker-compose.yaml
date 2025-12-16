@@ -145,8 +145,8 @@ services:
     ports:        
       - 80:80
     depends_on:
-      - ph4ntoms_client
-      - ph4ntoms_dashboard
+      - client
+      - dashboard
     volumes:
     - .nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     deploy:
