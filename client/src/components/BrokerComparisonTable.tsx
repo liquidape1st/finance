@@ -12,27 +12,35 @@ interface Broker {
 export function BrokerComparisonTable() {
   const brokers: Broker[] = [
     {
-      name: "ExampleBroker Pro",
-      logo: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=100&h=100&fit=crop",
-      license: "FCA, ASIC",
-      platform: "MT4, MT5, WebTrader",
-      bonus: "Tặng $30 Bonus",
+      name: "Exness",
+      logo: "https://cdn.brandfetch.io/id1_ft3Zgz/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1714117376751",
+      license: "FCA 730729, CySEC 178/12",
+      platform: "MT4, MT5, WebTerminal, Mobile",
+      bonus: "Phí thấp, rút nhanh",
       affiliateLink: "#"
     },
     {
-      name: "TradeMaster",
-      logo: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=100&h=100&fit=crop",
-      license: "CySEC",
-      platform: "MT4, MT5",
-      bonus: "Miễn phí khóa học",
+      name: "XM",
+      logo: "https://th.bing.com/th/id/OIP.0fgRF8nl-eaB6wgDnxLQpgHaHa?w=162&h=180&c=7&r=0&o=7&cb=ucfimg2&pid=1.7&rm=3&ucfimg=1",
+      license: "CySEC 120/10, ASIC 443670, IFSC 000261/106",
+      platform: "MT4, MT5, XM WebTrader, Mobile",
+      bonus: "Bonus/khuyến mãi định kỳ",
       affiliateLink: "#"
     },
     {
-      name: "GlobalFX",
-      logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=100&h=100&fit=crop",
-      license: "IFSC",
-      platform: "MT4, WebTrader",
-      bonus: "Hoàn phí 20%",
+      name: "IC Markets",
+      logo: "https://tse1.mm.bing.net/th/id/OIP.JD7weGk6-SvfMbc78fRl_QAAAA?cb=ucfimg2&pid=ImgDet&ucfimg=1&w=198&h=198&c=7&o=7&rm=3",
+      license: "ASIC 335692, CySEC 362/18, FSA (SC) SD018",
+      platform: "MT4, MT5, cTrader",
+      bonus: "Spread thấp, không bonus",
+      affiliateLink: "#"
+    },
+    {
+      name: "Pepperstone",
+      logo: "https://55brokers.com/wp-content/uploads/2021/06/PEP_Logo_55brokers_220317_250x250px.png",
+      license: "ASIC 414530, FCA 684312, CySEC 388/20",
+      platform: "MT4, MT5, cTrader, TradingView",
+      bonus: "Spread thấp, rebate theo đối tác",
       affiliateLink: "#"
     }
   ];
@@ -40,7 +48,7 @@ export function BrokerComparisonTable() {
   const cryptoBrokers: Broker[] = [
     {
       name: "Binance",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg",
+      logo: "https://images.seeklogo.com/logo-png/44/2/binance-smart-chain-bsc-logo-png_seeklogo-446621.png",
       license: "Nhiều giấy phép khu vực (châu Âu, APAC...)",
       platform: "Web, iOS, Android, API",
       bonus: "Giảm phí khi dùng BNB",
@@ -48,7 +56,7 @@ export function BrokerComparisonTable() {
     },
     {
       name: "Bybit",
-      logo: "https://assets.bybit.com/bybit-logo.svg",
+      logo: "https://images.seeklogo.com/logo-png/49/1/bybit-logo-png_seeklogo-490318.png",
       license: "Đăng ký tại BVI, hoạt động đa khu vực",
       platform: "Web, iOS, Android, API",
       bonus: "Bonus nạp & hoàn phí theo volume",
@@ -56,7 +64,7 @@ export function BrokerComparisonTable() {
     },
     {
       name: "OKX",
-      logo: "https://static.okx.com/cdn/assets/imgs/221/ED5A5F5C2B4A3E3D.png",
+      logo: "https://images.seeklogo.com/logo-png/45/1/okx-logo-png_seeklogo-459094.png",
       license: "Đăng ký tại Seychelles, chi nhánh toàn cầu",
       platform: "Web, iOS, Android, API",
       bonus: "Giảm phí cho holder OKB",
@@ -64,7 +72,7 @@ export function BrokerComparisonTable() {
     },
     {
       name: "BingX",
-      logo: "https://static.bingx.com/logo/bingx-logo.svg",
+      logo: "https://images.seeklogo.com/logo-png/51/1/bingx-logo-png_seeklogo-513450.png",
       license: "Đăng ký tại Lithuania & Canada (MSB)",
       platform: "Web, iOS, Android",
       bonus: "Hoàn phí cho trader copy & VIP",
@@ -72,7 +80,7 @@ export function BrokerComparisonTable() {
     },
     {
       name: "ONUS",
-      logo: "https://onus.vn/wp-content/uploads/2021/11/Logo-Onus.png",
+      logo: "https://cdn.brandfetch.io/idIo7ZtNyM/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1762459907240",
       license: "Nền tảng đầu tư tài sản số (VN), vận hành theo mô hình doanh nghiệp fintech",
       platform: "iOS, Android, Web",
       bonus: "Staking & điểm thưởng ONUS",
@@ -82,79 +90,14 @@ export function BrokerComparisonTable() {
 
   return (
     <div className="bg-[#1a1a1a] border border-neutral-800 rounded-xl overflow-hidden">
-      <div className="bg-[#141414] border-b border-neutral-800 px-8 py-6">
-        <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-          So Sánh Sàn Giao Dịch Uy Tín
-        </h3>
-        <p className="text-[#98989a] text-sm">
-          Các sàn được đánh giá dựa trên giấy phép, phí giao dịch và trải nghiệm người dùng
-        </p>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full table-fixed">
-          <thead>
-            <tr className="border-b border-neutral-800">
-              <th className="w-1/5 text-left px-8 py-4 text-[#98989a] text-sm">Sàn Giao Dịch</th>
-              <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Giấy Phép</th>
-              <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Nền Tảng</th>
-              <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Ưu Đãi</th>
-              <th className="w-1/5 text-center px-8 py-4 text-[#98989a] text-sm">Hành Động</th>
-            </tr>
-          </thead>
-          <tbody>
-            {brokers.map((broker, index) => (
-              <tr 
-                key={index}
-                className={`border-b border-neutral-800 hover:bg-[#141414] transition-colors`}
-              >
-                <td className="px-8 py-6">
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={broker.logo} 
-                      alt={broker.name}
-                      className="size-12 rounded-lg object-cover"
-                    />
-                    <span className="text-white">{broker.name}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-6">
-                  <div className="flex items-center gap-1.5 text-[#98989a] text-sm">
-                    <CheckCircle2 className="size-4 text-green-500" />
-                    {broker.license}
-                  </div>
-                </td>
-                <td className="px-4 py-6 text-[#98989a] text-sm">{broker.platform}</td>
-                <td className="px-4 py-6">
-                  <span className="bg-[#262626] text-[#FFD11A] px-3 py-1 rounded text-xs">
-                    {broker.bonus}
-                  </span>
-                </td>
-                <td className="px-8 py-6">
-                  <a
-                    href={broker.affiliateLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-[#FFD11A] text-[#141414] px-6 py-2.5 rounded-lg hover:bg-[#ffdb4d] transition-colors inline-flex items-center gap-2 text-sm"
-                  >
-                    Đăng Ký Ngay
-                    <ExternalLink className="size-4" />
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Crypto Brokers Table */}
-      <div className="border-t border-neutral-800">
+      {/* Desktop / Tablet tables */}
+      <div className="hidden sm:block">
         <div className="bg-[#141414] border-b border-neutral-800 px-8 py-6">
           <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-            So Sánh Sàn Crypto
+            So Sánh Sàn Giao Dịch Uy Tín
           </h3>
           <p className="text-[#98989a] text-sm">
-            Các sàn giao dịch crypto phổ biến, so sánh theo phí, giấy phép và nền tảng hỗ trợ
+            Các sàn được đánh giá dựa trên giấy phép, phí giao dịch và trải nghiệm người dùng
           </p>
         </div>
 
@@ -162,32 +105,32 @@ export function BrokerComparisonTable() {
           <table className="w-full table-fixed">
             <thead>
               <tr className="border-b border-neutral-800">
-                <th className="w-1/5 text-left px-8 py-4 text-[#98989a] text-sm">Sàn Crypto</th>
-                <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Giấy Phép / Khu Vực</th>
+                <th className="w-1/5 text-left px-8 py-4 text-[#98989a] text-sm">Sàn Giao Dịch</th>
+                <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Giấy Phép</th>
                 <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Nền Tảng</th>
                 <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Ưu Đãi</th>
                 <th className="w-1/5 text-center px-8 py-4 text-[#98989a] text-sm">Hành Động</th>
               </tr>
             </thead>
             <tbody>
-              {cryptoBrokers.map((broker, index) => (
-                <tr
+              {brokers.map((broker, index) => (
+                <tr 
                   key={index}
                   className={`border-b border-neutral-800 hover:bg-[#141414] transition-colors`}
                 >
-                <td className="px-8 py-6">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={broker.logo}
-                      alt={broker.name}
-                      className="size-12 rounded-lg object-cover"
-                    />
-                    <span className="text-white">{broker.name}</span>
-                  </div>
-                </td>
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={broker.logo} 
+                        alt={broker.name}
+                        className="size-12 rounded-lg object-cover"
+                      />
+                      <span className="text-white">{broker.name}</span>
+                    </div>
+                  </td>
                   <td className="px-4 py-6">
                     <div className="flex items-center gap-1.5 text-[#98989a] text-sm">
-                      <CheckCircle2 className="size-4 text-green-500" />
+                      <CheckCircle2 className="size-4 text-green-500 min-w-[20px]" />
                       {broker.license}
                     </div>
                   </td>
@@ -212,6 +155,171 @@ export function BrokerComparisonTable() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Crypto Brokers Table */}
+        <div className="border-t border-neutral-800">
+          <div className="bg-[#141414] border-b border-neutral-800 px-8 py-6">
+            <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+              So Sánh Sàn Crypto
+            </h3>
+            <p className="text-[#98989a] text-sm">
+              Các sàn giao dịch crypto phổ biến, so sánh theo phí, giấy phép và nền tảng hỗ trợ
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full table-fixed">
+              <thead>
+                <tr className="border-b border-neutral-800">
+                  <th className="w-1/5 text-left px-8 py-4 text-[#98989a] text-sm">Sàn Crypto</th>
+                  <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Giấy Phép / Khu Vực</th>
+                  <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Nền Tảng</th>
+                  <th className="w-1/5 text-left px-4 py-4 text-[#98989a] text-sm">Ưu Đãi</th>
+                  <th className="w-1/5 text-center px-8 py-4 text-[#98989a] text-sm">Hành Động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cryptoBrokers.map((broker, index) => (
+                  <tr
+                    key={index}
+                    className={`border-b border-neutral-800 hover:bg-[#141414] transition-colors`}
+                  >
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={broker.logo}
+                        alt={broker.name}
+                        className="size-12 rounded-lg object-cover"
+                      />
+                      <span className="text-white">{broker.name}</span>
+                    </div>
+                  </td>
+                    <td className="px-4 py-6">
+                      <div className="flex items-center gap-1.5 text-[#98989a] text-sm">
+                        <CheckCircle2 className="size-4 text-green-500 min-w-[20px]" />
+                        {broker.license}
+                      </div>
+                    </td>
+                    <td className="px-4 py-6 text-[#98989a] text-sm">{broker.platform}</td>
+                    <td className="px-4 py-6">
+                      <span className="bg-[#262626] text-[#FFD11A] px-3 py-1 rounded text-xs">
+                        {broker.bonus}
+                      </span>
+                    </td>
+                    <td className="px-8 py-6">
+                      <a
+                        href={broker.affiliateLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#FFD11A] text-[#141414] px-6 py-2.5 rounded-lg hover:bg-[#ffdb4d] transition-colors inline-flex items-center gap-2 text-sm"
+                      >
+                        Đăng Ký Ngay
+                        <ExternalLink className="size-4" />
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile cards */}
+      <div className="block sm:hidden">
+        <div className="bg-[#141414] border-b border-neutral-800 px-5 py-5">
+          <h3 className="text-white text-xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            So Sánh Sàn Giao Dịch Uy Tín
+          </h3>
+          <p className="text-[#98989a] text-xs">
+            Các sàn được đánh giá dựa trên giấy phép, phí giao dịch và trải nghiệm người dùng
+          </p>
+        </div>
+
+        <div className="space-y-4 px-4 py-5">
+          {brokers.map((broker, index) => (
+            <div key={index} className="bg-[#141414] border border-neutral-800 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src={broker.logo}
+                  alt={broker.name}
+                  className="size-12 rounded-lg object-cover"
+                />
+                <div className="flex flex-col">
+                  <span className="text-white font-medium">{broker.name}</span>
+                  <span className="text-[#98989a] text-xs flex items-center gap-1">
+                    <CheckCircle2 className="size-4 text-green-500" />
+                    {broker.license}
+                  </span>
+                </div>
+              </div>
+              <div className="text-[#98989a] text-sm">
+                <div className="mb-1"><strong className="text-white">Nền tảng:</strong> {broker.platform}</div>
+                <div className="mb-2">
+                  <span className="bg-[#262626] text-[#FFD11A] px-2.5 py-1 rounded text-xs">
+                    {broker.bonus}
+                  </span>
+                </div>
+              </div>
+              <a
+                href={broker.affiliateLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-center bg-[#FFD11A] text-[#141414] px-4 py-2.5 rounded-lg hover:bg-[#ffdb4d] transition-colors inline-flex items-center justify-center gap-2 text-sm"
+              >
+                Đăng Ký Ngay
+                <ExternalLink className="size-4" />
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-[#141414] border-y border-neutral-800 px-5 py-5">
+          <h3 className="text-white text-xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            So Sánh Sàn Crypto
+          </h3>
+          <p className="text-[#98989a] text-xs">
+            Các sàn giao dịch crypto phổ biến, so sánh theo phí, giấy phép và nền tảng hỗ trợ
+          </p>
+        </div>
+
+        <div className="space-y-4 px-4 py-5">
+          {cryptoBrokers.map((broker, index) => (
+            <div key={index} className="bg-[#141414] border border-neutral-800 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src={broker.logo}
+                  alt={broker.name}
+                  className="size-12 rounded-lg object-cover"
+                />
+                <div className="flex flex-col">
+                  <span className="text-white font-medium">{broker.name}</span>
+                  <span className="text-[#98989a] text-xs flex items-center gap-1">
+                    <CheckCircle2 className="size-4 text-green-500" />
+                    {broker.license}
+                  </span>
+                </div>
+              </div>
+              <div className="text-[#98989a] text-sm">
+                <div className="mb-1"><strong className="text-white">Nền tảng:</strong> {broker.platform}</div>
+                <div className="mb-2">
+                  <span className="bg-[#262626] text-[#FFD11A] px-2.5 py-1 rounded text-xs">
+                    {broker.bonus}
+                  </span>
+                </div>
+              </div>
+              <a
+                href={broker.affiliateLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full text-center bg-[#FFD11A] text-[#141414] px-4 py-2.5 rounded-lg hover:bg-[#ffdb4d] transition-colors inline-flex items-center justify-center gap-2 text-sm"
+              >
+                Đăng Ký Ngay
+                <ExternalLink className="size-4" />
+              </a>
+            </div>
+          ))}
         </div>
       </div>
 
