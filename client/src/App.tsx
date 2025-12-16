@@ -4,6 +4,9 @@ import { HomePage } from "./pages/HomePage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { BlogDetailPage } from "./pages/BlogDetailPage";
 import { ResourcesPage } from "./pages/ResourcesPage";
+import { ContactPage } from "./pages/ContactPage";
+import { TermsPage } from "./pages/TermsPage";
+import { PrivacyPage } from "./pages/PrivacyPage";
 
 
 export default function App() {
@@ -21,6 +24,9 @@ export default function App() {
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:lang/:slug" element={<BlogDetailPage />} />
         <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
     </>
   );

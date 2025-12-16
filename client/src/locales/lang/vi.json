@@ -353,7 +353,7 @@
     "footer.newsletter.description": "Trong bản tin hàng tuần của chúng tôi.",
     "footer.newsletter.emailPlaceholder": "Nhập email của bạn",
     "footer.newsletter.subscribe": "Đăng ký",
-    "footer.copyright": "© 2025 Ph4ntoms, Inc. Bảo lưu mọi quyền.",
+    "footer.newsletter.copyright": "© 2025 Ph4ntoms, Inc. Bảo lưu mọi quyền.",
     "mailbox.title": "MAILBOX",
     "mailbox.menuTitle": "Mailbox",
     "mailbox.inbox": "Hộp thư đến",
@@ -473,7 +473,7 @@
             "marketAnalysis": "Phân Tích Thị Trường",
             "technicalAnalysis": "Phân Tích Kỹ Thuật"
         },
-        "readMore": "Đọc Thêm",
+        "readNow": "Đọc Ngay",
         "loadMore": "Xem Thêm Bài Viết",
         "newsletter": {
             "title": "Đừng Bỏ Lỡ Bất Kỳ Kiến Thức Nào",
@@ -481,6 +481,88 @@
             "emailPlaceholder": "Email của bạn",
             "subscribe": "Đăng Ký",
             "footer": "Miễn phí • Hủy bất cứ lúc nào • Chúng tôi tôn trọng quyền riêng tư của bạn"
+        }
+    },
+    "terms": {
+        "badge": "Thông tin pháp lý",
+        "title": "Terms & Conditions",
+        "description": "Điều khoản sử dụng cho website chia sẻ kiến thức tài chính. Vui lòng đọc kỹ trước khi tiếp tục sử dụng.",
+        "sections": {
+            "purpose": {
+                "title": "1. Mục đích website",
+                "body": "Nội dung trên website này chỉ mang tính chất chia sẻ kiến thức và thông tin chung về tài chính, không phải là lời khuyên đầu tư, tư vấn tài chính hay khuyến nghị giao dịch. Các ví dụ (nếu có) chỉ nhằm mục đích giáo dục."
+            },
+            "responsibility": {
+                "title": "2. Trách nhiệm của người dùng",
+                "body": "Khi truy cập và sử dụng website, bạn đồng ý rằng mọi quyết định liên quan đến tài chính, đầu tư hoặc giao dịch là do bạn tự chịu trách nhiệm. Hãy tự nghiên cứu và/hoặc tham khảo ý kiến chuyên gia độc lập trước khi đưa ra bất kỳ quyết định nào."
+            },
+            "liability": {
+                "title": "3. Giới hạn trách nhiệm",
+                "body": "Chúng tôi không chịu trách nhiệm cho bất kỳ tổn thất, thiệt hại trực tiếp hoặc gián tiếp nào phát sinh từ việc sử dụng hoặc không thể sử dụng thông tin trên website này, bao gồm nhưng không giới hạn ở tổn thất tài chính, cơ hội hoặc dữ liệu."
+            },
+            "changes": {
+                "title": "4. Thay đổi nội dung",
+                "body": "Nội dung và điều khoản có thể được cập nhật, chỉnh sửa bất kỳ lúc nào mà không cần thông báo trước. Bạn nên kiểm tra trang này định kỳ để nắm phiên bản mới nhất."
+            }
+        },
+        "aside": {
+            "title": "Lưu ý quan trọng",
+            "description": "Thông tin chỉ mang tính tham khảo. Không phải tư vấn đầu tư.",
+            "footnote": "Nếu cần lời khuyên chuyên môn, hãy tìm đến cố vấn tài chính độc lập. Mọi hành động dựa trên nội dung tại đây đều do bạn tự quyết định và tự chịu trách nhiệm."
+        }
+    },
+    "privacy": {
+        "badge": "Quyền riêng tư",
+        "title": "Privacy Policy",
+        "description": "Cách chúng tôi xử lý dữ liệu, cookies và các thông tin liên quan khi bạn sử dụng website.",
+        "sections": {
+            "collection": {
+                "title": "1. Thu thập thông tin",
+                "body": "Website này không yêu cầu đăng ký tài khoản hoặc cung cấp thông tin cá nhân trực tiếp cho mục đích tư vấn tài chính. Bất kỳ thông tin bạn chủ động gửi (ví dụ qua form liên hệ, nếu có) sẽ chỉ được dùng để phản hồi lại bạn."
+            },
+            "cookies": {
+                "title": "2. Cookies và công cụ phân tích",
+                "body": "Chúng tôi có thể dùng cookies và công cụ phân tích lưu lượng (ví dụ Google Analytics hoặc tương tự) để hiểu hành vi sử dụng và cải thiện trải nghiệm. Dữ liệu này mang tính tổng hợp, không nhằm mục đích xác định danh tính cá nhân cụ thể."
+            },
+            "sharing": {
+                "title": "3. Chia sẻ dữ liệu",
+                "body": "Chúng tôi không bán hoặc cho thuê dữ liệu cá nhân của bạn. Dữ liệu (nếu có) chỉ có thể được chia sẻ với các bên cung cấp dịch vụ hạ tầng/analytics phục vụ vận hành website, trong phạm vi tối thiểu cần thiết."
+            },
+            "changes": {
+                "title": "4. Thay đổi chính sách",
+                "body": "Chính sách quyền riêng tư có thể được cập nhật bất kỳ lúc nào. Tiếp tục sử dụng website sau khi có thay đổi nghĩa là bạn đồng ý với phiên bản mới nhất."
+            }
+        },
+        "aside": {
+            "title": "Bảo vệ quyền riêng tư",
+            "description": "Chỉ thu thập tối thiểu và phục vụ mục đích cải thiện trải nghiệm.",
+            "footnote": "Bạn có thể chủ động xóa cookies trong trình duyệt. Nếu có câu hỏi về dữ liệu, hãy liên hệ để được hỗ trợ."
+        }
+    },
+    "contact": {
+        "badge": "Liên hệ",
+        "title": "Kết nối với đội ngũ GOIncome",
+        "description": "Nếu bạn có câu hỏi về nội dung, hợp tác, quảng cáo hoặc góp ý cải thiện nền tảng, hãy gửi cho chúng tôi một tin nhắn. Chúng tôi sẽ phản hồi sớm nhất có thể.",
+        "supportEmail": "Email hỗ trợ:",
+        "note": "Lưu ý: thông tin bạn gửi chỉ được dùng để liên hệ và hỗ trợ, không phải là tư vấn đầu tư hay khuyến nghị giao dịch.",
+        "form": {
+            "title": "Gửi tin nhắn cho chúng tôi",
+            "nameLabel": "Họ và tên",
+            "namePlaceholder": "Nhập họ tên của bạn",
+            "emailLabel": "Email của bạn",
+            "emailPlaceholder": "name@example.com",
+            "subjectLabel": "Tiêu đề",
+            "subjectPlaceholder": "Chủ đề liên hệ",
+            "messageLabel": "Nội dung",
+            "messagePlaceholder": "Hãy mô tả ngắn gọn câu hỏi hoặc yêu cầu của bạn...",
+            "submit": "Gửi tin nhắn"
+        },
+        "mail": {
+            "defaultSubject": "Liên hệ từ GOIncome",
+            "nameLabel": "Họ tên:",
+            "emailLabel": "Email:",
+            "contentLabel": "Nội dung:",
+            "missingValue": "(chưa cung cấp)"
         }
     }
 }

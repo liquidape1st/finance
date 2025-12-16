@@ -19,10 +19,11 @@ export function Navbar() {
     window.location.reload()
   };
   
-  const getCurrentPage = (): 'home' | 'blogs' | 'resources' => {
+  const getCurrentPage = (): 'home' | 'blogs' | 'resources' | 'contact' => {
     if (location.pathname === '/') return 'home';
     if (location.pathname === '/blogs') return 'blogs';
     if (location.pathname === '/resources') return 'resources';
+    if (location.pathname === '/contact') return 'contact';
     return 'home';
   };
   
@@ -113,9 +114,16 @@ export function Navbar() {
                 EN
               </button>
             </div>
-            <button className="bg-[#ffd11a] px-3.5 py-2.5 rounded-md text-[#141414] text-sm hover:bg-[#ffdb4d] transition-colors">
+            <Link
+              to="/contact"
+              className={`px-3.5 py-2.5 rounded-md text-sm transition-colors ${
+                currentPage === 'contact'
+                  ? 'bg-[#ffd11a] text-[#141414]'
+                  : 'bg-[#141414] text-white hover:bg-[#ffd11a] hover:text-[#141414]'
+              }`}
+            >
               {t('nav.contact')}
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -179,9 +187,13 @@ export function Navbar() {
                   EN
                 </button>
               </div>
-              <button className="bg-[#ffd11a] px-4 py-2.5 rounded-md text-[#141414] text-sm w-full">
+              <Link
+                to="/contact"
+                className="bg-[#ffd11a] px-4 py-2.5 rounded-md text-[#141414] text-sm w-full text-center"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 {t('nav.contact')}
-              </button>
+              </Link>
             </div>
           </div>
         )}

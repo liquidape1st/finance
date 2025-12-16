@@ -163,7 +163,7 @@ export function BlogsPage() {
                     {/* Read More Button */}
                     <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
                       <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        {t('blogs.readMore')}
+                        {t('blogs.readNow')}
                       </span>
                       <svg className="size-5 shrink-0" fill="none" viewBox="0 0 20 20">
                         <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
@@ -184,9 +184,7 @@ export function BlogsPage() {
           </button>
         </div>
       </section>
-
       {/* Newsletter CTA */}
-    
 
       <Footer />
     </div>

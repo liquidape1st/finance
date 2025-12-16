@@ -1,11 +1,6 @@
 import { HelpCircle } from "lucide-react";
 import { useState } from "react";
 
-interface Term {
-  word: string;
-  definition: string;
-}
-
 interface KeyTermsGlossaryProps {
   term: string;
   children: React.ReactNode;
@@ -52,7 +47,7 @@ export function KeyTermsGlossary({ term, children }: KeyTermsGlossaryProps) {
         <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 z-50 block animate-in fade-in slide-in-from-bottom-1 duration-200">
           <span className="bg-[#141414] border border-[#FFD11A]/30 rounded-lg p-4 shadow-xl block">
             <span className="flex items-start gap-2 mb-2">
-              <HelpCircle className="size-4 text-[#FFD11A] flex-shrink-0 mt-0.5" />
+              <HelpCircle className="size-4 text-[#FFD11A] shrink-0 mt-0.5" />
               <span className="text-[#FFD11A] text-sm block" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
                 {term}
               </span>
@@ -71,10 +66,6 @@ export function KeyTermsGlossary({ term, children }: KeyTermsGlossaryProps) {
 
 // Standalone Glossary Component for dedicated page
 export function GlossaryList() {
-  const terms = Object.entries(glossary).map(([word, definition]) => ({
-    word,
-    definition
-  }));
 
   const categories = {
     "Cơ Bản": ["PIP", "Lot", "Spread", "Leverage", "Margin"],
