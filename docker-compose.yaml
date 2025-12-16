@@ -43,20 +43,20 @@ services:
       retries: 10
       start_period: 10s
   
-  redisinsight:
-    image: redis/redisinsight:latest
-    restart: unless-stopped
-    container_name: finance_redisinsight
-    ports:
-      - "5540:5540"
-    volumes:
-      - finance_redis_insight:/data
-    environment:
-      - REDIS_HOSTS=redis://:eYXX7EwVmmxKDCDmwMtyKVge8oLd2t86@redis:6379
-    networks:
-      - microservices-net
-    depends_on:
-      - redis
+  # redisinsight:
+  #   image: redis/redisinsight:latest
+  #   restart: unless-stopped
+  #   container_name: finance_redisinsight
+  #   ports:
+  #     - "5540:5540"
+  #   volumes:
+  #     - finance_redis_insight:/data
+  #   environment:
+  #     - REDIS_HOSTS=redis://:eYXX7EwVmmxKDCDmwMtyKVge8oLd2t86@redis:6379
+  #   networks:
+  #     - microservices-net
+  #   depends_on:
+  #     - redis
 
   server:
     build:
@@ -70,12 +70,8 @@ services:
     ports:
       - "8886:8886"
     depends_on:
-      configuration:
+      mysql:
         condition: service_healthy
-      discovery:
-        condition: service_healthy
-      postgres:
-        condition: service_started
       redis:
         condition: service_started
     networks:
@@ -100,7 +96,7 @@ services:
     environment:
       TZ: Asia/Ho_Chi_Minh
     depends_on:
-      incense_backend:
+      server:
         condition: service_healthy
     networks:
       - microservices-net
@@ -126,7 +122,7 @@ services:
     profiles:
       - prod
     depends_on:
-      incense_backend:
+      server:
         condition: service_healthy
     networks:
       - microservices-net
