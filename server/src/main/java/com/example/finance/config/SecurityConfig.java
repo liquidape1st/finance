@@ -64,8 +64,7 @@ public class SecurityConfig {
                 "http://localhost:6866",  // Client app
                 "http://localhost:3000",
                 "http://localhost:8268",
-                "https://huongtramhaiyen.com",
-                "https://www.huongtramhaiyen.com"
+                "https://api.goincome.net"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
