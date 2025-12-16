@@ -110,7 +110,7 @@ export function BlogsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blog_translation.map((blog) => (
             <Link
-              to={`/blogs/${blog.slug}`}
+              to={`/blogs/${currentLang}/${blog.slug}`}
               state={{ blog }}
               key={`${currentLang}-${blog.id}`}
               className="group flex flex-col cursor-pointer"
@@ -186,50 +186,7 @@ export function BlogsPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-20 sm:py-24 border-t border-[#262626]">
-        <div className="relative overflow-hidden bg-linear-to-br from-[#FFD11A] via-[#FFD11A] to-[#FFA500] rounded-2xl p-12 sm:p-16">
-          <div className="absolute inset-0 opacity-[0.15]">
-            {/* Premium Gradient Orbs */}
-            <div className="absolute top-10 right-10 size-[500px] bg-linear-to-br from-white via-white/80 to-transparent rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '4s' }}></div>
-            <div className="absolute bottom-10 left-10 size-[450px] bg-linear-to-tr from-black via-black/60 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-
-            {/* Accent Orbs */}
-            <div className="absolute top-1/3 left-1/4 size-[300px] bg-linear-to-r from-orange-500/40 to-yellow-400/40 rounded-full blur-[80px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
-            <div className="absolute bottom-1/3 right-1/4 size-[250px] bg-white/60 rounded-full blur-[90px]"></div>
-
-            {/* Subtle Grid Pattern */}
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0)',
-              backgroundSize: '40px 40px'
-            }}></div>
-          </div>
-
-          <div className="relative z-10 max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-[#141414] mb-4 tracking-tight leading-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-              {t('blogs.newsletter.title')}
-            </h2>
-            <p className="text-[#141414]/80 text-lg leading-relaxed mb-8">
-              {t('blogs.newsletter.description')}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
-              <input
-                type="email"
-                placeholder={t('blogs.newsletter.emailPlaceholder')}
-                className="flex-1 bg-white/95 backdrop-blur-sm border-2 border-white/50 rounded-xl px-5 py-4 text-[#141414] placeholder:text-[#141414]/50 focus:outline-none focus:border-white focus:bg-white transition-all"
-              />
-              <button className="bg-[#141414] text-white px-8 py-4 rounded-xl hover:bg-[#262626] transition-all whitespace-nowrap inline-flex items-center gap-2 justify-center group">
-                <span>{t('blogs.newsletter.subscribe')}</span>
-                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-
-            <p className="text-[#141414]/60 text-xs mt-4">
-              {t('blogs.newsletter.footer')}
-            </p>
-          </div>
-        </div>
-      </section>
+    
 
       <Footer />
     </div>

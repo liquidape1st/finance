@@ -8,11 +8,33 @@ import { CategoryTranslation } from "@/@types/blog.category.client";
 export const SLICENAME = 'financeSlice'
 
 export type FinanceState = {
+    selected_blog_translation: BlogTranslationClient;
     blog_translation: BlogTranslationClient[];
     category_translation: CategoryTranslation[];
     tableData: TableQueries
 }
 const initState: FinanceState = {
+    selected_blog_translation: {
+        author: "",
+        category: {
+            categoryId: "",
+            id: "",
+            langCode: "",
+            name: ""
+        },
+        content: "",
+        createdAt: "",
+        estimatedReadTime: 0,
+        excerpt: "",
+        featured: false,
+        image: "",
+        id: "",
+        langCode: "",
+        slug: "",
+        title: "",
+        updatedAt: "",
+        view: 0 
+    },
     blog_translation: [],
     category_translation: [],
     tableData: {
@@ -49,6 +71,17 @@ export const getListClientCategoryTranslation = createAsyncThunk(
     },
 )
 
+export const getDetailClientBlogTranslation = createAsyncThunk(
+    SLICENAME + '/getDetailClientBlogTranslation',
+    async ({ langCode, slug }: { langCode: string; slug: string }) => {
+      const response = await apiGetSystem<ApiResponse<BlogTranslationClient>>(
+        `/blog-translations/detail/${langCode}/${slug}`
+      )
+      return response.data
+    }
+  )
+  
+
 const slice = createSlice({
     name: SLICENAME,
     initialState: initState,
@@ -63,6 +96,9 @@ const slice = createSlice({
         })
         builder.addCase(getListClientCategoryTranslation.fulfilled, (state, action) => {
             state.category_translation = action.payload.data
+        })
+        builder.addCase(getDetailClientBlogTranslation.fulfilled, (state, action) => {
+            state.selected_blog_translation = action.payload.data
         })
     }
 })

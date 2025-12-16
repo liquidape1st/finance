@@ -17,7 +17,12 @@ import java.util.UUID;
 public class BlogTranslationService {
     BlogTranslationRepository blogTranslationRepository;
 
-    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable){
+    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable) {
         return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, pageable);
     }
+
+    public BlogTranslationClientResponse findBlogTranslationByLangCodeAndSlug(String slug, String langCode) {
+        return blogTranslationRepository.findBlogTranslationByLangCodeAndSlug(slug, langCode);
+    }
+
 }

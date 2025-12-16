@@ -50,4 +50,37 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                 )
             """)
     Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("query") String query, @Param("langCode") String langCode, @Param("category") UUID category, Pageable pageable);
+
+
+    @Query("""
+                SELECT new com.example.finance.schemas.response.BlogTranslationClientResponse(
+                    bt.id,
+                    bt.langCode,
+                    bt.slug,
+                    bt.title,
+                    bt.content,
+                    bt.excerpt,
+                    b.view,
+                    b.image,
+                    b.author,
+                    b.featured,
+                    b.estimatedReadTime,
+                    new com.example.finance.schemas.response.CategoryTranslationClientResponse(
+                        ct.id,
+                        ct.langCode,
+                        ct.name,
+                        c.id
+                    ),
+                    bt.createdAt,
+                    bt.updatedAt
+                )
+                FROM BlogTranslation bt
+                JOIN bt.blog b
+                JOIN b.category c
+                JOIN c.translations ct
+                WHERE bt.langCode = :langCode
+                AND ct.langCode = :langCode
+                AND bt.slug = :slug
+            """)
+    BlogTranslationClientResponse findBlogTranslationByLangCodeAndSlug(@Param("slug") String slug, @Param("langCode") String langCode);
 }

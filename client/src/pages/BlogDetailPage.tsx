@@ -1,11 +1,12 @@
 import appConfig from "@/configs/app.config";
-import { useAppSelector } from "@/store";
+import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { AffiliateBanner } from "../components/AffiliateBanner";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
+import { useEffect } from "react";
 
 
 
@@ -13,12 +14,25 @@ const getBlogImageUrl = (fileName: string, updatedAt: string) =>
   `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`;
 
 export function BlogDetailPage() {
+  const { lang, slug } = useParams()
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const blog_translation = useAppSelector((state) => state.finance.blog_translation)
-  const blog = blog_translation[0]
+  const blog = useAppSelector((state) => state.finance.selected_blog_translation)
+
+  useEffect(() => {
+    if (!lang || !slug) {
+      return
+    }
+    dispatch(getDetailClientBlogTranslation({
+      langCode: lang,
+      slug: slug
+    }))
+  }, [lang, slug])
+
 
 
   return (
@@ -33,69 +47,59 @@ export function BlogDetailPage() {
           <ArrowLeft className="size-4" />
           <span>{t("blogs.back", { defaultValue: "Back to blogs" })}</span>
         </button>
-
-  
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="col-span-2" id="blog-detail">
-              <div className="mb-6">
-                <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
-                  <Tag className="size-4 text-[#FFD11A]" />
-                  <span className="text-[#98989a] text-xs uppercase tracking-wide">
-                    {blog.category?.name ?? t("blogs.category", { defaultValue: "Blog" })}
-                  </span>
-                </div>
-              </div>
-
-              <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Kumbh Sans, sans-serif" }}>
-                {blog.title}
-              </h1>
-
-              <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
-                {blog.createdAt && (
-                  <span className="inline-flex items-center gap-2">
-                    <Clock className="size-4" />
-                    {blog.createdAt}
-                  </span>
-                )}
-                <span className="inline-flex items-center gap-2">
-                  <Eye className="size-4" />
-                  {blog.view}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="col-span-2">
+            <div className="mb-6">
+              <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
+                <Tag className="size-4 text-[#FFD11A]" />
+                <span className="text-[#98989a] text-xs uppercase tracking-wide">
+                  {blog.category?.name ?? t("blogs.category", { defaultValue: "Blog" })}
                 </span>
               </div>
-
-              <div className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
-                <img
-                  src={getBlogImageUrl(blog.image, blog.updatedAt)}
-                  alt={blog.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              </div>
-
-              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4">
-                <div
-                  className="prose prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
-                />
-              </article>
             </div>
-            <div className="col-span-1 space-y-6">
-              <div id="affiliateBannerRef">
-                <AffiliateBanner
-                  title="Nhận hoàn phí giao dịch lên đến 30%"
-                  description="Đăng ký tài khoản qua link đối tác để nhận hoàn phí giao dịch và nhiều ưu đãi độc quyền khác."
-                  ctaText="Mở tài khoản ngay"
-                  ctaLink="https://your-affiliate-link.example.com"
-                  bonusAmount="Ưu đãi cho người mới"
-                  hasCountdown
-                  variant="dark"
-                  compact
-                  hideBackgroundPattern
-                />
+
+            <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Kumbh Sans, sans-serif" }}>
+              {blog.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
+              {blog.createdAt && (
+                <span className="inline-flex items-center gap-2">
+                  <Clock className="size-4" />
+                  {blog.createdAt}
+                </span>
+              )}
+              <span className="inline-flex items-center gap-2">
+                <Eye className="size-4" />
+                {blog.view}
+              </span>
+            </div>
+
+            <div className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
+              <img
+                src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                alt={blog.title}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4">
+              <div
+                className="prose prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
+              />
+            </article>
+          </div>
+          {/* Element ADS */}
+          <div className="col-span-1">
+             <div className="flex flex-col gap-6 sticky top-0">
+              <div>
+                <RandomAffiliateBanner />
               </div>
-              <div className="grid grid-cols-1 gap-4" id="blog-related">
-                {blog_translation.map((blog) => (
+              <div className="grid grid-cols-1 gap-4">
+                {blog_translation.slice(0, 5).map((blog) => (
                   <Link
                     to={`/blogs/${blog.slug}`}
                     state={{ blog }}
@@ -141,12 +145,16 @@ export function BlogDetailPage() {
                   </Link>
                 ))}
               </div>
+             
+              <div>
+                <RandomAffiliateBanner />
+              </div>
             </div>
           </div>
+        </div>
       </main>
 
       <Footer />
     </div>
   );
 }
-

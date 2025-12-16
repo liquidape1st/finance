@@ -2,7 +2,6 @@ package com.example.finance.controller;
 
 import com.example.finance.pageable.BlogPageableObject;
 import com.example.finance.pageable.CustomPage;
-import com.example.finance.pageable.PageableObject;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
 import com.example.finance.schemas.response.ResponsePayload;
 import com.example.finance.service.BlogTranslationService;
@@ -33,6 +32,19 @@ public class BlogTranslationController extends BaseController {
         CustomPage<BlogTranslationClientResponse> result = new CustomPage<>(blogTranslationService.findPageBlogTranslation(pageableObject.getQuery(), language, pageableObject.getCategory(), pageableObject.toPageRequest()));
         return createResponse(
                 result,
+                "blog.translation.search.success.title",
+                "blog.translation.search.success.detail",
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "detail/{langCode}/{slug}")
+    public ResponseEntity<ResponsePayload> detailClientBlogTranslation(
+            @PathVariable String langCode,
+            @PathVariable String slug
+    ) {
+        return createResponse(
+                blogTranslationService.findBlogTranslationByLangCodeAndSlug(slug, langCode),
                 "blog.translation.search.success.title",
                 "blog.translation.search.success.detail",
                 HttpStatus.OK
