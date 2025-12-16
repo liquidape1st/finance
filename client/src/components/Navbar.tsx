@@ -36,7 +36,7 @@ export function Navbar() {
           <p className="text-[#98989a] text-xs sm:text-sm tracking-tight text-center">
             {t('nav.newsletter')}
           </p>
-          <svg className="ml-2 size-4 sm:size-5 flex-shrink-0" fill="none" viewBox="0 0 20 20">
+          <svg className="ml-2 size-4 sm:size-5 shrink-0" fill="none" viewBox="0 0 20 20">
             <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#FFD11A" fillRule="evenodd" />
           </svg>
         </div>
@@ -47,7 +47,7 @@ export function Navbar() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-5 flex items-center justify-between">
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
-            <div className="relative size-10 sm:size-12 bg-gradient-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 flex-shrink-0">
+            <div className="relative size-10 sm:size-12 bg-linear-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 shrink-0">
               <svg className="size-full" viewBox="0 0 32 32" fill="none">
                 {/* Chart bars going up */}
                 <rect x="4" y="20" width="4" height="8" fill="#141414" rx="1"/>
@@ -61,9 +61,9 @@ export function Navbar() {
             <div>
               <div className="flex items-baseline gap-1">
                 <h1 className="text-white text-lg sm:text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                  Wealth
+                  GO
                 </h1>
-                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>Pulse</span>
+                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>Income</span>
               </div>
               <p className="text-[#666666] text-xs tracking-wide hidden sm:block">{t('nav.platform')}</p>
             </div>

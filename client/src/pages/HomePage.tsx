@@ -85,7 +85,7 @@ export function HomePage() {
 
         <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 lg:gap-16 mb-6 sm:mb-8">
           {/* Large Logo Icon */}
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-[120px] lg:h-[120px] relative flex-shrink-0">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-[120px] lg:h-[120px] relative shrink-0">
             <svg className="block size-full" fill="none" viewBox="0 0 120 120">
               <path d={svgPaths.p1471eac0} fill="#FFD11A" transform="scale(3)" />
               <path d={svgPaths.p1fd34e80} fill="#FFD11A" transform="scale(3)" />

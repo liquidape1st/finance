@@ -102,7 +102,7 @@ export function Footer() {
           <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
         </div>
 
-        <p className="text-[#666666] text-xs sm:text-sm order-3 sm:order-2">© 2024 WealthPulse. All rights reserved.</p>
+        <p className="text-[#666666] text-xs sm:text-sm order-3 sm:order-2">© 2024 GOIncome. All rights reserved.</p>
 
         <div className="flex items-center gap-3 sm:gap-3.5 order-1 sm:order-3">
           <a href="#" className="text-white hover:text-[#ffd11a] transition-colors">
