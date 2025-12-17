@@ -214,7 +214,7 @@ export function HomePage() {
           {whitepapers.map((paper, index) => (
             <div key={paper.id} className={`flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 items-start ${index > 0 ? 'border-t border-neutral-800 pt-8 sm:pt-12 md:pt-16 mt-8 sm:mt-12 md:mt-16' : ''}`}>
               {/* Left Side - Icon & Description */}
-              <div className="w-full lg:w-[412px] lg:flex-shrink-0">
+              <div className="w-full lg:w-[412px] lg:shrink-0">
                 <div className="size-12 sm:size-14 md:size-[60px] mb-6 sm:mb-8 md:mb-10 relative">
                   <svg className="block size-full" fill="none" viewBox="0 0 60 60">
                     {index === 0 ? (

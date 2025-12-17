@@ -6,6 +6,8 @@ import i18n from "../locales/locales";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
 import { setLang, useAppDispatch, useAppSelector } from "@/store";
 
+import logoImage from "@/assets/logo/logo.png";
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -49,15 +51,7 @@ export function Navbar() {
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <div className="relative size-10 sm:size-12 bg-linear-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 shrink-0">
-              <svg className="size-full" viewBox="0 0 32 32" fill="none">
-                {/* Chart bars going up */}
-                <rect x="4" y="20" width="4" height="8" fill="#141414" rx="1"/>
-                <rect x="10" y="14" width="4" height="14" fill="#141414" rx="1"/>
-                <rect x="16" y="10" width="4" height="18" fill="#141414" rx="1"/>
-                <rect x="22" y="6" width="4" height="22" fill="#141414" rx="1"/>
-                {/* Trending arrow */}
-                <path d="M26 8L28 6L30 8M28 6V12" stroke="#141414" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <img src={logoImage} alt="GO Income" className="scale-[280%]"/>
             </div>
             <div>
               <div className="flex items-baseline gap-1">

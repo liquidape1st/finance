@@ -27,22 +27,6 @@ export function BrokerComparisonTable() {
       bonus: "Bonus/khuyến mãi định kỳ",
       affiliateLink: "#"
     },
-    {
-      name: "IC Markets",
-      logo: "https://tse1.mm.bing.net/th/id/OIP.JD7weGk6-SvfMbc78fRl_QAAAA?cb=ucfimg2&pid=ImgDet&ucfimg=1&w=198&h=198&c=7&o=7&rm=3",
-      license: "ASIC 335692, CySEC 362/18, FSA (SC) SD018",
-      platform: "MT4, MT5, cTrader",
-      bonus: "Spread thấp, không bonus",
-      affiliateLink: "#"
-    },
-    {
-      name: "Pepperstone",
-      logo: "https://55brokers.com/wp-content/uploads/2021/06/PEP_Logo_55brokers_220317_250x250px.png",
-      license: "ASIC 414530, FCA 684312, CySEC 388/20",
-      platform: "MT4, MT5, cTrader, TradingView",
-      bonus: "Spread thấp, rebate theo đối tác",
-      affiliateLink: "#"
-    }
   ];
 
   const cryptoBrokers: Broker[] = [
