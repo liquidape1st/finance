@@ -29,13 +29,11 @@ public class BlogController extends BaseController implements AController<BlogRe
 
     BlogService blogService;
     BlogResponseMapper mapper;
-    BlogTranslationResponseMapper translationMapper;
 
-    public BlogController(MessageSource messageSource, BlogService blogService, BlogResponseMapper mapper, BlogTranslationResponseMapper translationMapper) {
+    public BlogController(MessageSource messageSource, BlogService blogService, BlogResponseMapper mapper) {
         super(messageSource);
         this.blogService = blogService;
         this.mapper = mapper;
-        this.translationMapper = translationMapper;
     }
 
     @Override

@@ -36,7 +36,7 @@ export function BrokerComparisonTable() {
       license: "Nhiều giấy phép khu vực (châu Âu, APAC...)",
       platform: "Web, iOS, Android, API",
       bonus: "Giảm phí khi dùng BNB",
-      affiliateLink: "#"
+      affiliateLink: "https://accounts.binance.com/register?ref=GOINCOME"
     },
     {
       name: "Bybit",
@@ -60,7 +60,7 @@ export function BrokerComparisonTable() {
       license: "Đăng ký tại Lithuania & Canada (MSB)",
       platform: "Web, iOS, Android",
       bonus: "Hoàn phí cho trader copy & VIP",
-      affiliateLink: "#"
+      affiliateLink: "https://bingxzone.com/partner/goincome/"
     },
     {
       name: "ONUS",
