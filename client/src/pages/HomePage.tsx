@@ -253,7 +253,17 @@ export function HomePage() {
                       <h4 className="text-white text-lg sm:text-xl mb-2 sm:mb-2.5">{paper.title}</h4>
                       <p className="text-[#98989a] text-sm sm:text-base leading-relaxed">{paper.description}</p>
                     </div>
-                    <button className="bg-[#1a1a1a] border border-neutral-800 px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#262626] transition-colors flex items-center gap-1 whitespace-nowrap self-start sm:self-auto">
+                    <button
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = '/pdf/Ebook - Cryptocurrency for beginners.pdf';
+                        link.download = 'Ebook - Cryptocurrency for beginners.pdf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                      className="bg-[#1a1a1a] border border-neutral-800 px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#262626] transition-colors flex items-center gap-1 whitespace-nowrap self-start sm:self-auto"
+                    >
                       {t('home.articles.downloadPdf')}
                       <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
                         <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#FFD11A" fillRule="evenodd" />
