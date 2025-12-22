@@ -30,7 +30,7 @@ public class BlogTranslationService {
     public BlogTranslationClientResponse findBlogTranslationByLangCodeAndSlug(String slug, String langCode) {
         BlogTranslationClientResponse blogTranslationClientResponse = blogTranslationRepository.findBlogTranslationByLangCodeAndSlug(slug, langCode);
         if (blogTranslationClientResponse != null) {
-            UUID uid = blogTranslationClientResponse.getId();
+            UUID uid = blogTranslationClientResponse.getBlogId();
             blogRepository.findById(uid).ifPresent(blog -> {
                 blog.setView(blog.getView() + 1);
                 blogRepository.save(blog);
