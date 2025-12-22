@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TableQueries } from '@/@types/common'
 import { apiGetSystem } from '@/services/SalesService'
 import { ApiResponse } from '@/@types/schema.common.response'
@@ -38,11 +38,16 @@ export const searchBlogPosts = createAsyncThunk(
 const slice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        setBlogs: (state, action: PayloadAction<BlogResponse[]>) => {
+            state.blogs = action.payload
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(searchBlogPosts.fulfilled, (state, action) => {
             state.blogs = action.payload.data
         })
     },
 })
+export const { setBlogs } = slice.actions
 export default slice.reducer

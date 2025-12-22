@@ -10,6 +10,11 @@ const BaseService = axios.create({
     baseURL: appConfig.apiPrefix,
 })
 
+function simpleSign(ts: number, rand: number) {
+    const secret = "k9xA"; // chỉ là nhiễu, không phải bí mật thật
+    return btoa(`${ts ^ rand}${secret}`).slice(0, 16);
+  }
+
 BaseService.interceptors.request.use(
     (config) => {
         const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
@@ -19,6 +24,14 @@ BaseService.interceptors.request.use(
         const language = (persistData as any)?.locale?.currentLang || "vi"
         config.headers["x-app-language"] = language
 
+        const ts = Date.now();
+        const rand = crypto.getRandomValues(new Uint32Array(1))[0];
+      
+        config.headers["X-Client-Time"] = ts;
+        config.headers["X-Noise"] = rand.toString(16);
+        config.headers["X-Signature"] = simpleSign(ts, rand);
+        config.headers["X-Jitter"] = Math.floor(performance.now() % 97);
+        config.headers["X-Env"] = [navigator.hardwareConcurrency,screen.width,screen.height].join("x");
         return config
     },
     (error) => {

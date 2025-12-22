@@ -3,7 +3,6 @@ package com.example.finance.controller;
 import com.example.finance.group.CreateMethod;
 import com.example.finance.group.UpdateMethod;
 import com.example.finance.mapper.BlogResponseMapper;
-import com.example.finance.mapper.BlogTranslationResponseMapper;
 import com.example.finance.pageable.CustomPage;
 import com.example.finance.pageable.PageableObject;
 import com.example.finance.schemas.request.BlogRequest;
@@ -105,6 +104,28 @@ public class BlogController extends BaseController implements AController<BlogRe
         blogService.removeEntityById(uuid);
         return createResponse(
                 null,
+                "blog.delete.success.title",
+                "blog.delete.success.detail",
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "/featured/{uuid}")
+    @PreAuthorize("hasAuthority('BLOG:UPDATE')")
+    public ResponseEntity<ResponsePayload> featured(@PathVariable UUID uuid, @RequestParam("featured") boolean featured) {
+        return createResponse(
+                mapper.toDTO(blogService.setBlogFeatured(uuid, featured)),
+                "blog.delete.success.title",
+                "blog.delete.success.detail",
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "/enabled/{uuid}")
+    @PreAuthorize("hasAuthority('BLOG:UPDATE')")
+    public ResponseEntity<ResponsePayload> enabled(@PathVariable UUID uuid, @RequestParam("enabled") boolean enabled) {
+        return createResponse(
+                mapper.toDTO(blogService.setBlogEnabled(uuid, enabled)),
                 "blog.delete.success.title",
                 "blog.delete.success.detail",
                 HttpStatus.OK

@@ -11,6 +11,8 @@ public class BlogResponse {
     private UUID id;
     private String image;
     private String author;
+    private Boolean enabled;
+    private Boolean featured;
     private Integer estimatedReadTime;
     private MinCategoryResponse category;
     private List<BlogTranslationClientResponse> translations;

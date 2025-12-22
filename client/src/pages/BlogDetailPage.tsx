@@ -7,7 +7,7 @@ import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { useEffect } from "react";
-
+import { getClientBlogTranslationPage } from "@/store/slices/finance/financeSlice";
 
 
 const getBlogImageUrl = (fileName: string, updatedAt: string) =>
@@ -22,6 +22,11 @@ export function BlogDetailPage() {
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const blog_translation = useAppSelector((state) => state.finance.blog_translation)
   const blog = useAppSelector((state) => state.finance.selected_blog_translation)
+  const { tableData } = useAppSelector((state) => state.finance)
+
+  useEffect(() => {
+    dispatch(getClientBlogTranslationPage(tableData))
+  }, [])
 
   useEffect(() => {
     if (!lang || !slug) {
@@ -32,7 +37,6 @@ export function BlogDetailPage() {
       slug: slug
     }))
   }, [lang, slug])
-
 
 
   return (
@@ -94,20 +98,20 @@ export function BlogDetailPage() {
           </div>
           {/* Element ADS */}
           <div className="col-span-1">
-             <div className="flex flex-col gap-6 sticky top-0">
+            <div className="flex flex-col gap-6 sticky top-0">
               <div>
                 <RandomAffiliateBanner />
               </div>
               <div className="grid grid-cols-1 gap-4">
                 {blog_translation.slice(0, 5).map((blog) => (
                   <Link
-                    to={`/blogs/${blog.slug}`}
+                    to={`/blogs/${currentLang}/${blog.slug}`}
                     state={{ blog }}
                     key={`${currentLang}-${blog.id}`}
                     className="group flex flex-col cursor-pointer"
                   >
                     <article className="flex flex-col h-full">
-                      <div className="relative h-[185px] rounded-[10px] overflow-hidden mb-4">
+                      <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
                         <img
                           src={getBlogImageUrl(blog.image, blog.updatedAt)}
                           loading="lazy"
@@ -145,7 +149,7 @@ export function BlogDetailPage() {
                   </Link>
                 ))}
               </div>
-             
+
               <div>
                 <RandomAffiliateBanner />
               </div>

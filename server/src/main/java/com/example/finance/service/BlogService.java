@@ -91,6 +91,18 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
         return deleteByIds(ids);
     }
 
+    public Blog setBlogFeatured(UUID id, Boolean featured) {
+        Blog blog = findByIdOrThrow(id);
+        blog.setFeatured(featured);
+        return blogRepository.save(blog);
+    }
+
+    public Blog setBlogEnabled(UUID id, Boolean enabled) {
+        Blog blog = findByIdOrThrow(id);
+        blog.setEnabled(enabled);
+        return blogRepository.save(blog);
+    }
+
     @Override
     public void mapRequestToEntity(Blog entity, BlogRequest request) {
         setIfNotNull(entity::setImage, request.getImage());

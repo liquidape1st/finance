@@ -14,7 +14,7 @@ const BlogPostList = () => {
     }, [dispatch])
     return (
         <Fragment>
-            <div className={"flex justify-end"}>
+            <div className={"flex justify-end mb-4"}>
                 <Link to={"/app/sales/blog-post"}>
                     <Button variant={"solid"} size={"sm"}>
                         Thêm mới

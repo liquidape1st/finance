@@ -32,6 +32,7 @@ public class Blog {
     @Column(name = "featured", nullable = false)
     private Boolean featured = false;
 
+    private Boolean enabled = false;
 
     private String image;
 

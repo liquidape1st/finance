@@ -2,6 +2,7 @@ package com.example.finance.controller;
 
 import com.example.finance.pageable.BlogPageableObject;
 import com.example.finance.pageable.CustomPage;
+import com.example.finance.schemas.api.FeaturedClientBlogTranslation;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
 import com.example.finance.schemas.response.ResponsePayload;
 import com.example.finance.service.BlogTranslationService;
@@ -45,6 +46,19 @@ public class BlogTranslationController extends BaseController {
     ) {
         return createResponse(
                 blogTranslationService.findBlogTranslationByLangCodeAndSlug(slug, langCode),
+                "blog.translation.search.success.title",
+                "blog.translation.search.success.detail",
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping(value = "featured")
+    public ResponseEntity<ResponsePayload> findFeaturedBlogList(
+            @Valid @RequestBody FeaturedClientBlogTranslation featuredClientBlogTranslation,
+            @RequestHeader(value = "x-app-language", defaultValue = "en") String language
+    ) {
+        return createResponse(
+                blogTranslationService.findFeaturedBlogList(language, featuredClientBlogTranslation.getCategory(), featuredClientBlogTranslation.getSeed()),
                 "blog.translation.search.success.title",
                 "blog.translation.search.success.detail",
                 HttpStatus.OK

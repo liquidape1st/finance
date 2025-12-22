@@ -1,6 +1,7 @@
 export type BlogResponse = {
-    id?: string
+    id: string
     featured: boolean
+    enabled: boolean
     image: string
     estimatedReadTime: number
     category: {
@@ -8,6 +9,7 @@ export type BlogResponse = {
     }
     translations: BlogTranslationResponse[],
     publishedAt: number
+    updatedAt: string
     author: string
 }
 

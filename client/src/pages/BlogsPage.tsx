@@ -1,13 +1,13 @@
 import appConfig from "@/configs/app.config";
 import { getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector } from "@/store";
+import { setTableData } from "@/store/slices/finance/financeSlice";
+import { debounce } from "lodash";
 import { ArrowRight, Eye, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { setTableData } from "@/store/slices/finance/financeSlice";
-import { debounce } from "lodash";
-import { Link } from "react-router-dom";
 
 export function BlogsPage() {
   const { t } = useTranslation();
@@ -117,7 +117,7 @@ export function BlogsPage() {
             >
               <article className="flex flex-col h-full">
                 {/* Image */}
-                <div className="relative h-[185px] rounded-[10px] overflow-hidden mb-4">
+                <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
                   <img
                     src={getBlogImageUrl(blog.image, blog.updatedAt)}
                     loading="lazy"

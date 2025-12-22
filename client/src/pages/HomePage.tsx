@@ -1,24 +1,32 @@
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { AffiliateBanner } from "../components/AffiliateBanner";
-import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
-import svgPaths from "../imports/svg-f8f5ykhcvu";
 import imgImage from "@/assets/6fbe74e4c1500ee56eb703cd4ca7bed8f5ab1e79.png";
 import imgImage1 from "@/assets/92ed7407e1ea241277ee1cb9c161bc12787080a5.png";
-import imgImage2 from "@/assets/80fa1841d31e58a1221a9df85d34fcd265c74760.png";
-import imgImage3 from "@/assets/64fd296dc0cbbcfa14675f3011d4d1b7eab3ee5b.png";
-import imgImage4 from "@/assets/dad619fc22331a397a147e42615c283ec555017b.png";
-import { useTranslation } from "react-i18next";
-import { getClientBlogTranslationPage, useAppDispatch, useAppSelector } from "@/store";
+import appConfig from "@/configs/app.config";
+import { getClientBlogTranslationPage, getHomePageFeaturedBlogTranslationList, useAppDispatch, useAppSelector } from "@/store";
+import { Eye } from "lucide-react";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { AffiliateBanner } from "../components/AffiliateBanner";
+import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
+import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
+import svgPaths from "../imports/svg-f8f5ykhcvu";
 
 export function HomePage() {
   const dispatch = useAppDispatch()
   const { t } = useTranslation();
-  const { tableData } = useAppSelector((state) => state.finance)
+  const { tableData, home_page_featured_blog_list } = useAppSelector((state) => state.finance)
+  const currentLang = useAppSelector((state) => state.locale.currentLang)
+
+  const getBlogImageUrl = (fileName: string, updatedAt: string) =>
+    `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`
+
 
   useEffect(() => {
     dispatch(getClientBlogTranslationPage(tableData))
+    dispatch(getHomePageFeaturedBlogTranslationList({
+      langCode: currentLang,
+    }))
   }, [dispatch])
 
 
@@ -52,26 +60,7 @@ export function HomePage() {
     },
   ];
 
-  const ebooks = [
-    {
-      id: 1,
-      title: t('home.ebooksList.personal.title'),
-      description: t('home.ebooksList.personal.description'),
-      image: imgImage2,
-    },
-    {
-      id: 2,
-      title: t('home.ebooksList.realEstate.title'),
-      description: t('home.ebooksList.realEstate.description'),
-      image: imgImage3,
-    },
-    {
-      id: 3,
-      title: t('home.ebooksList.planning.title'),
-      description: t('home.ebooksList.planning.description'),
-      image: imgImage4,
-    },
-  ];
+
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
@@ -300,26 +289,71 @@ export function HomePage() {
       {/* Ebooks Grid */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {ebooks.map((ebook) => (
-            <div key={ebook.id} className="flex flex-col">
-              <img
-                src={ebook.image}
-                alt={ebook.title}
-                className="w-full h-56 sm:h-64 md:h-[290px] object-cover rounded-xl mb-4 sm:mb-5 md:mb-6"
-              />
-              <h3 className="text-white text-base sm:text-lg mb-2 sm:mb-2.5">{ebook.title}</h3>
-              <p className="text-[#98989a] text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed flex-1">
-                {ebook.description}
-              </p>
-              <div className="flex gap-2 sm:gap-2.5">
-                <button className="flex-1 bg-[#141414] border border-neutral-800 px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#1a1a1a] transition-colors">
-                  {t('home.ebooks.viewMore')}
-                </button>
-                <button className="flex-1 bg-[#1a1a1a] border border-neutral-800 px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#262626] transition-colors">
-                  {t('home.ebooks.readNow')}
-                </button>
-              </div>
-            </div>
+          {home_page_featured_blog_list.map((blog) => (
+           <Link
+           to={`/blogs/${currentLang}/${blog.slug}`}
+           state={{ blog }}
+           key={`${currentLang}-${blog.id}`}
+           className="group flex flex-col cursor-pointer"
+         >
+           <article className="flex flex-col h-full">
+             {/* Image */}
+             <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
+               <img
+                 src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                 loading="lazy"
+                 decoding="async"
+                 alt={blog.title}
+                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+               />
+             </div>
+
+             {/* Content */}
+             <div className="flex flex-col gap-2.5 flex-1">
+               {/* Title & Category */}
+               <div className="flex flex-col gap-1">
+                 <h3 className="text-white text-[16px] leading-[1.5] tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                   {blog.title}
+                 </h3>
+                 <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                   {blog.category.name}
+                 </p>
+               </div>
+
+               {/* Stats & Button */}
+               <div className="flex items-center gap-[50px]">
+                 {/* Stats Pills */}
+                 <div className="flex items-center gap-2">
+                   {/* Views */}
+                   <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                     <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
+                     <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                       {blog.view}
+                     </span>
+                   </div>
+
+                   {/* Comments
+                   <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                     <MessageCircle className="size-5 text-[#666666]" strokeWidth={1.5} />
+                     <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                       {blog.comments}
+                     </span>
+                   </div> */}
+                 </div>
+
+                 {/* Read More Button */}
+                 <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
+                   <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
+                     {t('blogs.readNow')}
+                   </span>
+                   <svg className="size-5 shrink-0" fill="none" viewBox="0 0 20 20">
+                     <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
+                   </svg>
+                 </div>
+               </div>
+             </div>
+           </article>
+         </Link>
           ))}
         </div>
 
