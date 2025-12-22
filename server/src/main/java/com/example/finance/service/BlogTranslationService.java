@@ -1,5 +1,8 @@
 package com.example.finance.service;
 
+import com.example.finance.model.Blog;
+import com.example.finance.model.BlogTranslation;
+import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
 import lombok.AccessLevel;
@@ -8,24 +11,32 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogTranslationService {
     BlogTranslationRepository blogTranslationRepository;
+    BlogRepository blogRepository;
 
     public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable) {
         return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, pageable);
     }
 
+    @Transactional
     public BlogTranslationClientResponse findBlogTranslationByLangCodeAndSlug(String slug, String langCode) {
-        return blogTranslationRepository.findBlogTranslationByLangCodeAndSlug(slug, langCode);
+        BlogTranslationClientResponse blogTranslationClientResponse = blogTranslationRepository.findBlogTranslationByLangCodeAndSlug(slug, langCode);
+        if (blogTranslationClientResponse != null) {
+            UUID uid = blogTranslationClientResponse.getId();
+            blogRepository.findById(uid).ifPresent(blog -> {
+                blog.setView(blog.getView() + 1);
+                blogRepository.save(blog);
+            });
+        }
+        return blogTranslationClientResponse;
     }
 
     public List<BlogTranslationClientResponse> findFeaturedBlogList(String langCode, UUID category, Long seed) {
