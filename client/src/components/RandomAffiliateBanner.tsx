@@ -8,6 +8,14 @@ const AFFILIATE_CAMPAIGNS = [
   {
     image: "/banner/binance/poster.png",
     link: "https://accounts.binance.com/register?ref=GOINCOME"
+  },
+  {
+    image: "/banner/bybit/poster.png",
+    link: "https://www.bybitglobal.com/invite?ref=M3EKRL8"
+  },
+  {
+    image: "/banner/okx/poster.png",
+    link: "https://okx.com/join/93232594"
   }
 ];
 

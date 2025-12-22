@@ -17,7 +17,7 @@ export function BrokerComparisonTable() {
       license: "FCA 730729, CySEC 178/12",
       platform: "MT4, MT5, WebTerminal, Mobile",
       bonus: "Phí thấp, rút nhanh",
-      affiliateLink: "#"
+      affiliateLink: "https://one.exnessonelink.com/a/48gns7fdsp"
     },
     {
       name: "XM",
@@ -25,7 +25,7 @@ export function BrokerComparisonTable() {
       license: "CySEC 120/10, ASIC 443670, IFSC 000261/106",
       platform: "MT4, MT5, XM WebTrader, Mobile",
       bonus: "Bonus/khuyến mãi định kỳ",
-      affiliateLink: "#"
+      affiliateLink: "https://www.xmvnmarket.com/referral?token=dDx2S-IS37EF11VidOXGzQ"
     },
   ];
 
@@ -44,7 +44,7 @@ export function BrokerComparisonTable() {
       license: "Đăng ký tại BVI, hoạt động đa khu vực",
       platform: "Web, iOS, Android, API",
       bonus: "Bonus nạp & hoàn phí theo volume",
-      affiliateLink: "#"
+      affiliateLink: "https://www.bybitglobal.com/invite?ref=M3EKRL8"
     },
     {
       name: "OKX",
@@ -52,7 +52,7 @@ export function BrokerComparisonTable() {
       license: "Đăng ký tại Seychelles, chi nhánh toàn cầu",
       platform: "Web, iOS, Android, API",
       bonus: "Giảm phí cho holder OKB",
-      affiliateLink: "#"
+      affiliateLink: "https://okx.com/join/93232594"
     },
     {
       name: "BingX",
@@ -68,7 +68,7 @@ export function BrokerComparisonTable() {
       license: "Nền tảng đầu tư tài sản số (VN), vận hành theo mô hình doanh nghiệp fintech",
       platform: "iOS, Android, Web",
       bonus: "Staking & điểm thưởng ONUS",
-      affiliateLink: "#"
+      affiliateLink: "https://goonus.io/signup/6277729719995316126?utm_campaign=invite"
     }
   ];
 

@@ -8,7 +8,7 @@ export function RiskWarningDisclosure({ variant = 'full' }: RiskWarningDisclosur
   if (variant === 'compact') {
     return (
       <div className="bg-red-900/20 border border-red-800/50 rounded-lg p-3 sm:p-4 flex items-start gap-2 sm:gap-3">
-        <AlertTriangle className="size-4 sm:size-5 text-red-400 flex-shrink-0 mt-0.5" />
+        <AlertTriangle className="size-4 sm:size-5 text-red-400 shrink-0 mt-0.5" />
         <p className="text-red-300 text-xs sm:text-sm leading-relaxed">
           <strong>Cảnh báo rủi ro:</strong> Giao dịch tài chính có rủi ro cao. Bạn có thể mất toàn bộ số vốn đầu tư.
         </p>
