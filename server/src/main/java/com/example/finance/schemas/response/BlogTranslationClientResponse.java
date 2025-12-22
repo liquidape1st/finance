@@ -17,6 +17,7 @@ public class BlogTranslationClientResponse {
     private String title;
     private String content;
     private String excerpt;
+    private UUID blogId;
 
     private Integer view;
     private String image;

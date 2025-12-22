@@ -22,6 +22,7 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.title,
                     bt.content,
                     bt.excerpt,
+                    b.id,
                     b.view,
                     b.image,
                     b.author,
@@ -61,6 +62,7 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.title,
                     bt.content,
                     bt.excerpt,
+                    b.id,
                     b.view,
                     b.image,
                     b.author,
@@ -95,6 +97,7 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.title,
                     bt.content,
                     bt.excerpt,
+                    b.id,
                     b.view,
                     b.image,
                     b.author,
@@ -126,10 +129,23 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
 
     @Query("""
                 SELECT new com.example.finance.schemas.response.BlogTranslationClientResponse(
-                    bt.id, bt.langCode, bt.slug, bt.title, bt.content, bt.excerpt,
-                    b.view, b.image, b.author, b.featured, b.estimatedReadTime,
+                    bt.id,
+                    bt.langCode,
+                    bt.slug,
+                    bt.title,
+                    bt.content,
+                    bt.excerpt,
+                    b.id,
+                    b.view,
+                    b.image,
+                    b.author,
+                    b.featured,
+                    b.estimatedReadTime,
                     new com.example.finance.schemas.response.CategoryTranslationClientResponse(
-                        ct.id, ct.langCode, ct.name, c.id
+                        ct.id,
+                        ct.langCode,
+                        ct.name,
+                        c.id
                     ),
                     bt.createdAt, bt.updatedAt
                 )
@@ -147,10 +163,22 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
 
     @Query("""
                 SELECT new com.example.finance.schemas.response.BlogTranslationClientResponse(
-                    bt.id, bt.langCode, bt.slug, bt.title, bt.content, bt.excerpt,
-                    b.view, b.image, b.author, b.featured, b.estimatedReadTime,
+                    bt.id,
+                    bt.langCode,
+                    bt.slug,
+                    bt.title,
+                    bt.content,
+                    bt.excerpt,
+                    b.id,
+                    b.view,
+                    b.image,
+                    b.author,
+                    b.featured,
+                    b.estimatedReadTime,
                     new com.example.finance.schemas.response.CategoryTranslationClientResponse(
-                        ct.id, ct.langCode, ct.name, c.id
+                        ct.id,
+                        ct.langCode,
+                        ct.name, c.id
                     ),
                     bt.createdAt, bt.updatedAt
                 )

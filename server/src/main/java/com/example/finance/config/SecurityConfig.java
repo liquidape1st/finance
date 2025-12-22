@@ -63,7 +63,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "https://portal.goincome.net",
                 "https://goincome.net",
-                "http://localhost:6866",  // Client app
+                "http://localhost:6866",
                 "http://localhost:3000",
                 "http://localhost:8268"
         ));
