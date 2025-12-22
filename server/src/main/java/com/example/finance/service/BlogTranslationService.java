@@ -1,7 +1,5 @@
 package com.example.finance.service;
 
-import com.example.finance.model.Blog;
-import com.example.finance.model.BlogTranslation;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
@@ -13,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
