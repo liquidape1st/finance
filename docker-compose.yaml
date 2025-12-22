@@ -135,6 +135,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
+  
+  n8n:
+    container_name: n8n
+    image: docker.n8n.io/n8nio/n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh
+      - WEBHOOK_URL=https://n8n.goincome.net/
+    restart: unless-stopped
+    networks:
+      - microservices-net
 
   nginx:
     container_name: ms_nginx
@@ -165,3 +179,4 @@ volumes:
   finance_mysql_data:
   finance_redis_data:
   finance_redis_insight:
+  n8n_data:
