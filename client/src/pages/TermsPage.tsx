@@ -1,5 +1,6 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { SEO } from "../components/SEO";
 import { useTranslation } from "react-i18next";
 
 export function TermsPage() {
@@ -7,6 +8,11 @@ export function TermsPage() {
 
   return (
     <div className="bg-[#0f0f0f] min-h-screen w-full text-white">
+      <SEO
+        title={t("terms.title")}
+        description={t("terms.description")}
+        keywords="điều khoản sử dụng, terms of service, quy định sử dụng"
+      />
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24">

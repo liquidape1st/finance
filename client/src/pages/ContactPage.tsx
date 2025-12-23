@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { SEO } from "../components/SEO";
 import { useTranslation } from "react-i18next";
 
 export function ContactPage() {
@@ -27,8 +28,22 @@ export function ContactPage() {
     window.location.href = `mailto:${to}?subject=${mailSubject}&body=${mailBody}`;
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": t("contact.title"),
+    "description": t("contact.description"),
+    "url": "https://goincome.net/contact"
+  };
+
   return (
     <div className="bg-[#141414] min-h-screen w-full">
+      <SEO
+        title={t("contact.title")}
+        description={t("contact.description")}
+        keywords="liên hệ GOIncome, hỗ trợ khách hàng, tư vấn tài chính"
+        structuredData={structuredData}
+      />
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">
