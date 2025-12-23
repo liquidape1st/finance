@@ -9,7 +9,7 @@ export function Footer() {
           <h4 className="text-white text-base sm:text-lg mb-5 sm:mb-7">Trang Chủ</h4>
           <ul className="space-y-2.5 sm:space-y-3 text-[#666666] text-sm">
             <li><a href="/" className="hover:text-white transition-colors">Trang Chủ</a></li>
-            <li><a href="/blogs" className="hover:text-white transition-colors">Blog</a></li>
+            <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
             <li className="flex items-center gap-2">
               <a href="/resources" className="hover:text-white transition-colors">Tài Nguyên</a>
               <span className="bg-[#1a1a1a] border border-neutral-800 px-2.5 py-0.5 rounded text-white text-xs">Mới</span>

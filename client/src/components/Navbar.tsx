@@ -21,9 +21,9 @@ export function Navbar() {
     window.location.reload()
   };
   
-  const getCurrentPage = (): 'home' | 'blogs' | 'resources' | 'contact' => {
+  const getCurrentPage = (): 'home' | 'blog' | 'resources' | 'contact' => {
     if (location.pathname === '/') return 'home';
-    if (location.pathname === '/blogs') return 'blogs';
+    if (location.pathname === '/blog') return 'blog';
     if (location.pathname === '/resources') return 'resources';
     if (location.pathname === '/contact') return 'contact';
     return 'home';
@@ -69,7 +69,7 @@ export function Navbar() {
             <Link to="/" className={`text-sm transition-colors ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
               {t('nav.home')}
             </Link>
-            <Link to="/blogs" className={`text-sm transition-colors ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
+            <Link to="/blog" className={`text-sm transition-colors ${currentPage === 'blog' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
               {t('nav.blog')}
             </Link>
             <Link 
@@ -142,8 +142,8 @@ export function Navbar() {
                 {t('nav.home')}
               </Link>
               <Link 
-                to="/blogs" 
-                className={`text-sm transition-colors py-2 ${currentPage === 'blogs' ? 'text-white' : 'text-[#7e7e81]'}`}
+                to="/blog" 
+                className={`text-sm transition-colors py-2 ${currentPage === 'blog' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.blog')}

@@ -291,7 +291,7 @@ export function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {home_page_featured_blog_list.map((blog) => (
            <Link
-           to={`/blogs/${currentLang}/${blog.slug}`}
+           to={`/blog/${currentLang}/${blog.slug}`}
            state={{ blog }}
            key={`${currentLang}-${blog.id}`}
            className="group flex flex-col cursor-pointer"
