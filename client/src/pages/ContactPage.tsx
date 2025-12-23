@@ -3,6 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { useAppSelector } from "@/store";
 
 export function ContactPage() {
   const { t } = useTranslation();
@@ -28,18 +29,72 @@ export function ContactPage() {
     window.location.href = `mailto:${to}?subject=${mailSubject}&body=${mailBody}`;
   };
 
+  const canonicalUrl = `${window.location.origin}/contact`;
+  const siteImage = `${window.location.origin}/logo.png`;
+  const currentLang = useAppSelector((state) => state.locale.currentLang);
+  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
+
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": t('contact.title'),
+    "description": t('contact.description'),
+    "url": canonicalUrl,
+    "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "GOIncome",
+      "email": "contact@goincome.vn",
+      "url": window.location.origin,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@goincome.vn",
+        "contactType": "customer service"
+      }
+    }
+  };
+
   return (
     <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
         <title>{`GOIncome - ${t('contact.title')}`}</title>
         <meta name="description" content={t('contact.description')} />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('contact.title')}`} />
         <meta property="og:description" content={t('contact.description')} />
+        <meta property="og:image" content={siteImage} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GOIncome" />
+        
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`GOIncome - ${t('contact.title')}`} />
+        <meta name="twitter:description" content={t('contact.description')} />
+        <meta name="twitter:image" content={siteImage} />
+        
+        {/* Canonical */}
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
+        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        
+        {/* Additional SEO */}
+        <meta name="theme-color" content="#141414" />
+        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(contactPageSchema)}
+        </script>
       </Helmet>
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start" aria-label="Contact information and form">
           <div>
             <div className="bg-[#333333] inline-block px-3 py-1 rounded mb-3 sm:mb-4">
               <span className="text-white text-xs sm:text-sm">{t("contact.badge")}</span>
@@ -80,52 +135,60 @@ export function ContactPage() {
 
             <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm text-[#98989a] mb-1.5">
+                <label htmlFor="contact-name" className="block text-sm text-[#98989a] mb-1.5">
                   {t("contact.form.nameLabel")}
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  aria-required="false"
                   className="w-full bg-[#141414] border border-neutral-800 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-[#666666] focus:outline-none focus:border-[#FFD11A]/40 transition-colors"
                   placeholder={t("contact.form.namePlaceholder")}
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#98989a] mb-1.5">
+                <label htmlFor="contact-email" className="block text-sm text-[#98989a] mb-1.5">
                   {t("contact.form.emailLabel")}
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  aria-required="false"
                   className="w-full bg-[#141414] border border-neutral-800 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-[#666666] focus:outline-none focus:border-[#FFD11A]/40 transition-colors"
                   placeholder={t("contact.form.emailPlaceholder")}
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#98989a] mb-1.5">
+                <label htmlFor="contact-subject" className="block text-sm text-[#98989a] mb-1.5">
                   {t("contact.form.subjectLabel")}
                 </label>
                 <input
+                  id="contact-subject"
                   type="text"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
+                  aria-required="false"
                   className="w-full bg-[#141414] border border-neutral-800 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-[#666666] focus:outline-none focus:border-[#FFD11A]/40 transition-colors"
                   placeholder={t("contact.form.subjectPlaceholder")}
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-[#98989a] mb-1.5">
+                <label htmlFor="contact-message" className="block text-sm text-[#98989a] mb-1.5">
                   {t("contact.form.messageLabel")}
                 </label>
                 <textarea
+                  id="contact-message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
+                  aria-required="false"
                   className="w-full bg-[#141414] border border-neutral-800 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder:text-[#666666] focus:outline-none focus:border-[#FFD11A]/40 transition-colors resize-none"
                   placeholder={t("contact.form.messagePlaceholder")}
                 />

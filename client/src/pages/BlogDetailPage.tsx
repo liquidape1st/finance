@@ -38,12 +38,123 @@ export function BlogDetailPage() {
     }))
   }, [lang, slug])
 
+  const blogImageUrl = blog.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
+  const canonicalUrl = `${window.location.origin}/blog/${lang}/${slug}`;
+  const blogListUrl = `${window.location.origin}/blog`;
+  const alternateLang = lang === 'vi' ? 'en' : 'vi';
+  const alternateUrl = `${window.location.origin}/blog/${alternateLang}/${slug}`;
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": blog.title,
+    "description": blog.excerpt,
+    "image": blogImageUrl ? [{
+      "@type": "ImageObject",
+      "url": blogImageUrl,
+      "width": 1200,
+      "height": 630
+    }] : [],
+    "datePublished": blog.createdAt,
+    "dateModified": blog.updatedAt,
+    "url": canonicalUrl,
+    "inLanguage": lang === 'vi' ? 'vi-VN' : 'en-US',
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "GOIncome",
+      "url": window.location.origin
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GOIncome",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${window.location.origin}/logo.png`,
+        "width": 512,
+        "height": 512
+      }
+    },
+    "articleSection": blog.category?.name || "Blog",
+    "keywords": blog.category?.name || "",
+    "wordCount": blog.content ? blog.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0
+  };
+
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": window.location.origin
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": blogListUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": blog.title,
+        "item": canonicalUrl
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
         <title>{`GOIncome - ${blog.title}`}</title>
         <meta name="description" content={blog.excerpt} />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${blog.title}`} />
+        <meta property="og:description" content={blog.excerpt} />
+        {blogImageUrl && <meta property="og:image" content={blogImageUrl} />}
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="GOIncome" />
+        
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`GOIncome - ${blog.title}`} />
+        <meta name="twitter:description" content={blog.excerpt} />
+        {blogImageUrl && <meta name="twitter:image" content={blogImageUrl} />}
+        
+        {/* Canonical */}
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang={lang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
+        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={alternateUrl} />
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        
+        {/* Article Meta Tags */}
+        <meta name="article:published_time" content={blog.createdAt} />
+        <meta name="article:modified_time" content={blog.updatedAt} />
+        <meta name="article:author" content="GOIncome" />
+        <meta name="article:section" content={blog.category?.name || "Blog"} />
+        {blog.category?.name && <meta name="article:tag" content={blog.category.name} />}
+        
+        {/* Additional SEO */}
+        <meta name="theme-color" content="#141414" />
+        <meta name="language" content={lang === 'vi' ? 'Vietnamese' : 'English'} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbData)}
+        </script>
       </Helmet>
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
@@ -73,36 +184,43 @@ export function BlogDetailPage() {
 
               <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
                 {blog.createdAt && (
-                  <span className="inline-flex items-center gap-2">
+                  <time className="inline-flex items-center gap-2" dateTime={blog.createdAt} itemProp="datePublished">
                     <Clock className="size-4" />
                     {blog.createdAt}
-                  </span>
+                  </time>
                 )}
-                <span className="inline-flex items-center gap-2">
-                  <Eye className="size-4" />
+                <span className="inline-flex items-center gap-2" aria-label={`${blog.view} views`}>
+                  <Eye className="size-4" aria-hidden="true" />
                   {blog.view}
                 </span>
               </div>
 
-              <div className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
+              <figure className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
                 <img
                   src={getBlogImageUrl(blog.image, blog.updatedAt)}
                   alt={blog.title}
                   loading="lazy"
                   decoding="async"
+                  width={1200}
+                  height={630}
                   className="absolute inset-0 w-full h-full object-cover"
+                  itemProp="image"
                 />
-              </div>
+              </figure>
 
-              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4">
+              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4" itemScope itemType="https://schema.org/BlogPosting">
+                <meta itemProp="headline" content={blog.title} />
+                <meta itemProp="description" content={blog.excerpt} />
+                {blogImageUrl && <meta itemProp="image" content={blogImageUrl} />}
                 <div
                   className="prose prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
+                  itemProp="articleBody"
                 />
               </article>
             </div>
-            {/* Element ADS */}
-            <div className="col-span-1">
+            {/* Sidebar */}
+            <aside className="col-span-1" aria-label="Related articles">
               <div className="flex flex-col gap-6 sticky top-0">
                 <div>
                   <RandomAffiliateBanner />
@@ -159,7 +277,7 @@ export function BlogDetailPage() {
                   <RandomAffiliateBanner />
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         </main>
 

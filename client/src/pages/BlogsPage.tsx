@@ -46,18 +46,94 @@ export function BlogsPage() {
     dispatch(getClientBlogTranslationPage(tableData))
   }, [tableData.category, tableData.pageIndex, tableData.query])
 
+  const canonicalUrl = `${window.location.origin}/blog`;
+  const siteImage = `${window.location.origin}/logo.png`;
+  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": t('blogs.title'),
+    "description": t('blogs.description'),
+    "url": canonicalUrl,
+    "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
+    "publisher": {
+      "@type": "Organization",
+      "name": "GOIncome",
+      "logo": {
+        "@type": "ImageObject",
+        "url": siteImage,
+        "width": 512,
+        "height": 512
+      }
+    }
+  };
+
+  const itemListData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": t('blogs.title'),
+    "description": t('blogs.description'),
+    "numberOfItems": blog_translation.length,
+    "itemListElement": blog_translation.slice(0, 10).map((blog, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "BlogPosting",
+        "headline": blog.title,
+        "description": blog.excerpt,
+        "url": `${window.location.origin}/blog/${currentLang}/${blog.slug}`,
+        "image": getBlogImageUrl(blog.image, blog.updatedAt)
+      }
+    }))
+  };
+
   return (
     <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
         <title>{`GOIncome - ${t('blogs.title')}`}</title>
         <meta name="description" content={t('blogs.description')} />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('blogs.title')}`} />
         <meta property="og:description" content={t('blogs.description')} />
+        <meta property="og:image" content={siteImage} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GOIncome" />
+        
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`GOIncome - ${t('blogs.title')}`} />
+        <meta name="twitter:description" content={t('blogs.description')} />
+        <meta name="twitter:image" content={siteImage} />
+        
+        {/* Canonical */}
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
+        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        
+        {/* Additional SEO */}
+        <meta name="theme-color" content="#141414" />
+        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+        {/* ItemList Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(itemListData)}
+        </script>
       </Helmet>
       <Navbar />
 
+      <main>
       {/* Hero Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16" aria-label="Blog listing">
         <div className="mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full mb-4">
             <div className="size-1.5 bg-[#FFD11A] rounded-full"></div>
@@ -73,15 +149,20 @@ export function BlogsPage() {
 
         {/* Search Bar */}
         <div className="relative mb-8">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#666666]" />
+          <label htmlFor="blog-search" className="sr-only">
+            {t('blogs.searchPlaceholder')}
+          </label>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#666666]" aria-hidden="true" />
           <input
-            type="text"
+            id="blog-search"
+            type="search"
             value={search}
             onChange={e => {
               setSearch(e.target.value)
               debouncedSearch(e.target.value)
             }}
             placeholder={t('blogs.searchPlaceholder')}
+            aria-label={t('blogs.searchPlaceholder')}
             className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg pl-12 pr-4 py-3.5 text-white placeholder:text-[#666666] focus:border-[#FFD11A]/40 focus:outline-none transition-colors"
           />
         </div>
@@ -192,6 +273,7 @@ export function BlogsPage() {
         </div>
       </section>
       {/* Newsletter CTA */}
+      </main>
 
       <Footer />
     </div>

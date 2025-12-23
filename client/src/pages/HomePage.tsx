@@ -63,18 +63,96 @@ export function HomePage() {
 
 
 
+  const canonicalUrl = `${window.location.origin}/`;
+  const siteImage = `${window.location.origin}/logo.png`;
+  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "GOIncome",
+    "url": canonicalUrl,
+    "description": t('home.description'),
+    "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${canonicalUrl}blog?query={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GOIncome",
+      "logo": {
+        "@type": "ImageObject",
+        "url": siteImage,
+        "width": 512,
+        "height": 512
+      },
+      "url": canonicalUrl,
+      "sameAs": []
+    }
+  };
+
   return (
     <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
+        {/* Organization Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "GOIncome",
+            "url": canonicalUrl,
+            "logo": siteImage,
+            "sameAs": []
+          })}
+        </script>
         <title>{`GOIncome - ${t('home.title')}`}</title>
         <meta name="description" content={t('home.description')} />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('home.title')}`} />
         <meta property="og:description" content={t('home.description')} />
+        <meta property="og:image" content={siteImage} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GOIncome" />
+        
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`GOIncome - ${t('home.title')}`} />
+        <meta name="twitter:description" content={t('home.description')} />
+        <meta name="twitter:image" content={siteImage} />
+        
+        {/* Canonical */}
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
+        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        
+        {/* Additional SEO Meta Tags */}
+        <meta name="theme-color" content="#141414" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="geo.region" content="VN" />
+        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
       </Helmet>
       <Navbar />
 
+      <main>
       {/* Hero Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Hero section">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
           {t('home.title')}
         </h1>
@@ -111,14 +189,14 @@ export function HomePage() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
             {t('home.daily')}
           </h2>
-          <p className="flex-1 text-[#98989a] text-sm sm:text-base leading-relaxed">
+          <p className="flex-1 text-[#98989a] text-sm sm:text-base leading-relaxed" role="text">
             {t('home.dailyDescription')}
           </p>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 border-t border-neutral-800">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 border-t border-neutral-800" aria-label="Statistics">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-neutral-800">
           {stats.map((stat, index) => (
             <div key={index} className="py-8 sm:py-12 md:py-16 text-center">
@@ -132,7 +210,7 @@ export function HomePage() {
       </section>
 
       {/* Features Cards */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Features">
         <div className="bg-[#141414] border border-neutral-800 rounded-xl p-2 sm:p-2.5">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-2.5">
             <div className="bg-[#1a1a1a] border border-neutral-800 rounded-lg p-6 sm:p-8">
@@ -181,17 +259,17 @@ export function HomePage() {
       </section>
 
       {/* Tabs & Content Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Articles and whitepapers">
         <div className="bg-[#1a1a1a] rounded-xl p-6 sm:p-8 md:p-12 border border-neutral-800">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 sm:mb-10 md:mb-12 gap-6">
-            <div className="flex-1">
+            <header className="flex-1">
               <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-2.5">
                 <span className="text-white text-sm sm:text-base">{t('home.articles.title')}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white leading-tight tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
                 {t('home.articles.heading')}
               </h2>
-            </div>
+            </header>
 
             <div className="bg-[#141414] border border-neutral-800 rounded-xl p-2 sm:p-2.5 flex flex-col sm:flex-row gap-2 sm:gap-2.5">
               <button className="bg-neutral-800 border border-neutral-800 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-lg text-white text-xs sm:text-sm w-full sm:w-auto">
@@ -294,7 +372,7 @@ export function HomePage() {
       </section>
 
       {/* Ebooks Grid */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {home_page_featured_blog_list.map((blog) => (
            <Link
@@ -375,6 +453,7 @@ export function HomePage() {
           />
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>

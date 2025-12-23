@@ -7,23 +7,87 @@ import { BrokerComparisonTable } from "../components/BrokerComparisonTable";
 import { GlossaryList } from "../components/KeyTermsGlossary";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { useAppSelector } from "@/store";
 
 export function ResourcesPage() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"broker" | "glossary">("broker");
+
+  const canonicalUrl = `${window.location.origin}/resources`;
+  const siteImage = `${window.location.origin}/logo.png`;
+  const currentLang = useAppSelector((state) => state.locale.currentLang);
+  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
+
+  const resourcesPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t('resources.title'),
+    "description": t('resources.description'),
+    "url": canonicalUrl,
+    "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Trading Resources",
+      "description": "Broker comparison and trading glossary",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Broker Comparison",
+          "description": "Compare trusted trading brokers"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Trading Glossary",
+          "description": "Comprehensive trading terms dictionary"
+        }
+      ]
+    }
+  };
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
         <title>{`GOIncome - ${t('resources.title')}`}</title>
         <meta name="description" content={t('resources.description')} />
+        
+        {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('resources.title')}`} />
         <meta property="og:description" content={t('resources.description')} />
+        <meta property="og:image" content={siteImage} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GOIncome" />
+        
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`GOIncome - ${t('resources.title')}`} />
+        <meta name="twitter:description" content={t('resources.description')} />
+        <meta name="twitter:image" content={siteImage} />
+        
+        {/* Canonical */}
+        <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Hreflang for multilingual SEO */}
+        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
+        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        
+        {/* Additional SEO */}
+        <meta name="theme-color" content="#141414" />
+        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(resourcesPageSchema)}
+        </script>
       </Helmet>
       <Navbar />
 
+      <main>
       {/* Hero Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Resources hero section">
         <div className="bg-[#333333] inline-block px-3 py-1 rounded mb-3 sm:mb-4">
           <span className="text-white text-xs sm:text-sm">Công Cụ & Tài Nguyên</span>
         </div>
@@ -112,6 +176,7 @@ export function ResourcesPage() {
 
         {/* Guides Tab (đã loại bỏ để trang chỉ còn 2 phần: So sánh sàn & Từ điển) */}
       </section>
+      </main>
 
       <Footer />
     </div>
