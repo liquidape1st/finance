@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { SEO } from "../components/SEO";
 
 export function BlogsPage() {
   const { t } = useTranslation();
@@ -46,27 +45,8 @@ export function BlogsPage() {
     dispatch(getClientBlogTranslationPage(tableData))
   }, [tableData.category, tableData.pageIndex, tableData.query])
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "GOIncome Blog",
-    "url": "https://goincome.net/blog",
-    "description": t('blogs.description'),
-    "publisher": {
-      "@type": "Organization",
-      "name": "GOIncome",
-      "url": "https://goincome.net"
-    }
-  };
-
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <SEO
-        title={t('blogs.title')}
-        description={t('blogs.description')}
-        keywords="blog tài chính, kiến thức đầu tư, hướng dẫn forex, phân tích thị trường, tài chính cá nhân"
-        structuredData={structuredData}
-      />
       <Navbar />
 
       {/* Hero Section */}

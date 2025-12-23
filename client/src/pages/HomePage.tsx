@@ -10,7 +10,6 @@ import { AffiliateBanner } from "../components/AffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
-import { SEO } from "../components/SEO";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
 
 export function HomePage() {
@@ -63,29 +62,8 @@ export function HomePage() {
 
 
 
-  const defaultDescription = "GOIncome cung cấp kiến thức tài chính cá nhân, hướng dẫn affiliate forex, hoàn phí sàn giao dịch và so sánh các sàn giao dịch uy tín. Tài nguyên chuyên nghiệp cho nhà đầu tư.";
-  
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "GOIncome",
-    "url": "https://goincome.net",
-    "description": defaultDescription,
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://goincome.net/blog?query={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  };
-
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <SEO
-        title="Trang Chủ"
-        description="GOIncome - Nền tảng kiến thức tài chính cá nhân hàng đầu. Hướng dẫn affiliate forex, hoàn phí sàn giao dịch, so sánh sàn uy tín và tài nguyên giao dịch chuyên nghiệp."
-        keywords="tài chính cá nhân, affiliate forex, hoàn phí sàn giao dịch, so sánh sàn forex, kiến thức đầu tư, hướng dẫn giao dịch"
-        structuredData={structuredData}
-      />
       <Navbar />
 
       {/* Hero Section */}

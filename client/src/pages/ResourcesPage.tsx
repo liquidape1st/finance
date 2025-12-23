@@ -1,6 +1,5 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { SEO } from "../components/SEO";
 import { useState } from "react";
 import { AffiliateBanner } from "../components/AffiliateBanner";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
@@ -10,22 +9,8 @@ import { GlossaryList } from "../components/KeyTermsGlossary";
 export function ResourcesPage() {
   const [activeTab, setActiveTab] = useState<"broker" | "glossary">("broker");
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Tài Nguyên Giao Dịch Chuyên Nghiệp",
-    "description": "Truy cập nhanh bảng so sánh sàn giao dịch uy tín và từ điển thuật ngữ giao dịch chi tiết. Hai tài nguyên cốt lõi giúp bạn hiểu thị trường và chọn sàn phù hợp.",
-    "url": "https://goincome.net/resources"
-  };
-
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <SEO
-        title="Tài Nguyên Giao Dịch"
-        description="So sánh sàn giao dịch uy tín và từ điển thuật ngữ giao dịch chi tiết. Tài nguyên chuyên nghiệp giúp bạn hiểu thị trường và chọn sàn phù hợp."
-        keywords="so sánh sàn giao dịch, từ điển thuật ngữ, sàn forex uy tín, broker comparison, thuật ngữ giao dịch"
-        structuredData={structuredData}
-      />
       <Navbar />
 
       {/* Hero Section */}

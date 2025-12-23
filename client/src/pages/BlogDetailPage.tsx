@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { SEO } from "../components/SEO";
 import { useEffect } from "react";
 import { getClientBlogTranslationPage } from "@/store/slices/finance/financeSlice";
 
@@ -39,45 +38,9 @@ export function BlogDetailPage() {
     }))
   }, [lang, slug])
 
-  const blogImageUrl = blog?.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
-  const blogUrl = `https://goincome.net/blog/${lang}/${slug}`;
-  
-  const structuredData = blog?.title ? {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": blog.title,
-    "description": blog.excerpt || blog.content?.substring(0, 200) || "",
-    "image": blogImageUrl,
-    "datePublished": blog.createdAt || new Date().toISOString(),
-    "dateModified": blog.updatedAt || new Date().toISOString(),
-    "author": {
-      "@type": "Organization",
-      "name": "GOIncome"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "GOIncome",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://goincome.net/logo.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": blogUrl
-    },
-    "articleSection": blog.category?.name || "Tài chính"
-  } : null;
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <SEO
-        title={blog?.title || "Bài viết"}
-        description={blog?.excerpt || blog?.content?.substring(0, 160) || "Đọc bài viết chi tiết về tài chính và đầu tư"}
-        image={blogImageUrl}
-        type="article"
-        structuredData={structuredData}
-      />
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
