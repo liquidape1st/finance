@@ -11,6 +11,7 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
+import { Helmet } from "react-helmet";
 
 export function HomePage() {
   const dispatch = useAppDispatch()
@@ -64,6 +65,12 @@ export function HomePage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
+      <Helmet>
+        <title>{`GOIncome - ${t('home.title')}`}</title>
+        <meta name="description" content={t('home.description')} />
+        <meta property="og:title" content={`GOIncome - ${t('home.title')}`} />
+        <meta property="og:description" content={t('home.description')} />
+      </Helmet>
       <Navbar />
 
       {/* Hero Section */}

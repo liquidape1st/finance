@@ -483,6 +483,10 @@
             "footer": "Free • Cancel anytime • We respect your privacy"
         }
     },
+    "resources": {
+        "title": "Trading Resources & Tools",
+        "description": "Access professional trading resources including broker comparison tables and comprehensive trading glossary. Essential tools to understand the market and choose the right broker."
+    },
     "terms": {
         "badge": "Legal information",
         "title": "Terms & Conditions",

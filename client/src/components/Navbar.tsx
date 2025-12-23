@@ -54,7 +54,7 @@ export function Navbar() {
               <img src={logoImage} alt="GO Income" className="scale-[280%]"/>
             </div>
             <div>
-              <div className="flex items-baseline gap-1">
+              <div className="flex items-baseline">
                 <h1 className="text-white text-lg sm:text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
                   GO
                 </h1>

@@ -483,6 +483,10 @@
             "footer": "Miễn phí • Hủy bất cứ lúc nào • Chúng tôi tôn trọng quyền riêng tư của bạn"
         }
     },
+    "resources": {
+        "title": "Tài Nguyên & Công Cụ Giao Dịch",
+        "description": "Truy cập các tài nguyên giao dịch chuyên nghiệp bao gồm bảng so sánh sàn giao dịch và từ điển thuật ngữ giao dịch chi tiết. Công cụ cần thiết để hiểu thị trường và chọn sàn phù hợp."
+    },
     "terms": {
         "badge": "Thông tin pháp lý",
         "title": "Terms & Conditions",

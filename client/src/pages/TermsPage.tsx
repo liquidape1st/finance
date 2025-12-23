@@ -1,12 +1,19 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 
 export function TermsPage() {
   const { t } = useTranslation();
 
   return (
     <div className="bg-[#0f0f0f] min-h-screen w-full text-white">
+      <Helmet>
+        <title>{`GOIncome - ${t('terms.title')}`}</title>
+        <meta name="description" content={t('terms.description')} />
+        <meta property="og:title" content={`GOIncome - ${t('terms.title')}`} />
+        <meta property="og:description" content={t('terms.description')} />
+      </Helmet>
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24">

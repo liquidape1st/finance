@@ -5,12 +5,21 @@ import { AffiliateBanner } from "../components/AffiliateBanner";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import { BrokerComparisonTable } from "../components/BrokerComparisonTable";
 import { GlossaryList } from "../components/KeyTermsGlossary";
+import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 
 export function ResourcesPage() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"broker" | "glossary">("broker");
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
+      <Helmet>
+        <title>{`GOIncome - ${t('resources.title')}`}</title>
+        <meta name="description" content={t('resources.description')} />
+        <meta property="og:title" content={`GOIncome - ${t('resources.title')}`} />
+        <meta property="og:description" content={t('resources.description')} />
+      </Helmet>
       <Navbar />
 
       {/* Hero Section */}

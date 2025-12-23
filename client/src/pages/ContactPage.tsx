@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 
 export function ContactPage() {
   const { t } = useTranslation();
@@ -29,6 +30,12 @@ export function ContactPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
+      <Helmet>
+        <title>{`GOIncome - ${t('contact.title')}`}</title>
+        <meta name="description" content={t('contact.description')} />
+        <meta property="og:title" content={`GOIncome - ${t('contact.title')}`} />
+        <meta property="og:description" content={t('contact.description')} />
+      </Helmet>
       <Navbar />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">

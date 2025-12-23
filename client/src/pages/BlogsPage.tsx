@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
+import { Helmet } from "react-helmet";
 
 export function BlogsPage() {
   const { t } = useTranslation();
@@ -47,6 +48,12 @@ export function BlogsPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
+      <Helmet>
+        <title>{`GOIncome - ${t('blogs.title')}`}</title>
+        <meta name="description" content={t('blogs.description')} />
+        <meta property="og:title" content={`GOIncome - ${t('blogs.title')}`} />
+        <meta property="og:description" content={t('blogs.description')} />
+      </Helmet>
       <Navbar />
 
       {/* Hero Section */}
