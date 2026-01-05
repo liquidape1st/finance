@@ -4,6 +4,7 @@
         "runner-type": "javascript",
         "health-check-server-port": "5681",
         "workdir": "/opt/runners/task-runner-javascript",
+        "command": "/usr/local/bin/node dist/task-runner-process.js",
         "env-overrides": {
           "NODE_FUNCTION_ALLOW_BUILTIN": "crypto",
           "NODE_FUNCTION_ALLOW_EXTERNAL": "moment,uuid"
@@ -13,6 +14,7 @@
         "runner-type": "python",
         "health-check-server-port": "5682",
         "workdir": "/opt/runners/task-runner-python",
+        "command": "/usr/local/bin/node dist/task-runner-process.js",
         "env-overrides": {
           "PYTHONPATH": "/opt/runners/task-runner-python",
           "N8N_RUNNERS_STDLIB_ALLOW": "json,random",
