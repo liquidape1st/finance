@@ -2,8 +2,12 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Cài đặt Python 3 và PIP (cho Alpine Linux)
-RUN apk add --update --no-cache python3 py3-pip
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # (Tùy chọn) Cài thêm các thư viện Python nếu cần, ví dụ: pandas, requests
 RUN pip3 install pandas requests
