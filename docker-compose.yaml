@@ -138,7 +138,9 @@ services:
   
   n8n:
     container_name: n8n
-    image: docker.n8n.io/n8nio/n8n
+    build:
+      context: .
+      dockerfile: assistant/n8n/Dockerfile
     ports:
       - "5678:5678"
     volumes:
