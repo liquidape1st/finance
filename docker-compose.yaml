@@ -170,6 +170,7 @@ services:
     environment:
       - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
       - N8N_RUNNERS_AUTH_TOKEN=someRandomTokenForAuthCRTqwe123@#$
+      - N8N_RUNNERS_CONFIG_FILE=/etc/n8n-task-runners.json
     depends_on:
       - n8n
     networks:
