@@ -161,8 +161,12 @@ services:
       - microservices-net
   
   task-runners:
-    image: n8nio/runners
     container_name: n8n-runners
+    build:
+      context: ./assistant/n8n-task-runners
+      dockerfile: Dockerfile
+    profiles:
+      - prod
     environment:
       - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
       - N8N_RUNNERS_AUTH_TOKEN=someRandomTokenForAuthCRTqwe123@#$
@@ -170,6 +174,8 @@ services:
       - n8n
     networks:
       - microservices-net  
+    volumes:
+      - ./assistant/n8n-task-runners/n8n-task-runners.json:/etc/n8n-task-runners.json
     restart: unless-stopped
 
   nginx:
