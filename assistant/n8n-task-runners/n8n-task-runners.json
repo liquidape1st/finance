@@ -2,23 +2,19 @@
     "task-runners": [
       {
         "runner-type": "javascript",
-        "health-check-server-port": "5681",
-        "workdir": "/opt/runners/task-runner-javascript",
-        "command": "/usr/local/bin/node dist/task-runner-process.js",
+        "workdir": "/home/runner",
         "env-overrides": {
-          "NODE_FUNCTION_ALLOW_BUILTIN": "crypto",
+          "NODE_FUNCTION_ALLOW_BUILTIN": "crypto",        
           "NODE_FUNCTION_ALLOW_EXTERNAL": "moment,uuid"
         }
       },
       {
         "runner-type": "python",
-        "health-check-server-port": "5682",
-        "workdir": "/opt/runners/task-runner-python",
-        "command": "/usr/local/bin/node dist/task-runner-process.js",
+        "workdir": "/home/runner",
         "env-overrides": {
           "PYTHONPATH": "/opt/runners/task-runner-python",
-          "N8N_RUNNERS_STDLIB_ALLOW": "json,random",
-          "N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,pandas"
+          "N8N_RUNNERS_STDLIB_ALLOW": "json",             
+          "N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,pandas"    
         }
       }
     ]
