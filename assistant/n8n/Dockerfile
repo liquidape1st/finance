@@ -1,10 +1,12 @@
 FROM n8nio/n8n:latest
 
 USER root
-RUN apt-get update && apt-get install -y python3-pip build-essential
-# Cài đặt Python và công cụ build cho Alpine
+
+# Alpine: dùng apk
+RUN apk update && \
+    apk add --no-cache python3 py3-pip make g++
 
 # Cài đặt thư viện Python
-RUN python3 -m pip install --no-cache-dir --break-system-packages pandas requests
+RUN python3 -m pip install --no-cache-dir pandas requests
 
 USER node
