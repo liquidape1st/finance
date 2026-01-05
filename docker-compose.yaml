@@ -161,10 +161,10 @@ services:
       - microservices-net
   
   task-runners:
-    image: n8nio/runners:1.111.0
+    image: n8nio/runners
     container_name: n8n-runners
     environment:
-      - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5678
+      - N8N_RUNNERS_TASK_BROKER_URI=http://n8n:5679
       - N8N_RUNNERS_AUTH_TOKEN=someRandomTokenForAuthCRTqwe123@#$
     depends_on:
       - n8n
