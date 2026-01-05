@@ -3,7 +3,7 @@
       {
         "runner-type": "javascript",
         "health-check-server-port": "5681",
-        "working-directory": "/opt/runners/task-runner-javascript",
+        "workdir": "/opt/runners/task-runner-javascript",
         "command": "node dist/task-runner-process.js",
         "env-overrides": {
           "NODE_FUNCTION_ALLOW_BUILTIN": "crypto",
@@ -13,7 +13,7 @@
       {
         "runner-type": "python",
         "health-check-server-port": "5682",
-        "working-directory": "/opt/runners/task-runner-python",
+        "workdir": "/opt/runners/task-runner-python",
         "command": "node dist/task-runner-process.js",
         "env-overrides": {
           "PYTHONPATH": "/opt/runners/task-runner-python",
