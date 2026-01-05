@@ -29,7 +29,6 @@ public class MysqlExportService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final String LOG_PREFIX = "mysql-backup4j-export";
     private String dirName = "mysql-backup4j-export-temp";
-    @Getter
     private String sqlFileName = "";
     private String zipFileName = "";
     private final Properties properties;
