@@ -17,5 +17,5 @@ public class TagRequest {
     @NotNull(groups = {UpdateMethod.class})
     private UUID id;
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
-    private List<TagTranslationRequest> translationRequests;
+    private List<TagTranslationRequest> translations;
 }

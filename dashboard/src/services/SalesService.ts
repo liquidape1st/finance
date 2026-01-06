@@ -33,14 +33,12 @@ export async function apiDetailSystem<T>(endpoint: string, id: string) {
         method: 'get',
     })
 }
-export async function apiDeleteSystem<T, U extends Record<string, unknown>>(
+export async function apiDeleteSystem<T>(
     endpoint: string,
-    data: U,
 ) {
     return ApiService.fetchData<T>({
         url: endpoint,
         method: 'delete',
-        data,
     })
 }
 export async function apiPostFormDataSystem<

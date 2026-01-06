@@ -1,15 +1,13 @@
 package com.example.finance.service;
 
-import com.example.finance.model.Blog;
 import com.example.finance.model.Tag;
 import com.example.finance.model.TagTranslation;
 import com.example.finance.pageable.PageableObject;
 import com.example.finance.repository.TagRepository;
 import com.example.finance.repository.TagTranslationRepository;
-import com.example.finance.schemas.request.BlogRequest;
 import com.example.finance.schemas.request.TagRequest;
 import com.example.finance.schemas.request.TagTranslationRequest;
-import com.example.finance.schemas.response.ResponsePayload;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -33,37 +31,38 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
     }
 
     @Override
-    public Page<Tag> searchEntities(PageableObject pageableObject) {
-        return null;
+    public Page<Tag> searchEntities(@NotNull PageableObject pageableObject) {
+        return tagRepository.search(pageableObject.getQuery(), pageableObject.toPageRequest());
     }
 
     @Override
     @Transactional
     public Tag createEntity(TagRequest request) {
-        List<TagTranslationRequest> list = request.getTranslationRequests();
+        List<TagTranslationRequest> list = request.getTranslations();
         Tag newTag = new Tag();
         for (TagTranslationRequest tagTranslationRequest : list) {
             TagTranslation tagTranslation = new TagTranslation();
-            tagTranslation.setLang(tagTranslationRequest.getLang());
-            tagTranslation.setSlug(tagTranslationRequest.getSlug());
-            tagTranslation.setName(tagTranslationRequest.getName());
-            tagTranslation.setTag(newTag);
+            mapTagTranslation(newTag, tagTranslationRequest, tagTranslation);
         }
         return tagRepository.save(newTag);
     }
 
     @Override
     public Tag updateEntityById(UUID uuid, TagRequest request) {
-        List<TagTranslationRequest> list = request.getTranslationRequests();
-        Tag newTag = findEntityById(request.getId());
-        for (TagTranslationRequest tagTranslationRequest : list) {
-            TagTranslation tagTranslation = tagTranslationRepository.findByTagId(tagTranslationRequest.getId()).orElse(new TagTranslation());
-            tagTranslation.setLang(tagTranslationRequest.getLang());
-            tagTranslation.setSlug(tagTranslationRequest.getSlug());
-            tagTranslation.setName(tagTranslationRequest.getName());
-            tagTranslation.setTag(newTag);
+        Tag existTag = findEntityById(request.getId());
+        for (TagTranslationRequest tagTranslationRequest : request.getTranslations()) {
+            System.out.println("Tìm kiếm");
+            System.out.println(tagTranslationRequest.getId());
+            TagTranslation tagTranslation = tagTranslationRepository.findById(tagTranslationRequest.getId()).orElse(new TagTranslation());
+            if (tagTranslation.getId() == null) {
+                System.out.println("Tạo mới");
+            } else {
+                System.out.println("Cập nhật");
+            }
+            mapTagTranslation(existTag, tagTranslationRequest, tagTranslation);
+            existTag.getTranslations().add(tagTranslation);
         }
-        return tagRepository.save(newTag);
+        return tagRepository.save(existTag);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
 
     @Override
     public void removeEntityById(UUID uuid) {
-
+        tagRepository.deleteById(uuid);
     }
 
     @Override
@@ -94,6 +93,14 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
     @Override
     protected String getEntityName() {
         return "Tag";
+    }
+
+    private void mapTagTranslation(Tag tag, TagTranslationRequest tagTranslationRequest, TagTranslation translation) {
+        translation.setLang(tagTranslationRequest.getLang());
+        translation.setSlug(tagTranslationRequest.getSlug());
+        translation.setName(tagTranslationRequest.getName());
+        translation.setTag(tag);
+        tag.getTranslations().add(translation);
     }
 
 }

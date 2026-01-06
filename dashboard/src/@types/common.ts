@@ -30,3 +30,9 @@ export interface Pageable {
     paged: boolean;
     unpaged: boolean;
 }
+export enum ActionMode {
+    CREATE = "CREATE",
+    UPDATE = "UPDATE",
+    DELETE = "DELETE",
+    SEARCH = "SEARCH"
+}

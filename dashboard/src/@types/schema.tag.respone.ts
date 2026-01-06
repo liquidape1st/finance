@@ -1,8 +1,6 @@
 export type TagResponse = {
     id: string
     translations: TagTranslationResponse[],
-    publishedAt: number
-    updatedAt: string
 }
 
 export type LangCode = 'vi' | 'en'

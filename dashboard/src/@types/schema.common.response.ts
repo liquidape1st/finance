@@ -15,13 +15,6 @@ export type ApiResponse<T = unknown> = {
 export type Paginated<T = unknown> = {
     content: T[]
     pageable: Pageable
-    last: boolean
-    totalPages: number
     totalElements: number
-    size: number
-    number: number
     sort: Sort
-    first: boolean
-    numberOfElements: number
-    empty: boolean
 }

@@ -12,5 +12,5 @@ import java.util.UUID;
 @Data
 public class TagResponse {
     private UUID id;
-    private List<TagTranslationResponse> tags;
+    private List<TagTranslationResponse> translations;
 }
