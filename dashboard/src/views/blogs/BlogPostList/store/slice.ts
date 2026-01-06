@@ -1,14 +1,15 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TableQueries } from '@/@types/common'
-import { apiGetSystem } from '@/services/SalesService'
-import { ApiResponse } from '@/@types/schema.common.response'
 import { BlogResponse } from '@/@types/schema.blog.respone'
+import { ApiResponse } from '@/@types/schema.common.response'
+import { apiGetSystem } from '@/services/SalesService'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const SLICE_NAME = 'salesBlogPostList'
 
 export type BlogSliceState = {
     blogs: BlogResponse[]
     tableData: TableQueries
+    isOpenManageAttribute: boolean
 }
 const initialState: BlogSliceState = {
     blogs: [],
@@ -22,6 +23,7 @@ const initialState: BlogSliceState = {
         pageSize: 10,
         pageIndex: 1,
     },
+    isOpenManageAttribute: false
 }
 
 export const searchBlogPosts = createAsyncThunk(
@@ -42,6 +44,9 @@ const slice = createSlice({
         setBlogs: (state, action: PayloadAction<BlogResponse[]>) => {
             state.blogs = action.payload
         },
+        setIsOpenManageAttribute: (state, action: PayloadAction<boolean>) => {
+            state.isOpenManageAttribute = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(searchBlogPosts.fulfilled, (state, action) => {
@@ -49,5 +54,5 @@ const slice = createSlice({
         })
     },
 })
-export const { setBlogs } = slice.actions
+export const { setBlogs, setIsOpenManageAttribute } = slice.actions
 export default slice.reducer

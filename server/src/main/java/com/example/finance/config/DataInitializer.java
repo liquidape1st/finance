@@ -75,6 +75,11 @@ public class DataInitializer implements CommandLineRunner {
                 "PERMISSION:UPDATE",
                 "PERMISSION:DELETE",
 
+                "TAG:READ",
+                "TAG:CREATE",
+                "TAG:UPDATE",
+                "TAG:DELETE",
+
                 "BLOG:READ",
                 "BLOG:CREATE",
                 "BLOG:UPDATE",
@@ -84,6 +89,11 @@ public class DataInitializer implements CommandLineRunner {
                 "CATEGORY:CREATE",
                 "CATEGORY:UPDATE",
                 "CATEGORY:DELETE",
+
+                "TAG-TRANSLATION:READ",
+                "TAG-TRANSLATION:CREATE",
+                "TAG-TRANSLATION:UPDATE",
+                "TAG-TRANSLATION:DELETE",
 
                 "BLOG-TRANSLATION:READ",
                 "BLOG-TRANSLATION:CREATE",
@@ -114,6 +124,10 @@ public class DataInitializer implements CommandLineRunner {
         userRole.setDescription("Regular user - can view products and create orders");
         Set<Permission> userPerms = new HashSet<>();
 
+        userPerms.add(findPermissionByName(allPermissions, "TAG:READ"));
+
+        userPerms.add(findPermissionByName(allPermissions, "TAG-TRANSLATION:READ"));
+
         userPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
 
         userPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:READ"));
@@ -131,6 +145,10 @@ public class DataInitializer implements CommandLineRunner {
         managerRole.setDescription("Manager - can manage products and orders");
         Set<Permission> managerPerms = new HashSet<>(userPerms);
 
+        managerPerms.add(findPermissionByName(allPermissions, "TAG:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "TAG:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "TAG:UPDATE"));
+
         managerPerms.add(findPermissionByName(allPermissions, "BLOG:READ"));
         managerPerms.add(findPermissionByName(allPermissions, "BLOG:CREATE"));
         managerPerms.add(findPermissionByName(allPermissions, "BLOG:UPDATE"));
@@ -138,6 +156,10 @@ public class DataInitializer implements CommandLineRunner {
         managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:READ"));
         managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:CREATE"));
         managerPerms.add(findPermissionByName(allPermissions, "CATEGORY:UPDATE"));
+
+        managerPerms.add(findPermissionByName(allPermissions, "TAG-TRANSLATION:READ"));
+        managerPerms.add(findPermissionByName(allPermissions, "TAG-TRANSLATION:CREATE"));
+        managerPerms.add(findPermissionByName(allPermissions, "TAG-TRANSLATION:UPDATE"));
 
         managerPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:READ"));
         managerPerms.add(findPermissionByName(allPermissions, "BLOG-TRANSLATION:CREATE"));

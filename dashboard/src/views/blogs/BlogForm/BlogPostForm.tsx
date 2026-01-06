@@ -484,6 +484,54 @@ const BlogPostForm = () => {
                                         component={Input}
                                     />
                                 </FormItem>
+                                 {/* <FormItem
+                                    label="Category"
+                                    invalid={
+                                        errors?.category?.id &&
+                                        touched?.category?.id
+                                    }
+                                    errorMessage={errors?.category?.id}
+                                >
+                                    <Field name="category.id">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: SelectOption[] =
+                                                blogCategories.map(
+                                                    (item: BlogCategory) => ({
+                                                        ...item,
+                                                        value: item.id,
+                                                        label: item
+                                                            ?.translations[0]
+                                                            ?.name,
+                                                    }),
+                                                )
+                                            return (
+                                                <Select
+                                                    placeholder="Category"
+                                                    field={field}
+                                                    form={form}
+                                                    options={transformedData}
+                                                    value={transformedData.filter(
+                                                        (s: SelectOption) =>
+                                                            s.id ===
+                                                            values?.category
+                                                                ?.id,
+                                                    )}
+                                                    onChange={(
+                                                        s: SelectOption | null,
+                                                    ) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            s?.id || '',
+                                                        )
+                                                    }
+                                                />
+                                            )
+                                        }}
+                                    </Field>
+                                </FormItem> */}
                                 <FieldArray key={selectedLang} name="translations">
                                     {() =>
                                         values.translations.map((t, index) => {

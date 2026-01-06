@@ -1,6 +1,7 @@
 export type BlogResponse = {
     id: string
     featured: boolean
+    type: string
     enabled: boolean
     image: string
     estimatedReadTime: number
