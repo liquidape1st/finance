@@ -15,6 +15,7 @@ public class BlogResponse {
     private Boolean featured;
     private Integer estimatedReadTime;
     private MinCategoryResponse category;
+    private TagResponse tag;
     private List<BlogTranslationClientResponse> translations;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;

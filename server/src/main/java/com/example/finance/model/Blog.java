@@ -43,7 +43,6 @@ public class Blog {
     @Column(name = "estimated_read_time")
     private Integer estimatedReadTime = 5;
 
-
     @JsonManagedReference
     @OneToMany(
             mappedBy = "blog",
@@ -52,11 +51,17 @@ public class Blog {
     )
     private List<BlogTranslation> translations = new ArrayList<>();
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "blog_tags",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags = new ArrayList<>();
 
     @Column(name = "published_at")
     @Convert(converter = LocalDateTimeConverter.class)
