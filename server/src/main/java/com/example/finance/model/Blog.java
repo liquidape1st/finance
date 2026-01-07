@@ -25,6 +25,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Blog {
+    public enum UiType {
+        BLOG,
+        NEWS
+    }
+    public enum ContentType {
+        GUIDE,
+        SHARING,
+        COMPARISON,
+        NEWS
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -37,6 +47,17 @@ public class Blog {
     private String image;
 
     private String author;
+
+    /* PHÂN LOẠI CHO UI */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ui_type", nullable = false)
+    private UiType uiType; // BLOG | NEWS
+
+
+    /* PHÂN LOẠI NỘI DUNG THẬT */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "content_type", nullable = false)
+    private ContentType contentType; // GUIDE | SHARING | COMPARISON | NEWS
 
     private Integer view = 0;
 

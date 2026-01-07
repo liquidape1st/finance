@@ -180,7 +180,12 @@ const TagList = () => {
 
     return (
         <Fragment>
-            <Card className="!max-w-4xl h-full">
+            <Card className="h-full">
+                <div className="mb-4">
+                    <h4>
+                        Quản lý Tag
+                    </h4>
+                </div>
                 <div className="flex justify-between">
                     <div>
                         <TagTableSearch />

@@ -1,5 +1,6 @@
 package com.example.finance.schemas.response;
 
+import com.example.finance.model.Blog;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ public class BlogResponse {
     private Integer estimatedReadTime;
     private MinCategoryResponse category;
     private TagResponse tag;
+    private Blog.UiType uiType;
+    private Blog.ContentType contentType;
     private List<BlogTranslationClientResponse> translations;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;

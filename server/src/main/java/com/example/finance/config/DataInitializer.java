@@ -5,6 +5,7 @@ import com.example.finance.repository.CategoryRepository;
 import com.example.finance.repository.PermissionRepository;
 import com.example.finance.repository.RoleRepository;
 import com.example.finance.repository.UserRepository;
+import com.example.finance.util.GenerateSlug;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,7 +46,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private void createBlogPostCategories () {
         Map<String, String[]> categories = new HashMap<>();
-        categories.put("vi", new String[]{"Tiền điện tử", "Forex"});
+        categories.put("vi", new String[]{"Tiền điện tử", "Ngoại hối"});
         categories.put("en", new String[]{"Cryptocurrency", "Forex"});
 
         int n = categories.get("vi").length;
@@ -57,6 +58,7 @@ public class DataInitializer implements CommandLineRunner {
                 translation.setLangCode(lang);
                 translation.setName(categories.get(lang)[i]);
                 translation.setCategory(category);
+                translation.setSlug(GenerateSlug.generateSlug(categories.get(lang)[i]));
                 category.getTranslations().add(translation);
             }
             categoryRepository.save(category);

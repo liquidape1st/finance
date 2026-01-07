@@ -3,7 +3,7 @@ import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import RichTextEditor from '@/components/shared/RichTextEditor'
-import { FieldArray, FieldProps, FormikProps, getIn , Field, Form, Formik } from 'formik'
+import { FieldArray, FieldProps, FormikProps, getIn, Field, Form, Formik } from 'formik'
 import ReactHtmlParser from 'html-react-parser'
 import * as Yup from 'yup'
 import reducer, {
@@ -134,7 +134,7 @@ const BlogPostForm = () => {
                 setPreviewImageUrl('')
             }
         }
-        loadPreviewImage().then(() => {})
+        loadPreviewImage().then(() => { })
     }, [blog.image, blog.id, isEditMode])
 
     const readFileAsDataUrl = (file: File): Promise<string> => {
@@ -484,7 +484,208 @@ const BlogPostForm = () => {
                                         component={Input}
                                     />
                                 </FormItem>
-                                 {/* <FormItem
+                                <FormItem
+                                    label="Category"
+                                    invalid={
+                                        errors?.category?.id &&
+                                        touched?.category?.id
+                                    }
+                                    errorMessage={errors?.category?.id}
+                                >
+                                    <Field name="category.id">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: SelectOption[] =
+                                                blogCategories.map(
+                                                    (item: BlogCategory) => ({
+                                                        ...item,
+                                                        value: item.id,
+                                                        label: item
+                                                            ?.translations[0]
+                                                            ?.name,
+                                                    }),
+                                                )
+                                            return (
+                                                <Select
+                                                    placeholder="Category"
+                                                    field={field}
+                                                    form={form}
+                                                    options={transformedData}
+                                                    value={transformedData.filter(
+                                                        (s: SelectOption) =>
+                                                            s.id ===
+                                                            values?.category
+                                                                ?.id,
+                                                    )}
+                                                    onChange={(
+                                                        s: SelectOption | null,
+                                                    ) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            s?.id || '',
+                                                        )
+                                                    }
+                                                />
+                                            )
+                                        }}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    label="Image"
+                                    invalid={errors.image && touched.image}
+                                    errorMessage={errors.image}
+                                >
+                                    <Field name="image">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            return (
+                                                <div>
+                                                    {form.values.image ? (
+                                                        <div className="space-y-4">
+                                                            <div className="relative inline-block w-full">
+                                                                <div className="rounded border-gray-300 dark:border-gray-600 border flex items-center gap-2">
+                                                                    <img
+                                                                        src={
+                                                                            previewImageUrl ||
+                                                                            form
+                                                                                .values
+                                                                                .image
+                                                                        }
+                                                                        alt="Preview"
+                                                                        className="max-w-full max-h-24"
+                                                                    />
+                                                                    <div>
+                                                                        {
+                                                                            form
+                                                                                .values
+                                                                                .image
+                                                                        }
+                                                                    </div>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="absolute right-2 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-lg"
+                                                                        disabled={
+                                                                            uploading ||
+                                                                            cropDialogOpen
+                                                                        }
+                                                                        title="Xóa ảnh"
+                                                                        onClick={async (): Promise<void> => {
+                                                                            await form.setFieldValue(
+                                                                                field.name,
+                                                                                '',
+                                                                            )
+                                                                            setPreviewFiles(
+                                                                                [],
+                                                                            )
+                                                                            setPreviewImageUrl(
+                                                                                '',
+                                                                            )
+                                                                        }}
+                                                                    >
+                                                                        <HiX className="" />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                                                                Hoặc chọn ảnh
+                                                                khác:
+                                                            </div>
+                                                            <Upload
+                                                                key={`upload-${form.values.image}`}
+                                                                draggable
+                                                                fileList={[]}
+                                                                beforeUpload={
+                                                                    beforeUpload
+                                                                }
+                                                                showList={false}
+                                                                disabled={
+                                                                    uploading ||
+                                                                    cropDialogOpen
+                                                                }
+                                                                onChange={async (
+                                                                    files: File[],
+                                                                ): Promise<void> => {
+                                                                    if (
+                                                                        files &&
+                                                                        files.length >
+                                                                        0
+                                                                    ) {
+                                                                        await openCropDialog(
+                                                                            files[0],
+                                                                            form,
+                                                                        )
+                                                                    }
+                                                                }}
+                                                                onFileRemove={async (): Promise<void> => {
+                                                                    await form.setFieldValue(
+                                                                        field.name,
+                                                                        '',
+                                                                    )
+                                                                    setPreviewFiles(
+                                                                        [],
+                                                                    )
+                                                                    setPreviewImageUrl(
+                                                                        '',
+                                                                    )
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <Upload
+                                                            key={
+                                                                blog.id ||
+                                                                'upload-new'
+                                                            }
+                                                            draggable
+                                                            fileList={
+                                                                previewFiles
+                                                            }
+                                                            beforeUpload={
+                                                                beforeUpload
+                                                            }
+                                                            showList={false}
+                                                            disabled={
+                                                                uploading ||
+                                                                cropDialogOpen
+                                                            }
+                                                            onChange={async (
+                                                                files: File[],
+                                                            ): Promise<void> => {
+                                                                if (
+                                                                    files &&
+                                                                    files.length >
+                                                                    0
+                                                                ) {
+                                                                    await openCropDialog(
+                                                                        files[0],
+                                                                        form,
+                                                                    )
+                                                                }
+                                                            }}
+                                                            onFileRemove={async (): Promise<void> => {
+                                                                await form.setFieldValue(
+                                                                    field.name,
+                                                                    '',
+                                                                )
+                                                                setPreviewFiles(
+                                                                    [],
+                                                                )
+                                                                setPreviewImageUrl(
+                                                                    '',
+                                                                )
+                                                            }}
+                                                        />
+                                                    )}
+                                                </div>
+                                            )
+                                        }}
+                                    </Field>
+                                </FormItem>
+                                {/* <FormItem
                                     label="Category"
                                     invalid={
                                         errors?.category?.id &&
@@ -664,207 +865,7 @@ const BlogPostForm = () => {
                                         })
                                     }
                                 </FieldArray>
-                                <FormItem
-                                    label="Category"
-                                    invalid={
-                                        errors?.category?.id &&
-                                        touched?.category?.id
-                                    }
-                                    errorMessage={errors?.category?.id}
-                                >
-                                    <Field name="category.id">
-                                        {({
-                                            field,
-                                            form,
-                                        }: FieldProps<string, BlogRequest>) => {
-                                            const transformedData: SelectOption[] =
-                                                blogCategories.map(
-                                                    (item: BlogCategory) => ({
-                                                        ...item,
-                                                        value: item.id,
-                                                        label: item
-                                                            ?.translations[0]
-                                                            ?.name,
-                                                    }),
-                                                )
-                                            return (
-                                                <Select
-                                                    placeholder="Category"
-                                                    field={field}
-                                                    form={form}
-                                                    options={transformedData}
-                                                    value={transformedData.filter(
-                                                        (s: SelectOption) =>
-                                                            s.id ===
-                                                            values?.category
-                                                                ?.id,
-                                                    )}
-                                                    onChange={(
-                                                        s: SelectOption | null,
-                                                    ) =>
-                                                        form.setFieldValue(
-                                                            field.name,
-                                                            s?.id || '',
-                                                        )
-                                                    }
-                                                />
-                                            )
-                                        }}
-                                    </Field>
-                                </FormItem>
-                                <FormItem
-                                    label="Image"
-                                    invalid={errors.image && touched.image}
-                                    errorMessage={errors.image}
-                                >
-                                    <Field name="image">
-                                        {({
-                                            field,
-                                            form,
-                                        }: FieldProps<string, BlogRequest>) => {
-                                            return (
-                                                <div>
-                                                    {form.values.image ? (
-                                                        <div className="space-y-4">
-                                                            <div className="relative inline-block w-full">
-                                                                <div className="rounded border-gray-300 dark:border-gray-600 border flex items-center gap-2">
-                                                                    <img
-                                                                        src={
-                                                                            previewImageUrl ||
-                                                                            form
-                                                                                .values
-                                                                                .image
-                                                                        }
-                                                                        alt="Preview"
-                                                                        className="max-w-full max-h-24"
-                                                                    />
-                                                                    <div>
-                                                                        {
-                                                                            form
-                                                                                .values
-                                                                                .image
-                                                                        }
-                                                                    </div>
-                                                                    <button
-                                                                        type="button"
-                                                                        className="absolute right-2 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-lg"
-                                                                        disabled={
-                                                                            uploading ||
-                                                                            cropDialogOpen
-                                                                        }
-                                                                        title="Xóa ảnh"
-                                                                        onClick={async (): Promise<void> => {
-                                                                            await form.setFieldValue(
-                                                                                field.name,
-                                                                                '',
-                                                                            )
-                                                                            setPreviewFiles(
-                                                                                [],
-                                                                            )
-                                                                            setPreviewImageUrl(
-                                                                                '',
-                                                                            )
-                                                                        }}
-                                                                    >
-                                                                        <HiX className="" />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div className="text-sm text-gray-600 dark:text-gray-400">
-                                                                Hoặc chọn ảnh
-                                                                khác:
-                                                            </div>
-                                                            <Upload
-                                                                key={`upload-${form.values.image}`}
-                                                                draggable
-                                                                fileList={[]}
-                                                                beforeUpload={
-                                                                    beforeUpload
-                                                                }
-                                                                showList={false}
-                                                                disabled={
-                                                                    uploading ||
-                                                                    cropDialogOpen
-                                                                }
-                                                                onChange={async (
-                                                                    files: File[],
-                                                                ): Promise<void> => {
-                                                                    if (
-                                                                        files &&
-                                                                        files.length >
-                                                                            0
-                                                                    ) {
-                                                                        await openCropDialog(
-                                                                            files[0],
-                                                                            form,
-                                                                        )
-                                                                    }
-                                                                }}
-                                                                onFileRemove={async (): Promise<void> => {
-                                                                    await form.setFieldValue(
-                                                                        field.name,
-                                                                        '',
-                                                                    )
-                                                                    setPreviewFiles(
-                                                                        [],
-                                                                    )
-                                                                    setPreviewImageUrl(
-                                                                        '',
-                                                                    )
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        <Upload
-                                                            key={
-                                                                blog.id ||
-                                                                'upload-new'
-                                                            }
-                                                            draggable
-                                                            fileList={
-                                                                previewFiles
-                                                            }
-                                                            beforeUpload={
-                                                                beforeUpload
-                                                            }
-                                                            showList={false}
-                                                            disabled={
-                                                                uploading ||
-                                                                cropDialogOpen
-                                                            }
-                                                            onChange={async (
-                                                                files: File[],
-                                                            ): Promise<void> => {
-                                                                if (
-                                                                    files &&
-                                                                    files.length >
-                                                                        0
-                                                                ) {
-                                                                    await openCropDialog(
-                                                                        files[0],
-                                                                        form,
-                                                                    )
-                                                                }
-                                                            }}
-                                                            onFileRemove={async (): Promise<void> => {
-                                                                await form.setFieldValue(
-                                                                    field.name,
-                                                                    '',
-                                                                )
-                                                                setPreviewFiles(
-                                                                    [],
-                                                                )
-                                                                setPreviewImageUrl(
-                                                                    '',
-                                                                )
-                                                            }}
-                                                        />
-                                                    )}
-                                                </div>
-                                            )
-                                        }}
-                                    </Field>
-                                </FormItem>
+
                                 <div className="mt-4 flex justify-end">
                                     <Button
                                         loading={isSubmitting || loading}
@@ -875,7 +876,7 @@ const BlogPostForm = () => {
                                 </div>
                             </Card>
                             <Card
-                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "vi" ? "!border-red-400 !border": ""}`}
+                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "vi" ? "!border-red-400 !border" : ""}`}
                                 onClick={() => setSelectedLang("vi")}
                             >
                                 <h4>VI</h4>
@@ -894,7 +895,7 @@ const BlogPostForm = () => {
                                 </div>
                             </Card>
                             <Card
-                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "en" ? "!border-red-400 !border": ""}`}
+                                className={`col-span-4 h-[90svh] overflow-auto ${selectedLang == "en" ? "!border-red-400 !border" : ""}`}
                                 onClick={() => setSelectedLang("en")}
                             >
                                 <h4>EN</h4>

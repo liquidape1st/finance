@@ -16,7 +16,7 @@ public class TagTranslationRequest {
     @NotNull(groups = {UpdateMethod.class})
     private UUID id;
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
-    private String lang;
+    private String langCode;
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private String name;
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})

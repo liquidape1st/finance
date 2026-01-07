@@ -51,14 +51,7 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
     public Tag updateEntityById(UUID uuid, TagRequest request) {
         Tag existTag = findEntityById(request.getId());
         for (TagTranslationRequest tagTranslationRequest : request.getTranslations()) {
-            System.out.println("Tìm kiếm");
-            System.out.println(tagTranslationRequest.getId());
             TagTranslation tagTranslation = tagTranslationRepository.findById(tagTranslationRequest.getId()).orElse(new TagTranslation());
-            if (tagTranslation.getId() == null) {
-                System.out.println("Tạo mới");
-            } else {
-                System.out.println("Cập nhật");
-            }
             mapTagTranslation(existTag, tagTranslationRequest, tagTranslation);
             existTag.getTranslations().add(tagTranslation);
         }
@@ -96,7 +89,7 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
     }
 
     private void mapTagTranslation(Tag tag, TagTranslationRequest tagTranslationRequest, TagTranslation translation) {
-        translation.setLang(tagTranslationRequest.getLang());
+        translation.setLangCode(tagTranslationRequest.getLangCode());
         translation.setSlug(tagTranslationRequest.getSlug());
         translation.setName(tagTranslationRequest.getName());
         translation.setTag(tag);

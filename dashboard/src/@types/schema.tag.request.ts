@@ -7,7 +7,7 @@ export type LangCode = 'vi' | 'en'
 
 export type TagTranslationRequest = {
     id: string
-    lang: LangCode
+    langCode: LangCode
     slug: string
     name: string
 }

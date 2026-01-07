@@ -25,10 +25,10 @@ import java.util.UUID;
         name = "category_translations",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"category_id", "lang_code"}),
-                @UniqueConstraint(columnNames = {"lang_code", "name"})
+                @UniqueConstraint(columnNames = {"lang_code", "slug"})
         },
         indexes = {
-                @Index(name = "idx_translation_lang", columnList = "lang_code"),
+                @Index(name = "idx_translation_lang_slug", columnList = "lang_code, slug"),
         }
 )
 public class CategoryTranslation {
@@ -45,6 +45,9 @@ public class CategoryTranslation {
 
     @Column(name = "lang_code", length = 5, nullable = false)
     private String langCode; // vi, en, ja, fr...
+
+    @Column(name = "slug", nullable = false)
+    private String slug;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

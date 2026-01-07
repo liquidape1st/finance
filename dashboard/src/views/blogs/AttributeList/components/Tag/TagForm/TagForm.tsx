@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .of(
             Yup.object({
                 name: Yup.string().required(),
-                lang: Yup.string().required(),
+                langCode: Yup.string().required(),
                 slug: Yup.string().required(),
             }),
         )
@@ -55,13 +55,13 @@ const LicenseForm = forwardRef<FormikRef, TagForm>((props, ref) => {
             translations: [
                 {
                     id: selectedTagObject?.translations[0]?.id || '',
-                    lang: 'en',
+                    langCode: 'en',
                     name: selectedTagObject?.translations[0]?.name || '',
                     slug: selectedTagObject?.translations[0]?.slug || '',
                 },
                 {
                     id: selectedTagObject?.translations[1]?.id || '',
-                    lang: 'vi',
+                    langCode: 'vi',
                     name: selectedTagObject?.translations[1]?.name || '',
                     slug: selectedTagObject?.translations[1]?.slug || '',
                 },
@@ -111,9 +111,9 @@ const LicenseForm = forwardRef<FormikRef, TagForm>((props, ref) => {
                                         )
 
                                         return (
-                                            <div key={t.lang}>
+                                            <div key={t.langCode}>
                                                 <h4>
-                                                    {t.lang.toUpperCase()}
+                                                    {t.langCode.toUpperCase()}
                                                 </h4>
                                                 <FormItem
 

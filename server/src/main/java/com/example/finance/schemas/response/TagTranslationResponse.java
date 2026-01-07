@@ -14,6 +14,6 @@ public class TagTranslationResponse {
     private UUID id;
     private String name;
     private String slug;
-    private String lang;
+    private String langCode;
 }
 

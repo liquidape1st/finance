@@ -13,6 +13,7 @@ import java.util.UUID;
 public class CategoryTranslationResponse {
     private UUID id;
     private String langCode;
+    private String slug;
     private String name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

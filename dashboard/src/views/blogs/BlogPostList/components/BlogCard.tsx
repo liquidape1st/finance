@@ -45,14 +45,49 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
         dispatch(setBlogs(updatedBlogs))
     }
 
+    const getContentTypeBadgeClass = (contentType: string) => {
+        switch (contentType) {
+            case "NEWS":
+                return "bg-red-600";
+            case "GUIDE":
+                return "bg-blue-600";
+            case "SHARING":
+                return "bg-green-600";
+            case "COMPARISON":
+                return "bg-purple-600";
+            default:
+                return "bg-gray-500";
+        }
+    };
+
+    const getUiTypeConfig = (uiType: string) => {
+        switch (uiType) {
+            case "NEWS":
+                return {
+                    label: "News",
+                    className: "bg-red-700"
+                };
+            case "BLOG":
+                return {
+                    label: "Blog",
+                    className: "bg-slate-800"
+                };
+            default:
+                return {
+                    label: "Unknown",
+                    className: "bg-gray-500"
+                };
+        }
+    };
+
     return (
         <Card>
             <div className='relative'>
-                <div className='z-20 absolute top-4 right-4 bg-yellow-500 text-white px-2 py-1 rounded-bl-lg font-medium text-sm'>
-                    {blog?.type || "Unknown"}
+                <div className={`z-20 absolute top-4 right-4 bg-yellow-500 text-white px-2 py-1 rounded-bl-lg font-medium text-sm  ${getContentTypeBadgeClass(blog?.contentType)}`}>
+                    {blog?.contentType || "Unknown"}
                 </div>
                 <div className="flex flex-col gap-4">
-                   
+
                     {blog.image && (
                         <div className="w-full h-64 overflow-hidden rounded-xl">
                             <BlogImage filename={blog.image} blog={blog} />
@@ -75,6 +110,11 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
                         <span className="font-medium text-gray-600">
                             {blog.author}
                         </span>
+                        <div>
+                            <div className={`bg-yellow-500 text-white px-2 py-1 rounded-l-lg font-medium text-sm  ${getUiTypeConfig(blog?.uiType)}`}>
+                                {blog?.uiType || "Unknown"}
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex justify-between pt-2 border-t items-center">

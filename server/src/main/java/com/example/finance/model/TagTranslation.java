@@ -11,11 +11,11 @@ import java.util.UUID;
 @Table(
         name = "tag_translations",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"tag_id", "lang"}),
-                @UniqueConstraint(columnNames = {"lang", "slug"})
+                @UniqueConstraint(columnNames = {"tag_id", "lang_code"}),
+                @UniqueConstraint(columnNames = {"lang_code", "slug"})
         },
         indexes = {
-                @Index(name = "idx_tag_lang_slug", columnList = "lang, slug")
+                @Index(name = "idx_tag_lang_slug", columnList = "lang_code, slug")
         }
 )
 
@@ -32,8 +32,8 @@ public class TagTranslation {
     @JoinColumn(name = "tag_id", nullable = false)
     private Tag tag;
 
-    @Column(nullable = false, length = 5)
-    private String lang; // VI, EN
+    @Column(name = "lang_code", length = 5, nullable = false)
+    private String langCode; // VI, EN
 
     @Column(nullable = false)
     private String name;

@@ -12,6 +12,13 @@ import java.util.UUID;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
-    @Query("SELECT b FROM Category b")
+    @Query("""
+    SELECT DISTINCT c
+    FROM Category c
+    JOIN c.translations ct
+    WHERE (:query IS NULL OR :query = ''
+           OR LOWER(ct.slug) LIKE LOWER(CONCAT('%', :query, '%'))
+           OR LOWER(ct.name) LIKE LOWER(CONCAT('%', :query, '%')))
+    """)
     Page<Category> search(@Param("query") String query, Pageable pageable);
 }
