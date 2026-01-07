@@ -7,7 +7,7 @@ export type BlogTranslationClient = {
     title: string;
     content: string;
     excerpt: string;
-    uiType: 'NEWS' | 'BLOG' | 'MARKET';
+    uiType: 'NEWS' | 'LEARN' | 'MARKET';
     contentType: string;
     image: string;
     view: number;

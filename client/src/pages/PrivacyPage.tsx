@@ -30,6 +30,7 @@ export function PrivacyPage() {
       <Helmet>
         <title>{`GOIncome - ${t('privacy.title')}`}</title>
         <meta name="description" content={t('privacy.description')} />
+        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
         
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('privacy.title')}`} />
@@ -38,12 +39,14 @@ export function PrivacyPage() {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="GOIncome" />
+        <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
         
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`GOIncome - ${t('privacy.title')}`} />
         <meta name="twitter:description" content={t('privacy.description')} />
         <meta name="twitter:image" content={siteImage} />
+        <meta name="twitter:site" content="@goincome" />
         
         {/* Canonical */}
         <link rel="canonical" href={canonicalUrl} />

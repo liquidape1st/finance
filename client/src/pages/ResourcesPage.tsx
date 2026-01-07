@@ -51,6 +51,7 @@ export function ResourcesPage() {
       <Helmet>
         <title>{`GOIncome - ${t('resources.title')}`}</title>
         <meta name="description" content={t('resources.description')} />
+        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
         
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('resources.title')}`} />
@@ -59,12 +60,14 @@ export function ResourcesPage() {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="GOIncome" />
+        <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
         
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`GOIncome - ${t('resources.title')}`} />
         <meta name="twitter:description" content={t('resources.description')} />
         <meta name="twitter:image" content={siteImage} />
+        <meta name="twitter:site" content="@goincome" />
         
         {/* Canonical */}
         <link rel="canonical" href={canonicalUrl} />

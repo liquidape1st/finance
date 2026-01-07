@@ -2,7 +2,7 @@ import appConfig from "@/configs/app.config";
 import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
@@ -16,6 +16,7 @@ const getBlogImageUrl = (fileName: string, updatedAt: string) =>
 export function BlogDetailPage() {
   const { lang, slug } = useParams()
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -39,10 +40,10 @@ export function BlogDetailPage() {
   }, [lang, slug])
 
   const blogImageUrl = blog.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
-  const canonicalUrl = `${window.location.origin}/blog/${lang}/${slug}`;
-  const blogListUrl = `${window.location.origin}/blog`;
+  const canonicalUrl = `${window.location.origin}${location.pathname}`;
+  const blogListUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}`;
   const alternateLang = lang === 'vi' ? 'en' : 'vi';
-  const alternateUrl = `${window.location.origin}/blog/${alternateLang}/${slug}`;
+  const alternateUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}/${alternateLang}/${slug}`;
   
   const structuredData = {
     "@context": "https://schema.org",
@@ -113,6 +114,7 @@ export function BlogDetailPage() {
       <Helmet>
         <title>{`GOIncome - ${blog.title}`}</title>
         <meta name="description" content={blog.excerpt} />
+        <meta name="robots" content="index,follow" />
         
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${blog.title}`} />

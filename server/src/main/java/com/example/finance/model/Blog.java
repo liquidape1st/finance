@@ -26,9 +26,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Blog {
     public enum UiType {
-        BLOG,
-        NEWS,
-        MARKET
+        NEWS,     // Tin tức, cập nhật nhanh, thời sự tài chính
+        GUIDE,    // Hướng dẫn thực hành, step-by-step
+        LEARN,    // Học tài chính, kiến thức nền tảng
+        MARKET,   // Phân tích thị trường, xu hướng, vĩ mô
     }
     public enum ContentType {
         GUIDE,

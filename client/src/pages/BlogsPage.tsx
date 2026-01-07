@@ -11,7 +11,7 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 
 type BlogsPageProps = {
-  uiType: 'NEWS' | 'BLOG' | 'MARKET',
+  uiType: 'NEWS' | 'LEARN' | 'MARKET',
   preflix: string
 }
 
@@ -58,7 +58,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
     dispatch(getClientBlogTranslationPage(tableData))
   }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType])
 
-  const canonicalUrl = `${window.location.origin}/blog`;
+  const canonicalUrl = `${window.location.origin}/${preflix}`;
   const siteImage = `${window.location.origin}/logo.png`;
   const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
 
@@ -94,7 +94,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
         "@type": "BlogPosting",
         "headline": blog.title,
         "description": blog.excerpt,
-        "url": `${window.location.origin}/blog/${currentLang}/${blog.slug}`,
+        "url": `${window.location.origin}/${preflix}/${currentLang}/${blog.slug}`,
         "image": getBlogImageUrl(blog.image, blog.updatedAt)
       }
     }))
@@ -102,7 +102,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
   const uiTypeStyles: Record<BlogsPageProps['uiType'], string> = {
     NEWS: 'bg-blue-500/15 text-blue-100 border border-blue-400/40 shadow-blue-500/20',
-    BLOG: 'bg-emerald-500/15 text-emerald-100 border border-emerald-400/40 shadow-emerald-500/20',
+    LEARN: 'bg-emerald-500/15 text-emerald-100 border border-emerald-400/40 shadow-emerald-500/20',
     MARKET: 'bg-purple-500/15 text-purple-100 border border-purple-400/40 shadow-purple-500/20',
   };
 
@@ -111,6 +111,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
       <Helmet>
         <title>{`GOIncome - ${t('blogs.title')}`}</title>
         <meta name="description" content={t('blogs.description')} />
+        <meta name="robots" content="index,follow" />
 
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('blogs.title')}`} />
