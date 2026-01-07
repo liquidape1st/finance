@@ -80,7 +80,7 @@ const TagList = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span className={'whitespace-nowrap'}>{row.translations[0]?.name || "n/a"}</span>
+                        <span className={'whitespace-nowrap'}>{row.translations[1]?.name || "n/a"}</span>
                     )
                 }
             },
@@ -89,7 +89,7 @@ const TagList = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span className={'whitespace-nowrap'}>{row.translations[0]?.slug || "n/a"}</span>
+                        <span className={'whitespace-nowrap'}>{row.translations[1]?.slug || "n/a"}</span>
                     )
                 }
             },
@@ -98,7 +98,7 @@ const TagList = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span className={'whitespace-nowrap'}>{row.translations[1]?.name || "n/a"}</span>
+                        <span className={'whitespace-nowrap'}>{row.translations[0]?.name || "n/a"}</span>
                     )
                 }
             },
@@ -107,7 +107,7 @@ const TagList = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span className={'whitespace-nowrap'}>{row.translations[1]?.slug || "n/a"}</span>
+                        <span className={'whitespace-nowrap'}>{row.translations[0]?.slug || "n/a"}</span>
                     )
                 }
             },

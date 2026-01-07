@@ -2,15 +2,11 @@ package com.example.finance.service;
 
 import com.example.finance.model.Category;
 import com.example.finance.model.CategoryTranslation;
-import com.example.finance.model.Tag;
-import com.example.finance.model.TagTranslation;
 import com.example.finance.pageable.PageableObject;
 import com.example.finance.repository.CategoryRepository;
 import com.example.finance.repository.CategoryTranslationRepository;
 import com.example.finance.schemas.request.CategoryRequest;
 import com.example.finance.schemas.request.CategoryTranslationRequest;
-import com.example.finance.schemas.request.TagRequest;
-import com.example.finance.schemas.request.TagTranslationRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

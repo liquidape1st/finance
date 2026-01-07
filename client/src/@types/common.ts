@@ -48,6 +48,7 @@ export type TableQueries = {
         key: string | number
     },
     category: string
+    uiType: string
 }
 
 export type DetailParamObject = {

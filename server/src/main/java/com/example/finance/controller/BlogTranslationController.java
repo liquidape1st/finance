@@ -30,7 +30,13 @@ public class BlogTranslationController extends BaseController {
             @Valid @RequestBody BlogPageableObject pageableObject,
             @RequestHeader(value = "x-app-language", defaultValue = "en") String language
     ) {
-        CustomPage<BlogTranslationClientResponse> result = new CustomPage<>(blogTranslationService.findPageBlogTranslation(pageableObject.getQuery(), language, pageableObject.getCategory(), pageableObject.toPageRequest()));
+        CustomPage<BlogTranslationClientResponse> result = new CustomPage<>(blogTranslationService.findPageBlogTranslation(
+                pageableObject.getQuery(),
+                language,
+                pageableObject.getCategory(),
+                pageableObject.toPageRequest(),
+                pageableObject.getUiType()
+        ));
         return createResponse(
                 result,
                 "blog.translation.search.success.title",

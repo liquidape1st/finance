@@ -1,5 +1,6 @@
 package com.example.finance.service;
 
+import com.example.finance.model.Blog;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
@@ -23,8 +24,11 @@ public class BlogTranslationService {
     BlogTranslationRepository blogTranslationRepository;
     BlogRepository blogRepository;
 
-    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable) {
-        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, pageable);
+    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable, Blog.UiType uiType) {
+        System.out.println("UI Type: " + uiType);
+        System.out.println(uiType.getClass().getSimpleName());
+        System.out.println("UI Type class: " + uiType.getClass());
+        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, uiType, pageable);
     }
 
     @Transactional

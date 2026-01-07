@@ -1,5 +1,6 @@
 package com.example.finance.service;
 
+import com.example.finance.model.Blog;
 import com.example.finance.repository.CategoryTranslationRepository;
 import com.example.finance.schemas.response.CategoryTranslationClientResponse;
 import lombok.AccessLevel;
@@ -17,5 +18,9 @@ public class CategoryTranslationService {
 
     public List<CategoryTranslationClientResponse> findAllCategoryTranslationByLanguageCode(String languageCode) {
         return categoryTranslationRepository.findAllCategoryTranslationByLanguageCode(languageCode);
+    }
+
+    public List<CategoryTranslationClientResponse> findAllCategoryTranslationByLanguageCodeAndUiType(String languageCode, Blog.UiType uiType) {
+        return categoryTranslationRepository.findAllCategoryTranslationByLanguageCodeAndUiType(languageCode, uiType);
     }
 }

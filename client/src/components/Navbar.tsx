@@ -21,9 +21,11 @@ export function Navbar() {
     window.location.reload()
   };
   
-  const getCurrentPage = (): 'home' | 'blog' | 'resources' | 'contact' => {
+  const getCurrentPage = (): 'home' | 'news' | 'learn' | 'markets' | 'resources' | 'contact' => {
     if (location.pathname === '/') return 'home';
-    if (location.pathname === '/blog') return 'blog';
+    if (location.pathname === '/news') return 'news';
+    if (location.pathname === '/learn') return 'learn';
+    if (location.pathname === '/markets') return 'markets';
     if (location.pathname === '/resources') return 'resources';
     if (location.pathname === '/contact') return 'contact';
     return 'home';
@@ -66,17 +68,43 @@ export function Navbar() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <Link to="/" className={`text-sm transition-colors ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
+            <Link
+              to="/"
+              className={`text-sm transition-colors ${
+                currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+              }`}
+            >
               {t('nav.home')}
             </Link>
-            <Link to="/blog" className={`text-sm transition-colors ${currentPage === 'blog' ? 'text-white' : 'text-[#7e7e81] hover:text-white'}`}>
-              {t('nav.blog')}
+            <Link
+              to="/news"
+              className={`text-sm transition-colors ${
+                currentPage === 'news' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+              }`}
+            >
+              {t('nav.news')}
             </Link>
-            <Link 
-              to="/resources" 
+            <Link
+              to="/learn"
+              className={`text-sm transition-colors ${
+                currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+              }`}
+            >
+              {t('nav.learn')}
+            </Link>
+            <Link
+              to="/markets"
+              className={`text-sm transition-colors ${
+                currentPage === 'markets' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+              }`}
+            >
+              {t('nav.markets')}
+            </Link>
+            <Link
+              to="/resources"
               className={`px-[18px] py-2.5 rounded-md text-sm transition-colors ${
-                currentPage === 'resources' 
-                  ? 'bg-[#262626] border border-[#333333] text-white' 
+                currentPage === 'resources'
+                  ? 'bg-[#262626] border border-[#333333] text-white'
                   : 'bg-[#141414] border border-[#333333] text-white hover:bg-[#1a1a1a]'
               }`}
             >
@@ -142,11 +170,25 @@ export function Navbar() {
                 {t('nav.home')}
               </Link>
               <Link 
-                to="/blog" 
-                className={`text-sm transition-colors py-2 ${currentPage === 'blog' ? 'text-white' : 'text-[#7e7e81]'}`}
+                to="/news" 
+                className={`text-sm transition-colors py-2 ${currentPage === 'news' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {t('nav.blog')}
+                {t('nav.news')}
+              </Link>
+              <Link 
+                to="/learn" 
+                className={`text-sm transition-colors py-2 ${currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('nav.learn')}
+              </Link>
+              <Link 
+                to="/markets" 
+                className={`text-sm transition-colors py-2 ${currentPage === 'markets' ? 'text-white' : 'text-[#7e7e81]'}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('nav.markets')}
               </Link>
               <Link 
                 to="/resources" 

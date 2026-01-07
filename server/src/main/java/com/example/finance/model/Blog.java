@@ -27,7 +27,8 @@ import java.util.UUID;
 public class Blog {
     public enum UiType {
         BLOG,
-        NEWS
+        NEWS,
+        MARKET
     }
     public enum ContentType {
         GUIDE,

@@ -1,5 +1,6 @@
 package com.example.finance.schemas.response;
 
+import com.example.finance.model.Blog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,9 @@ public class BlogTranslationClientResponse {
     private String content;
     private String excerpt;
     private UUID blogId;
+
+    private Blog.UiType uiType;
+    private Blog.ContentType contentType;
 
     private Integer view;
     private String image;

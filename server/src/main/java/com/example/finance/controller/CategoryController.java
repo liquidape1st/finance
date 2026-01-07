@@ -59,7 +59,7 @@ public class CategoryController extends BaseController implements AController<Ca
 
     @Override
     @PostMapping(value = "/create")
-    @PreAuthorize("hasAuthority('BLOG:CREATE')")
+    @PreAuthorize("hasAuthority('CATEGORY:CREATE')")
     public ResponseEntity<ResponsePayload> create(@Validated(CreateMethod.class) @RequestBody CategoryRequest request) {
         return createResponse(
                 mapper.toDTO(categoryService.createEntity(request)),
@@ -71,7 +71,7 @@ public class CategoryController extends BaseController implements AController<Ca
 
     @Override
     @PutMapping(value = "/update/{uuid}")
-    @PreAuthorize("hasAuthority('BLOG:UPDATE')")
+    @PreAuthorize("hasAuthority('CATEGORY:UPDATE')")
     public ResponseEntity<ResponsePayload> update(@PathVariable UUID uuid, @Validated(UpdateMethod.class) @RequestBody CategoryRequest request) {
         return createResponse(
                 mapper.toDTO(categoryService.updateEntityById(uuid, request)),
@@ -83,7 +83,7 @@ public class CategoryController extends BaseController implements AController<Ca
 
     @Override
     @GetMapping(value = "/detail/{uuid}")
-    @PreAuthorize("hasAuthority('BLOG:READ')")
+    @PreAuthorize("hasAuthority('CATEGORY:READ')")
     public ResponseEntity<ResponsePayload> detail(@PathVariable UUID uuid) {
         return createResponse(
                 mapper.toDTO(categoryService.findEntityById(uuid)),
@@ -95,7 +95,7 @@ public class CategoryController extends BaseController implements AController<Ca
 
     @Override
     @DeleteMapping(value = "/delete/{uuid}")
-    @PreAuthorize("hasAuthority('BLOG:DELETE')")
+    @PreAuthorize("hasAuthority('CATEGORY:DELETE')")
     public ResponseEntity<ResponsePayload> delete(@PathVariable UUID uuid) {
         categoryService.removeEntityById(uuid);
         return createResponse(

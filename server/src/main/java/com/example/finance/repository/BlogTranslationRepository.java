@@ -1,5 +1,6 @@
 package com.example.finance.repository;
 
+import com.example.finance.model.Blog;
 import com.example.finance.model.BlogTranslation;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.content,
                     bt.excerpt,
                     b.id,
+                    b.uiType,
+                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -44,6 +47,9 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                 WHERE bt.langCode = :langCode
                 AND ct.langCode = :langCode
                 AND (
+                   :#{#uiType} IS NULL OR b.uiType = :#{#uiType}
+                )
+                AND (
                     :category IS NULL OR b.category.id = :category
                 )
                 AND (
@@ -51,7 +57,7 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     OR LOWER(bt.excerpt) LIKE LOWER(CONCAT('%', :query, '%'))
                 ) AND b.enabled = true
             """)
-    Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("query") String query, @Param("langCode") String langCode, @Param("category") UUID category, Pageable pageable);
+    Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("query") String query, @Param("langCode") String langCode, @Param("category") UUID category, @Param("uiType") Blog.UiType uiType, Pageable pageable);
 
 
     @Query("""
@@ -63,6 +69,8 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.content,
                     bt.excerpt,
                     b.id,
+                    b.uiType,
+                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -98,6 +106,8 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.content,
                     bt.excerpt,
                     b.id,
+                    b.uiType,
+                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -136,6 +146,8 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.content,
                     bt.excerpt,
                     b.id,
+                    b.uiType,
+                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -170,6 +182,8 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.content,
                     bt.excerpt,
                     b.id,
+                    b.uiType,
+                    b.contentType,
                     b.view,
                     b.image,
                     b.author,

@@ -1,5 +1,6 @@
 package com.example.finance.pageable;
 
+import com.example.finance.model.Blog;
 import lombok.*;
 
 import java.util.UUID;
@@ -16,5 +17,5 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BlogPageableObject extends PageableObject{
     private UUID category;
-
+    private Blog.UiType uiType;
 }

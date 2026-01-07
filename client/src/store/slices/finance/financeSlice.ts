@@ -24,6 +24,8 @@ const initState: FinanceState = {
             langCode: "",
             name: ""
         },
+        uiType: "BLOG",
+        contentType: "",
         content: "",
         createdAt: "",
         estimatedReadTime: 0,
@@ -48,7 +50,8 @@ const initState: FinanceState = {
             order: "asc"
         },
         total: 0,
-        category: ""
+        category: "",
+        uiType: ""
     }
 }
 
@@ -65,9 +68,9 @@ export const getClientBlogTranslationPage = createAsyncThunk(
 
 export const getListClientCategoryTranslation = createAsyncThunk(
     SLICENAME + '/getListClientCategoryTranslation',
-    async () => {
+    async (uiType: string) => {
         const response = await apiGetSystem<ApiResponse<CategoryTranslation[]>>(
-            '/category-translations/search',
+            `/category-translations/filter?uiType=${uiType}`,
         )
         return response.data
     },
