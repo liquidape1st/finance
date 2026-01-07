@@ -353,11 +353,60 @@
     "products.tiers.growth.features.importExport": "Import/export member data",
     "products.tiers.growth.features.sendEmoji": "Send emoji to channel posts",
     "products.tiers.growth.features.cloneChat": "Clone chat from another group ✨",
-    "footer.newsletter.title": "Get a free note-taking workflow",
-    "footer.newsletter.description": "In our weekly newsletter.",
-    "footer.newsletter.emailPlaceholder": "Enter your email",
-    "footer.newsletter.subscribe": "Subscribe",
-    "footer.newsletter.copyright": "© 2025 Ph4ntoms, Inc. All rights reserved.",
+    "footer": {
+        "home": {
+            "title": "Home",
+            "home": "Home",
+            "blog": "Blog",
+            "resources": "Resources",
+            "contact": "Contact",
+            "newsletter": "Newsletter",
+            "new": "New"
+        },
+        "categories": {
+            "title": "Categories",
+            "cryptocurrency": "Cryptocurrency",
+            "stocks": "Stocks",
+            "forex": "Forex",
+            "realEstate": "Real Estate",
+            "personalFinance": "Personal Finance"
+        },
+        "tools": {
+            "title": "Tools",
+            "calculator": "Calculator Tools",
+            "brokerComparison": "Broker Comparison",
+            "glossary": "Trading Glossary",
+            "basicGuides": "Basic Guides",
+            "new": "New"
+        },
+        "learning": {
+            "title": "Learning",
+            "whatIsTrading": "What is Trading?",
+            "riskManagement": "Risk Management",
+            "technicalAnalysis": "Technical Analysis",
+            "fundamentalAnalysis": "Fundamental Analysis",
+            "important": "Important"
+        },
+        "resources": {
+            "title": "Resources",
+            "ebooks": "E-Books",
+            "pdfGuides": "PDF Guides",
+            "videoLearning": "Video Learning",
+            "checklist": "Checklist"
+        },
+        "legal": {
+            "terms": "Terms & Conditions",
+            "privacy": "Privacy Policy",
+            "copyright": "© 2026 GOIncome. All rights reserved."
+        },
+        "newsletter": {
+            "title": "Get a free note-taking workflow",
+            "description": "In our weekly newsletter.",
+            "emailPlaceholder": "Enter your email",
+            "subscribe": "Subscribe",
+            "copyright": "© 2025 Ph4ntoms, Inc. All rights reserved."
+        }
+    },
     "mailbox.title": "MAILBOX",
     "mailbox.menuTitle": "Mailbox",
     "mailbox.inbox": "Inbox",
@@ -479,6 +528,22 @@
         },
         "readNow": "Read Now",
         "loadMore": "Load More Articles",
+        "news": {
+            "title": "Latest Financial News",
+            "description": "Stay updated with the latest news in crypto, forex, and personal finance markets"
+        },
+        "guide": {
+            "title": "Trading Guides & Tutorials",
+            "description": "Comprehensive guides to help you master trading strategies and financial planning"
+        },
+        "market": {
+            "title": "Market Analysis & Insights",
+            "description": "In-depth market analysis, trends, and expert insights for informed decision making"
+        },
+        "learn": {
+            "title": "Learn Finance Fundamentals",
+            "description": "Educational content to build your financial knowledge from basics to advanced concepts"
+        },
         "newsletter": {
             "title": "Don't Miss Any Knowledge",
             "description": "Get weekly newsletters with market analysis, trading guides and expert insights",
@@ -489,7 +554,118 @@
     },
     "resources": {
         "title": "Trading Resources & Tools",
-        "description": "Access professional trading resources including broker comparison tables and comprehensive trading glossary. Essential tools to understand the market and choose the right broker."
+        "description": "Access professional trading resources including broker comparison tables and comprehensive trading glossary. Essential tools to understand the market and choose the right broker.",
+        "badge": "Tools & Resources",
+        "heroTitle": "Professional Trading Resources",
+        "heroDescription": "Quick access to trusted broker comparison tables and detailed trading glossary. Two core resources to help you understand the market and choose the right broker.",
+        "affiliate": {
+            "title": "🎁 Special Offer: 20% Trading Fee Rebate for Binance",
+            "description": "Register a Binance account today and receive up to 20% trading fee rebate. Applies to all trades, no time limit.",
+            "ctaText": "Register Binance Now",
+            "bonusAmount": "20% Fee Rebate"
+        },
+        "tabs": {
+            "broker": "Broker Comparison",
+            "glossary": "Trading Glossary"
+        },
+        "brokerTab": {
+            "title": "Compare Trusted Trading Brokers",
+            "description": "Learn and compare brokers regulated by trusted authorities worldwide."
+        },
+        "glossaryTab": {
+            "title": "Trading Terms Dictionary",
+            "description": "Learn important terms in financial trading, from basic to advanced."
+        },
+        "schema": {
+            "mainEntityName": "Trading Resources",
+            "mainEntityDescription": "Broker comparison and trading glossary",
+            "brokerComparison": {
+                "name": "Broker Comparison",
+                "description": "Compare trusted trading brokers"
+            },
+            "tradingGlossary": {
+                "name": "Trading Glossary",
+                "description": "Comprehensive trading terms dictionary"
+            }
+        },
+        "table": {
+            "brokerName": "Broker",
+            "platform": "Platform",
+            "bonus": "Bonus",
+            "action": "Action",
+            "registerNow": "Register Now",
+            "platformLabel": "Platform:"
+        },
+        "forexSection": {
+            "title": "Compare Forex & CFD Brokers",
+            "description": "Trusted Forex, Gold and CFD brokers, evaluated based on trading fees and user experience",
+            "descriptionMobile": "Trusted Forex, Gold and CFD brokers",
+            "badge": "FOREX & CFD"
+        },
+        "cryptoSection": {
+            "title": "Compare Crypto Exchanges",
+            "description": "Popular cryptocurrency exchanges, compared by fees and supported platforms",
+            "descriptionMobile": "Popular cryptocurrency exchanges",
+            "badge": "CRYPTO"
+        },
+        "riskWarning": {
+            "label": "Note:",
+            "text": "Financial trading carries high risk. You may lose all invested capital. The information above is for reference only and is not investment advice."
+        },
+        "riskDisclosure": {
+            "compact": {
+                "label": "Risk Warning:",
+                "text": "Financial trading carries high risk. You may lose all invested capital."
+            },
+            "full": {
+                "title": "Important Risk Warning",
+                "subtitle": "Please read carefully before trading",
+                "paragraph1": {
+                    "strong": "Trading leveraged financial products (Forex, CFD, Crypto) carries high risk.",
+                    "text": "You may lose all your initial invested capital and even more than the amount you deposited into your account."
+                },
+                "paragraph2": "These products are not suitable for everyone and you need to ensure that you fully understand the risks involved. Before deciding to trade, you should carefully consider your investment objectives, level of experience and risk tolerance.",
+                "paragraph3": {
+                    "strong": "The content on this website is for knowledge sharing and educational purposes only.",
+                    "text": "We do not provide personal investment advice. All trading decisions are your own responsibility."
+                },
+                "paragraph4": "Past performance does not guarantee future results. Examples and results presented on the website are for illustrative purposes only and may not accurately reflect actual results.",
+                "paragraph5": {
+                    "strong": "Recommendation:",
+                    "text": "Only trade with money you can afford to lose. You should start with a Demo account to familiarize yourself before using real money."
+                }
+            }
+        },
+        "brokers": {
+            "exness": {
+                "platform": "Forex, Gold, CFD - 100+ currency pairs, metals, indices",
+                "bonus": "Instant deposits/withdrawals 24/7 and unlimited leverage"
+            },
+            "xm": {
+                "platform": "Forex, Stock CFD - 1,000+ stocks, forex",
+                "bonus": "Multiple deposit bonus programs"
+            },
+            "binance": {
+                "platform": "Crypto (Cryptocurrency) - 350+ coins and tokens",
+                "bonus": "Largest ecosystem, highest liquidity"
+            },
+            "bybit": {
+                "platform": "Crypto (Cryptocurrency) - 200+ coins and tokens",
+                "bonus": "Smooth and stable derivatives (Futures) trading"
+            },
+            "okx": {
+                "platform": "Crypto (Cryptocurrency) - 300+ coins and tokens",
+                "bonus": "Secure Web3 wallet and excellent automated Bot tools"
+            },
+            "bingx": {
+                "platform": "Crypto, Forex, Gold - 250+ coins, including gold and indices",
+                "bonus": "Most famous for Copy Trading feature"
+            },
+            "onus": {
+                "platform": "Crypto (Cryptocurrency) - 500+ different digital assets",
+                "bonus": "Earn 12.8% VNDC interest and easy to use for Vietnamese users"
+            }
+        }
     },
     "terms": {
         "badge": "Legal information",

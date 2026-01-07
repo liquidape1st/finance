@@ -27,20 +27,20 @@ export function ResourcesPage() {
     "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
     "mainEntity": {
       "@type": "ItemList",
-      "name": "Trading Resources",
-      "description": "Broker comparison and trading glossary",
+      "name": t('resources.schema.mainEntityName'),
+      "description": t('resources.schema.mainEntityDescription'),
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Broker Comparison",
-          "description": "Compare trusted trading brokers"
+          "name": t('resources.schema.brokerComparison.name'),
+          "description": t('resources.schema.brokerComparison.description')
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Trading Glossary",
-          "description": "Comprehensive trading terms dictionary"
+          "name": t('resources.schema.tradingGlossary.name'),
+          "description": t('resources.schema.tradingGlossary.description')
         }
       ]
     }
@@ -92,26 +92,25 @@ export function ResourcesPage() {
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Resources hero section">
         <div className="bg-[#333333] inline-block px-3 py-1 rounded mb-3 sm:mb-4">
-          <span className="text-white text-xs sm:text-sm">Công Cụ & Tài Nguyên</span>
+          <span className="text-white text-xs sm:text-sm">{t('resources.badge')}</span>
         </div>
         
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight leading-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-          Tài Nguyên Giao Dịch Chuyên Nghiệp
+          {t('resources.heroTitle')}
         </h1>
         <p className="text-[#98989a] text-sm sm:text-base leading-relaxed max-w-3xl mb-8 sm:mb-10 md:mb-12">
-          Truy cập nhanh bảng so sánh sàn giao dịch uy tín và từ điển thuật ngữ giao dịch chi tiết. 
-          Hai tài nguyên cốt lõi giúp bạn hiểu thị trường và chọn sàn phù hợp.
+          {t('resources.heroDescription')}
         </p>
 
         {/* Affiliate Banner */}
         <AffiliateBanner
-          title="🎁 Ưu Đãi Đặc Biệt: Nhận $50 Bonus Khi Đăng Ký"
-          description="Mở tài khoản giao dịch ngay hôm nay và nhận ngay $50 bonus vào tài khoản. Áp dụng cho người dùng mới, có giới hạn thời gian."
-          ctaText="Nhận Ưu Đãi Ngay"
-          ctaLink="#"
-          bonusAmount="$50 Bonus"
+          title={t('resources.affiliate.title')}
+          description={t('resources.affiliate.description')}
+          ctaText={t('resources.affiliate.ctaText')}
+          ctaLink="https://accounts.binance.com/register?ref=GOINCOME"
+          bonusAmount={t('resources.affiliate.bonusAmount')}
           hasCountdown={true}
-          variant="gradient"
+          variant="dark"
         />
       </section>
 
@@ -127,7 +126,7 @@ export function ResourcesPage() {
                 : 'text-[#98989a] hover:bg-[#262626]'
             }`}
           >
-            So Sánh Sàn
+            {t('resources.tabs.broker')}
           </button>
           <button 
             onClick={() => setActiveTab('glossary')}
@@ -137,7 +136,7 @@ export function ResourcesPage() {
                 : 'text-[#98989a] hover:bg-[#262626]'
             }`}
           >
-            Từ Điển Thuật Ngữ
+            {t('resources.tabs.glossary')}
           </button>
         </div>
 
@@ -146,10 +145,10 @@ export function ResourcesPage() {
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                So Sánh Sàn Giao Dịch Uy Tín
+                {t('resources.brokerTab.title')}
               </h2>
               <p className="text-[#98989a] text-sm sm:text-base mb-6 sm:mb-8">
-                Tìm hiểu và so sánh các sàn giao dịch được quản lý bởi các cơ quan có uy tín trên thế giới.
+                {t('resources.brokerTab.description')}
               </p>
             </div>
             <BrokerComparisonTable />
@@ -166,10 +165,10 @@ export function ResourcesPage() {
           <div className="space-y-6 sm:space-y-8">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                Từ Điển Thuật Ngữ Giao Dịch
+                {t('resources.glossaryTab.title')}
               </h2>
               <p className="text-[#98989a] text-sm sm:text-base mb-6 sm:mb-8">
-                Tìm hiểu các thuật ngữ quan trọng trong giao dịch tài chính, từ cơ bản đến nâng cao.
+                {t('resources.glossaryTab.description')}
               </p>
             </div>
             

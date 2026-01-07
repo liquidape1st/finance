@@ -353,11 +353,60 @@
     "products.tiers.growth.features.importExport": "Nhập/xuất dữ liệu thành viên",
     "products.tiers.growth.features.sendEmoji": "Gửi emoji vào bài đăng kênh",
     "products.tiers.growth.features.cloneChat": "Sao chép chat từ nhóm chat khác ✨",
-    "footer.newsletter.title": "Nhận quy trình ghi chú miễn phí",
-    "footer.newsletter.description": "Trong bản tin hàng tuần của chúng tôi.",
-    "footer.newsletter.emailPlaceholder": "Nhập email của bạn",
-    "footer.newsletter.subscribe": "Đăng ký",
-    "footer.newsletter.copyright": "© 2025 Ph4ntoms, Inc. Bảo lưu mọi quyền.",
+    "footer": {
+        "home": {
+            "title": "Trang Chủ",
+            "home": "Trang Chủ",
+            "blog": "Blog",
+            "resources": "Tài Nguyên",
+            "contact": "Liên Hệ",
+            "newsletter": "Bản Tin",
+            "new": "Mới"
+        },
+        "categories": {
+            "title": "Danh Mục",
+            "cryptocurrency": "Tiền Điện Tử",
+            "stocks": "Chứng Khoán",
+            "forex": "Forex",
+            "realEstate": "Bất Động Sản",
+            "personalFinance": "Tài Chính Cá Nhân"
+        },
+        "tools": {
+            "title": "Công Cụ",
+            "calculator": "Công Cụ Tính Toán",
+            "brokerComparison": "So Sánh Sàn",
+            "glossary": "Từ Điển Thuật Ngữ",
+            "basicGuides": "Hướng Dẫn Cơ Bản",
+            "new": "Mới"
+        },
+        "learning": {
+            "title": "Học Tập",
+            "whatIsTrading": "Giao Dịch Là Gì?",
+            "riskManagement": "Quản Lý Rủi Ro",
+            "technicalAnalysis": "Phân Tích Kỹ Thuật",
+            "fundamentalAnalysis": "Phân Tích Cơ Bản",
+            "important": "Quan Trọng"
+        },
+        "resources": {
+            "title": "Tài Liệu",
+            "ebooks": "E-Books",
+            "pdfGuides": "Hướng Dẫn PDF",
+            "videoLearning": "Video Học",
+            "checklist": "Checklist"
+        },
+        "legal": {
+            "terms": "Terms & Conditions",
+            "privacy": "Privacy Policy",
+            "copyright": "© 2026 GOIncome. All rights reserved."
+        },
+        "newsletter": {
+            "title": "Nhận quy trình ghi chú miễn phí",
+            "description": "Trong bản tin hàng tuần của chúng tôi.",
+            "emailPlaceholder": "Nhập email của bạn",
+            "subscribe": "Đăng ký",
+            "copyright": "© 2025 Ph4ntoms, Inc. Bảo lưu mọi quyền."
+        }
+    },
     "mailbox.title": "MAILBOX",
     "mailbox.menuTitle": "Mailbox",
     "mailbox.inbox": "Hộp thư đến",
@@ -479,6 +528,22 @@
         },
         "readNow": "Đọc Ngay",
         "loadMore": "Xem Thêm Bài Viết",
+        "news": {
+            "title": "Tin Tức Tài Chính Mới Nhất",
+            "description": "Cập nhật những tin tức mới nhất về thị trường crypto, forex và tài chính cá nhân"
+        },
+        "guide": {
+            "title": "Hướng Dẫn & Hướng Dẫn Trading",
+            "description": "Hướng dẫn toàn diện để giúp bạn thành thạo chiến lược giao dịch và lập kế hoạch tài chính"
+        },
+        "market": {
+            "title": "Phân Tích Thị Trường & Insights",
+            "description": "Phân tích thị trường sâu sắc, xu hướng và insights từ chuyên gia để đưa ra quyết định sáng suốt"
+        },
+        "learn": {
+            "title": "Học Kiến Thức Tài Chính Cơ Bản",
+            "description": "Nội dung giáo dục để xây dựng kiến thức tài chính của bạn từ cơ bản đến nâng cao"
+        },
         "newsletter": {
             "title": "Đừng Bỏ Lỡ Bất Kỳ Kiến Thức Nào",
             "description": "Nhận bản tin hàng tuần với phân tích thị trường, hướng dẫn trading và insights từ chuyên gia",
@@ -489,7 +554,118 @@
     },
     "resources": {
         "title": "Tài Nguyên & Công Cụ Giao Dịch",
-        "description": "Truy cập các tài nguyên giao dịch chuyên nghiệp bao gồm bảng so sánh sàn giao dịch và từ điển thuật ngữ giao dịch chi tiết. Công cụ cần thiết để hiểu thị trường và chọn sàn phù hợp."
+        "description": "Truy cập các tài nguyên giao dịch chuyên nghiệp bao gồm bảng so sánh sàn giao dịch và từ điển thuật ngữ giao dịch chi tiết. Công cụ cần thiết để hiểu thị trường và chọn sàn phù hợp.",
+        "badge": "Công Cụ & Tài Nguyên",
+        "heroTitle": "Tài Nguyên Giao Dịch Chuyên Nghiệp",
+        "heroDescription": "Truy cập nhanh bảng so sánh sàn giao dịch uy tín và từ điển thuật ngữ giao dịch chi tiết. Hai tài nguyên cốt lõi giúp bạn hiểu thị trường và chọn sàn phù hợp.",
+        "affiliate": {
+            "title": "🎁 Ưu Đãi Đặc Biệt: Hoàn Phí Giao Dịch 20% Cho Sàn Binance",
+            "description": "Đăng ký tài khoản Binance ngay hôm nay và nhận hoàn phí giao dịch lên đến 20%. Áp dụng cho tất cả giao dịch, không giới hạn thời gian.",
+            "ctaText": "Đăng Ký Binance Ngay",
+            "bonusAmount": "20% Hoàn Phí"
+        },
+        "tabs": {
+            "broker": "So Sánh Sàn",
+            "glossary": "Từ Điển Thuật Ngữ"
+        },
+        "brokerTab": {
+            "title": "So Sánh Sàn Giao Dịch Uy Tín",
+            "description": "Tìm hiểu và so sánh các sàn giao dịch được quản lý bởi các cơ quan có uy tín trên thế giới."
+        },
+        "glossaryTab": {
+            "title": "Từ Điển Thuật Ngữ Giao Dịch",
+            "description": "Tìm hiểu các thuật ngữ quan trọng trong giao dịch tài chính, từ cơ bản đến nâng cao."
+        },
+        "schema": {
+            "mainEntityName": "Trading Resources",
+            "mainEntityDescription": "Broker comparison and trading glossary",
+            "brokerComparison": {
+                "name": "Broker Comparison",
+                "description": "Compare trusted trading brokers"
+            },
+            "tradingGlossary": {
+                "name": "Trading Glossary",
+                "description": "Comprehensive trading terms dictionary"
+            }
+        },
+        "table": {
+            "brokerName": "Sàn Giao Dịch",
+            "platform": "Nền Tảng",
+            "bonus": "Ưu Đãi",
+            "action": "Hành Động",
+            "registerNow": "Đăng Ký Ngay",
+            "platformLabel": "Nền tảng:"
+        },
+        "forexSection": {
+            "title": "So Sánh Sàn Ngoại Hối & CFD",
+            "description": "Các sàn giao dịch Forex, Vàng và CFD uy tín, được đánh giá dựa trên phí giao dịch và trải nghiệm người dùng",
+            "descriptionMobile": "Các sàn giao dịch Forex, Vàng và CFD uy tín",
+            "badge": "NGOẠI HỐI & CFD"
+        },
+        "cryptoSection": {
+            "title": "So Sánh Sàn Crypto",
+            "description": "Các sàn giao dịch tiền mã hóa phổ biến, so sánh theo phí và nền tảng hỗ trợ",
+            "descriptionMobile": "Các sàn giao dịch tiền mã hóa phổ biến",
+            "badge": "CRYPTO"
+        },
+        "riskWarning": {
+            "label": "Lưu ý:",
+            "text": "Giao dịch tài chính có rủi ro cao. Bạn có thể mất toàn bộ số tiền đầu tư. Các thông tin trên chỉ mang tính tham khảo, không phải lời khuyên đầu tư."
+        },
+        "riskDisclosure": {
+            "compact": {
+                "label": "Cảnh báo rủi ro:",
+                "text": "Giao dịch tài chính có rủi ro cao. Bạn có thể mất toàn bộ số vốn đầu tư."
+            },
+            "full": {
+                "title": "Cảnh Báo Rủi Ro Quan Trọng",
+                "subtitle": "Vui lòng đọc kỹ trước khi tham gia giao dịch",
+                "paragraph1": {
+                    "strong": "Giao dịch các sản phẩm tài chính có đòn bẩy (Forex, CFD, Crypto) mang lại rủi ro cao.",
+                    "text": "Bạn có thể mất toàn bộ số vốn đầu tư ban đầu và thậm chí mất nhiều hơn số tiền bạn đã nạp vào tài khoản."
+                },
+                "paragraph2": "Các sản phẩm này không phù hợp cho tất cả mọi người và bạn cần đảm bảo rằng bạn hiểu rõ các rủi ro liên quan. Trước khi quyết định giao dịch, bạn nên cân nhắc kỹ lưỡng các mục tiêu đầu tư, mức độ kinh nghiệm và khả năng chấp nhận rủi ro của mình.",
+                "paragraph3": {
+                    "strong": "Nội dung trên website này chỉ mang tính chất chia sẻ kiến thức và giáo dục.",
+                    "text": "Chúng tôi không cung cấp lời khuyên đầu tư cá nhân. Mọi quyết định giao dịch là trách nhiệm của riêng bạn."
+                },
+                "paragraph4": "Hiệu suất trong quá khứ không đảm bảo cho kết quả trong tương lai. Các ví dụ và kết quả được trình bày trên website chỉ mang tính minh họa và có thể không phản ánh chính xác kết quả thực tế.",
+                "paragraph5": {
+                    "strong": "Khuyến nghị:",
+                    "text": "Chỉ giao dịch với số tiền mà bạn có thể chấp nhận mất. Nên bắt đầu với tài khoản Demo để làm quen trước khi sử dụng tiền thật."
+                }
+            }
+        },
+        "brokers": {
+            "exness": {
+                "platform": "Forex, Vàng, CFD - 100+ cặp tiền, kim loại, chỉ số",
+                "bonus": "Nạp rút tức thì 24/7 và đòn bẩy vô cực"
+            },
+            "xm": {
+                "platform": "Forex, Cổ phiếu CFD - 1,000+ mã chứng khoán, ngoại hối",
+                "bonus": "Nhiều chương trình thưởng (Bonus) nạp tiền"
+            },
+            "binance": {
+                "platform": "Crypto (Tiền mã hóa) - 350+ đồng coin và token",
+                "bonus": "Hệ sinh thái lớn nhất, thanh khoản cao nhất"
+            },
+            "bybit": {
+                "platform": "Crypto (Tiền mã hóa) - 200+ đồng coin và token",
+                "bonus": "Giao dịch phái sinh (Futures) mượt, ổn định"
+            },
+            "okx": {
+                "platform": "Crypto (Tiền mã hóa) - 300+ đồng coin và token",
+                "bonus": "Ví Web3 bảo mật và công cụ Bot tự động tốt"
+            },
+            "bingx": {
+                "platform": "Crypto, Forex, Vàng - 250+ coin, có cả vàng và chỉ số",
+                "bonus": "Nổi tiếng nhất về tính năng Copy Trading"
+            },
+            "onus": {
+                "platform": "Crypto (Tiền mã hóa) - 500+ loại tài sản số khác nhau",
+                "bonus": "Nhận lãi VNDC 12.8% và dễ dùng cho người Việt"
+            }
+        }
     },
     "terms": {
         "badge": "Thông tin pháp lý",

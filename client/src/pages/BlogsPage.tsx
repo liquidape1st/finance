@@ -65,8 +65,8 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": t('blogs.title'),
-    "description": t('blogs.description'),
+    "name": t(`blogs.${uiType.toLowerCase()}.title`),
+    "description": t(`blogs.${uiType.toLowerCase()}.description`),
     "url": canonicalUrl,
     "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
     "publisher": {
@@ -84,8 +84,8 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   const itemListData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": t('blogs.title'),
-    "description": t('blogs.description'),
+    "name": t(`blogs.${uiType.toLowerCase()}.title`),
+    "description": t(`blogs.${uiType.toLowerCase()}.description`),
     "numberOfItems": blog_translation.length,
     "itemListElement": blog_translation.slice(0, 10).map((blog, index) => ({
       "@type": "ListItem",
@@ -109,13 +109,13 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   return (
     <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
-        <title>{`GOIncome - ${t('blogs.title')}`}</title>
-        <meta name="description" content={t('blogs.description')} />
+        <title>{`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`}</title>
+        <meta name="description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
         <meta name="robots" content="index,follow" />
 
         {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t('blogs.title')}`} />
-        <meta property="og:description" content={t('blogs.description')} />
+        <meta property="og:title" content={`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`} />
+        <meta property="og:description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
         <meta property="og:image" content={siteImage} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
@@ -123,8 +123,8 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${t('blogs.title')}`} />
-        <meta name="twitter:description" content={t('blogs.description')} />
+        <meta name="twitter:title" content={`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`} />
+        <meta name="twitter:description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
         <meta name="twitter:image" content={siteImage} />
 
         {/* Canonical */}
@@ -159,10 +159,10 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
               <span className="text-[#98989a] text-xs tracking-wider uppercase">{t('blogs.badge')}</span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-              {t('blogs.title')}
+              {t(`blogs.${uiType.toLowerCase()}.title`)}
             </h1>
             <p className="text-[#7e7e81] text-base sm:text-lg leading-relaxed max-w-2xl">
-              {t('blogs.description')}
+              {t(`blogs.${uiType.toLowerCase()}.description`)}
             </p>
           </div>
 
@@ -262,7 +262,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div
-                        className={`absolute top-2 right-2 z-30 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg shadow-black/30 ${uiTypeStyles[blog.uiType]}`}
+                        className={`absolute top-2 right-2 z-30 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-xl shadow-black/50 backdrop-blur-sm border border-white/10 ${uiTypeStyles[blog.uiType]}`}
                       >
                         {blog.uiType}
                       </div>
