@@ -1,3 +1,5 @@
+import { TagResponse } from "./schema.tag.respone"
+
 export type BlogResponse = {
     id: string
     featured: boolean
@@ -9,6 +11,7 @@ export type BlogResponse = {
     category: {
         id: string // UUID
     }
+    tags: TagResponse[]
     translations: BlogTranslationResponse[],
     publishedAt: number
     updatedAt: string

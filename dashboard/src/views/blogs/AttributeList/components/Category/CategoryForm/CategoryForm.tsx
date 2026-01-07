@@ -40,15 +40,6 @@ const validationSchema = Yup.object().shape({
 const LicenseForm = forwardRef<FormikRef, TagForm>((props, ref) => {
     const { actionMode, selectedCategoryObject } = useAppSelector((state) => state.systemCategoryListManageSlice .data);
 
-    useEffect(() => {
-        console.log('selectedCategoryObject', selectedCategoryObject)
-    }, [selectedCategoryObject])
-
-
-    useEffect(() => {
-        console.log('actionMode', actionMode)
-    }, [actionMode])
-
     const {
         initialData = {
             id: actionMode === "CREATE" ? '' : selectedCategoryObject.id,

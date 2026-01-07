@@ -9,6 +9,7 @@ import * as Yup from 'yup'
 import reducer, {
     getBlogCategories,
     getBlogDetail,
+    getTags,
     resetBlog,
     useAppDispatch,
     useAppSelector,
@@ -31,10 +32,16 @@ import BaseService from '@/services/BaseService'
 import type { BlogCategory } from '@/@types/schema.blog.category.respone'
 import type { AxiosResponse } from 'axios'
 import { BlogRequest } from '@/@types/schema.blog.request'
+import { TagResponse } from '@/@types/schema.tag.respone'
 
 type UploadImageResponse = {
     key: string
     presignedUrl: string
+}
+
+type Option = {
+    value: string
+    label: string
 }
 
 type SelectOption = BlogCategory & {
@@ -54,6 +61,11 @@ const validationSchema = Yup.object({
     category: Yup.object({
         id: Yup.string().required('Chọn category'),
     }),
+    contentType: Yup.string().required('Chọn content type'),
+    uiType: Yup.string().required('Chọn UI type'),
+    tags: Yup.array()
+        .of(Yup.string().required())
+        .min(1, "Phải chọn ít nhất 1 tag"),
     translations: Yup.array()
         .of(
             Yup.object({
@@ -81,6 +93,9 @@ const BlogPostForm = () => {
     const blogCategories = useAppSelector(
         (state) => state.blogFormSlice.data.blogCategories,
     )
+    const tags = useAppSelector(
+        (state) => state.blogFormSlice.data.tags,
+    )
     const loading = useAppSelector((state) => state.blogFormSlice.data.loading)
     const blog = useAppSelector((state) => state.blogFormSlice.data.blog)
     // UseState
@@ -101,6 +116,7 @@ const BlogPostForm = () => {
 
     useEffect(() => {
         dispatch(getBlogCategories())
+        dispatch(getTags())
     }, [dispatch])
 
     // Load blog detail khi edit mode
@@ -429,6 +445,9 @@ const BlogPostForm = () => {
                     image: blog.image || '',
                     estimatedReadTime: blog.estimatedReadTime || 5,
                     category: { id: blog?.category?.id || '' },
+                    uiType: blog.uiType || '',
+                    contentType: blog.contentType || '',
+                    tags: blog.tags.map(s => s.id) || [],
                     translations: [
                         {
                             langCode: 'en',
@@ -483,6 +502,159 @@ const BlogPostForm = () => {
                                         name="estimatedReadTime"
                                         component={Input}
                                     />
+                                </FormItem>
+                                <FormItem
+                                    label="Tags"
+                                    invalid={
+                                        errors?.tags &&
+                                        touched?.tags
+                                    }
+                                    errorMessage={
+                                        Array.isArray(errors?.tags)
+                                            ? errors.tags.join(', ')
+                                            : errors?.tags
+                                    }
+                                >
+                                    <Field name="tags">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: Option[] =
+                                                tags.map(
+                                                    (item: TagResponse) => ({
+                                                        ...item,
+                                                        value: item.id,
+                                                        label: item
+                                                            ?.translations[0]
+                                                            ?.name,
+                                                    }),
+                                                )
+                                            return (
+                                                <Select
+                                                    isMulti
+                                                    placeholder="Tags"
+                                                    field={field}
+                                                    form={form}
+                                                    options={transformedData}
+                                                    value={transformedData.filter(
+                                                        (s: Option) =>
+                                                            values?.tags?.includes(s.value),
+                                                    )}
+                                                    onChange={(
+                                                        selected: readonly Option[],
+                                                    ) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            selected.map(s => s.value),
+                                                        )
+                                                    }
+                                                />
+                                            )
+                                        }}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    label="Content Type"
+                                    invalid={
+                                        errors?.contentType &&
+                                        touched?.contentType
+                                    }
+                                    errorMessage={errors?.contentType}
+                                >
+                                    <Field name="contentType">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: Option[] = [
+                                                {
+                                                    label: "Guide",
+                                                    value: "GUIDE"
+                                                },
+                                                {
+                                                    label: "Comparison",
+                                                    value: "COMPARISON"
+                                                },
+                                                {
+                                                    label: "Sharing",
+                                                    value: "SHARING"
+                                                },
+                                                {
+                                                    label: "News",
+                                                    value: "NEWS"
+                                                },
+                                            ]
+                                            return (
+                                                <Select
+                                                    placeholder="Content Type"
+                                                    field={field}
+                                                    form={form}
+                                                    options={transformedData}
+                                                    value={transformedData.filter(
+                                                        (s: Option) =>
+                                                            s.value ===
+                                                            values?.contentType,
+                                                    )}
+                                                    onChange={(
+                                                        s: Option | null,
+                                                    ) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            s?.value || '',
+                                                        )
+                                                    }
+                                                />
+                                            )
+                                        }}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    label="UI Type"
+                                    invalid={
+                                        errors?.uiType &&
+                                        touched?.uiType
+                                    }
+                                    errorMessage={errors?.uiType}
+                                >
+                                    <Field name="uiType">
+                                        {({
+                                            field,
+                                            form,
+                                        }: FieldProps<string, BlogRequest>) => {
+                                            const transformedData: Option[] = [
+                                                {
+                                                    label: "News",
+                                                    value: "NEWS"
+                                                },
+                                                {
+                                                    label: "Blog",
+                                                    value: "BLOG"
+                                                },
+                                            ]
+                                            return (
+                                                <Select
+                                                    placeholder="Ui Type"
+                                                    field={field}
+                                                    form={form}
+                                                    options={transformedData}
+                                                    value={transformedData.filter(
+                                                        (s: Option) =>
+                                                            s.value ===
+                                                            values?.uiType,
+                                                    )}
+                                                    onChange={(
+                                                        s: Option | null,
+                                                    ) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            s?.value || '',
+                                                        )
+                                                    }
+                                                />
+                                            )
+                                        }}
+                                    </Field>
                                 </FormItem>
                                 <FormItem
                                     label="Category"

@@ -1,14 +1,11 @@
-import { Card, Button, Switcher } from '@/components/ui'
-import { useEffect, useState } from 'react'
-import isEmpty from 'lodash/isEmpty'
-import BaseService from '@/services/BaseService'
-import { Link } from 'react-router-dom'
-import { HiPencil, HiStar } from 'react-icons/hi'
 import { BlogResponse } from '@/@types/schema.blog.respone'
+import { Button, Card, Switcher } from '@/components/ui'
 import appConfig from '@/configs/app.config'
+import BaseService from '@/services/BaseService'
 import { useAppDispatch } from '@/store'
-import { setBlogs } from '../store'
-import { useAppSelector } from '../store'
+import { HiPencil, HiStar } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
+import { setBlogs, useAppSelector } from '../store'
 
 const BlogImage = ({ filename, blog }: { filename: string, blog: BlogResponse; size?: number }) => {
     return (
@@ -63,27 +60,18 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
     const getUiTypeConfig = (uiType: string) => {
         switch (uiType) {
             case "NEWS":
-                return {
-                    label: "News",
-                    className: "bg-red-700"
-                };
+                return "bg-red-700"
             case "BLOG":
-                return {
-                    label: "Blog",
-                    className: "bg-slate-800"
-                };
+                return "bg-indigo-800"
             default:
-                return {
-                    label: "Unknown",
-                    className: "bg-gray-500"
-                };
+                "bg-gray-500"
         }
     };
 
     return (
         <Card>
             <div className='relative'>
-                <div className={`z-20 absolute top-4 right-4 bg-yellow-500 text-white px-2 py-1 rounded-bl-lg font-medium text-sm  ${getContentTypeBadgeClass(blog?.contentType)}`}>
+                <div className={`z-20 absolute top-4 right-4 text-white px-2 py-1 rounded-bl-lg font-medium text-sm  ${getContentTypeBadgeClass(blog?.contentType)}`}>
                     {blog?.contentType || "Unknown"}
                 </div>
                 <div className="flex flex-col gap-4">
@@ -111,10 +99,20 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
                             {blog.author}
                         </span>
                         <div>
-                            <div className={`bg-yellow-500 text-white px-2 py-1 rounded-l-lg font-medium text-sm  ${getUiTypeConfig(blog?.uiType)}`}>
+                            <div className={`text-white px-2 py-1 rounded-l-lg font-medium text-sm  ${getUiTypeConfig(blog?.uiType)}`}>
                                 {blog?.uiType || "Unknown"}
                             </div>
                         </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 min-h-[50px]">
+                        {
+                            blog.tags.map(tag => (
+                                <span key={tag.id} className="inline-flex items-center px-3 py-1 text-xs font-medium bg-slate-700 text-slate-300 rounded-lg border border-slate-600 hover:bg-slate-600 transition-colors h-[24px]">
+                                    {tag.translations[0]?.name}
+                                </span>
+                            ))
+                        }
                     </div>
 
                     <div className="flex justify-between pt-2 border-t items-center">
