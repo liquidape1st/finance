@@ -66,8 +66,8 @@ const SignInForm = (props: SignInFormProps) => {
             )}
             <Formik
                 initialValues={{
-                    email: 'liquidape@finance.com',
-                    password: 'liquidape123@#',
+                    email: '',
+                    password: '',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
