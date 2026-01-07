@@ -2,6 +2,7 @@ package com.example.finance.schemas.request;
 
 import com.example.finance.group.CreateMethod;
 import com.example.finance.group.UpdateMethod;
+import com.example.finance.model.Blog;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,12 @@ public class BlogRequest {
     private String image;
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private Blog.UiType uiType;
+
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private Blog.ContentType contentType;
+
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private Integer estimatedReadTime;
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
@@ -34,4 +41,7 @@ public class BlogRequest {
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private List<BlogTranslationRequest> translations;
+
+    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
+    private List<UUID> tags;
 }

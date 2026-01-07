@@ -16,7 +16,7 @@ public class BlogResponse {
     private Boolean featured;
     private Integer estimatedReadTime;
     private MinCategoryResponse category;
-    private TagResponse tag;
+    private List<TagResponse> tags;
     private Blog.UiType uiType;
     private Blog.ContentType contentType;
     private List<BlogTranslationClientResponse> translations;

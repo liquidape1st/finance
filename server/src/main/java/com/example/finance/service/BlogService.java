@@ -4,12 +4,15 @@ import com.example.finance.exception.EntityNotFoundException;
 import com.example.finance.model.Blog;
 import com.example.finance.model.BlogTranslation;
 import com.example.finance.model.Category;
+import com.example.finance.model.Tag;
 import com.example.finance.pageable.PageableObject;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
 import com.example.finance.repository.CategoryRepository;
+import com.example.finance.repository.TagRepository;
 import com.example.finance.schemas.request.BlogRequest;
 import com.example.finance.schemas.request.BlogTranslationRequest;
+import com.example.finance.schemas.request.TagRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
     BlogRepository blogRepository;
     CategoryRepository categoryRepository;
     BlogTranslationRepository blogTranslationRepository;
+    TagRepository tagRepository;
 
     @Override
     public List<Blog> findAllEntities() {
@@ -106,7 +110,15 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
     @Override
     public void mapRequestToEntity(Blog entity, BlogRequest request) {
         setIfNotNull(entity::setImage, request.getImage());
+        setIfNotNull(entity::setUiType, request.getUiType());
+        setIfNotNull(entity::setContentType, request.getContentType());
         setIfNotNull(entity::setEstimatedReadTime, request.getEstimatedReadTime());
+
+        for (UUID uid : request.getTags()) {
+            Tag existTag = tagRepository.findById(uid)
+                    .orElseThrow(() -> new EntityNotFoundException("Tag not found"));
+            entity.getTags().add(existTag);
+        }
     }
 
     @Override
