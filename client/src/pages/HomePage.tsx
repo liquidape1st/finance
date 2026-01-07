@@ -155,14 +155,14 @@ export function HomePage() {
 
       <main>
       {/* Hero Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Hero section">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Hero section">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
           {t('home.title')}
         </h1>
 
         <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 lg:gap-16 mb-6 sm:mb-8">
           {/* Large Logo Icon */}
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-[120px] lg:h-[120px] relative shrink-0">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-30 lg:h-30 relative shrink-0">
             <svg className="block size-full" fill="none" viewBox="0 0 120 120">
               <path d={svgPaths.p1471eac0} fill="#FFD11A" transform="scale(3)" />
               <path d={svgPaths.p1fd34e80} fill="#FFD11A" transform="scale(3)" />
@@ -199,7 +199,7 @@ export function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 border-t border-neutral-800" aria-label="Statistics">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 border-t border-neutral-800" aria-label="Statistics">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-neutral-800">
           {stats.map((stat, index) => (
             <div key={index} className="py-8 sm:py-12 md:py-16 text-center">
@@ -213,7 +213,7 @@ export function HomePage() {
       </section>
 
       {/* Features Cards */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Features">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Features">
         <div className="bg-[#141414] border border-neutral-800 rounded-xl p-2 sm:p-2.5">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-2.5">
             <div className="bg-[#1a1a1a] border border-neutral-800 rounded-lg p-6 sm:p-8">
@@ -262,7 +262,7 @@ export function HomePage() {
       </section>
 
       {/* Tabs & Content Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Articles and whitepapers">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Articles and whitepapers">
         <div className="bg-[#1a1a1a] rounded-xl p-6 sm:p-8 md:p-12 border border-neutral-800">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 sm:mb-10 md:mb-12 gap-6">
             <header className="flex-1">
@@ -291,8 +291,8 @@ export function HomePage() {
           {whitepapers.map((paper, index) => (
             <div key={paper.id} className={`flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 items-start ${index > 0 ? 'border-t border-neutral-800 pt-8 sm:pt-12 md:pt-16 mt-8 sm:mt-12 md:mt-16' : ''}`}>
               {/* Left Side - Icon & Description */}
-              <div className="w-full lg:w-[412px] lg:shrink-0">
-                <div className="size-12 sm:size-14 md:size-[60px] mb-6 sm:mb-8 md:mb-10 relative">
+              <div className="w-full lg:w-103 lg:shrink-0">
+                <div className="size-12 sm:size-14 md:size-15 mb-6 sm:mb-8 md:mb-10 relative">
                   <svg className="block size-full" fill="none" viewBox="0 0 60 60">
                     {index === 0 ? (
                       <>
@@ -323,7 +323,7 @@ export function HomePage() {
                   <img
                     src={paper.image}
                     alt={paper.title}
-                    className="w-full h-48 sm:h-64 md:h-[303px] object-cover rounded-xl mb-4 sm:mb-5 md:mb-6"
+                    className="w-full h-48 sm:h-64 md:h-75.75 object-cover rounded-xl mb-4 sm:mb-5 md:mb-6"
                   />
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
                     <div className="flex-1">
@@ -375,7 +375,7 @@ export function HomePage() {
       </section>
 
       {/* Ebooks Grid */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {home_page_featured_blog_list.map((blog) => (
            <Link
@@ -386,7 +386,7 @@ export function HomePage() {
          >
            <article className="flex flex-col h-full">
              {/* Image */}
-             <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
+             <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4">
                <img
                  src={getBlogImageUrl(blog.image, blog.updatedAt)}
                  loading="lazy"
@@ -409,7 +409,7 @@ export function HomePage() {
                </div>
 
                {/* Stats & Button */}
-               <div className="flex items-center gap-[50px]">
+               <div className="flex items-center gap-12.5">
                  {/* Stats Pills */}
                  <div className="flex items-center gap-2">
                    {/* Views */}

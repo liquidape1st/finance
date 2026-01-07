@@ -13,6 +13,10 @@ export type FinanceState = {
     home_page_featured_blog_list: BlogTranslationClient[];
     category_translation: CategoryTranslation[];
     tableData: TableQueries
+    isLoadingSelectedBlogPost: boolean;
+    isLoadingBlogPostList: boolean;
+    isLoadingCategoryList: boolean;
+    isLoadingRelatedBlogPosts: boolean;
 }
 const initState: FinanceState = {
     home_page_featured_blog_list: [],
@@ -24,7 +28,7 @@ const initState: FinanceState = {
             langCode: "",
             name: ""
         },
-        uiType: "BLOG",
+        uiType: "LEARN",
         contentType: "",
         content: "",
         createdAt: "",
@@ -39,6 +43,10 @@ const initState: FinanceState = {
         updatedAt: "",
         view: 0
     },
+    isLoadingSelectedBlogPost: false,
+    isLoadingBlogPostList: false,
+    isLoadingCategoryList: false,
+    isLoadingRelatedBlogPosts: false,
     blog_translation: [],
     category_translation: [],
     tableData: {
@@ -112,15 +120,31 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getClientBlogTranslationPage.fulfilled, (state, action) => {
             state.blog_translation = action.payload.data.content
+            state.isLoadingBlogPostList = false;
+        })
+        builder.addCase(getClientBlogTranslationPage.pending, (state) => {
+            state.isLoadingBlogPostList = true;
         })
         builder.addCase(getListClientCategoryTranslation.fulfilled, (state, action) => {
             state.category_translation = action.payload.data
+            state.isLoadingCategoryList = false;
+        })
+        builder.addCase(getListClientCategoryTranslation.pending, (state) => {
+            state.isLoadingCategoryList = true;
         })
         builder.addCase(getDetailClientBlogTranslation.fulfilled, (state, action) => {
             state.selected_blog_translation = action.payload.data
+            state.isLoadingSelectedBlogPost = false
+        })
+        builder.addCase(getDetailClientBlogTranslation.pending, (state) => {
+            state.isLoadingSelectedBlogPost = true;
         })
         builder.addCase(getHomePageFeaturedBlogTranslationList.fulfilled, (state, action) => {
             state.home_page_featured_blog_list = action.payload.data
+            state.isLoadingRelatedBlogPosts = false;
+        })
+        builder.addCase(getHomePageFeaturedBlogTranslationList.pending, (state) => {
+            state.isLoadingRelatedBlogPosts = true;
         })
     }
 })

@@ -32,12 +32,19 @@ export default function App() {
       </Helmet>
       <Routes>
         <Route path="/" element={<HomePage />} />
+
         <Route path="/news" element={<BlogsPage uiType="NEWS" preflix="news"/>} />
-        <Route path="/news/:lang/:slug" element={<BlogDetailPage />} />
+        <Route path="/news/:lang/:slug" element={<BlogDetailPage preflix="news" />} />
+
         <Route path="/learn" element={<BlogsPage uiType="LEARN" preflix="learn"/>} />
-        <Route path="/learn/:lang/:slug" element={<BlogDetailPage />} />
-        <Route path="/markets" element={<BlogsPage uiType="MARKET" preflix="markets"/>} />
-        <Route path="/markets/:lang/:slug" element={<BlogDetailPage />} />
+        <Route path="/learn/:lang/:slug" element={<BlogDetailPage preflix="learn" />} />
+
+        <Route path="/guides" element={<BlogsPage uiType="GUIDE" preflix="guides"/>} />
+        <Route path="/guides/:lang/:slug" element={<BlogDetailPage preflix="guides" />} />
+
+        <Route path="/market" element={<BlogsPage uiType="MARKET" preflix="market"/>} />
+        <Route path="/market/:lang/:slug" element={<BlogDetailPage preflix="market" />} />
+
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/terms" element={<TermsPage />} />

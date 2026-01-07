@@ -1,19 +1,24 @@
 import appConfig from "@/configs/app.config";
 import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
+import { getClientBlogTranslationPage } from "@/store/slices/finance/financeSlice";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
-import { useEffect } from "react";
-import { getClientBlogTranslationPage } from "@/store/slices/finance/financeSlice";
-import { Helmet } from "react-helmet";
+import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
 
 const getBlogImageUrl = (fileName: string, updatedAt: string) =>
   `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`;
 
-export function BlogDetailPage() {
+type DetailBlogPageProps = {
+  preflix: string
+}
+
+
+export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
   const { lang, slug } = useParams()
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +28,7 @@ export function BlogDetailPage() {
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const blog_translation = useAppSelector((state) => state.finance.blog_translation)
   const blog = useAppSelector((state) => state.finance.selected_blog_translation)
-  const { tableData } = useAppSelector((state) => state.finance)
+  const { tableData, isLoadingSelectedBlogPost, isLoadingRelatedBlogPosts } = useAppSelector((state) => state.finance)
 
   useEffect(() => {
     dispatch(getClientBlogTranslationPage(tableData))
@@ -38,6 +43,7 @@ export function BlogDetailPage() {
       slug: slug
     }))
   }, [lang, slug])
+
 
   const blogImageUrl = blog.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
   const canonicalUrl = `${window.location.origin}${location.pathname}`;
@@ -161,7 +167,7 @@ export function BlogDetailPage() {
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
 
-        <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
+        <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
           <button
             onClick={() => navigate(-1)}
             className="inline-flex items-center gap-2 text-[#98989a] hover:text-white transition-colors mb-6"
@@ -171,108 +177,165 @@ export function BlogDetailPage() {
           </button>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="col-span-2">
-              <div className="mb-6">
-                <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
-                  <Tag className="size-4 text-[#FFD11A]" />
-                  <span className="text-[#98989a] text-xs uppercase tracking-wide">
-                    {blog.category?.name ?? t("blogs.category", { defaultValue: "Blog" })}
-                  </span>
+              {isLoadingSelectedBlogPost ? (
+                <div className="animate-pulse">
+                  <div className="mb-6">
+                    <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
+                      <div className="size-4 rounded-full bg-[#262626]" />
+                      <div className="h-3 w-24 bg-[#262626] rounded" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="h-8 bg-[#262626] rounded w-3/4" />
+                    <div className="h-6 bg-[#1f1f1f] rounded w-1/2" />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4 text-sm mb-8">
+                    <div className="h-4 w-32 bg-[#1f1f1f] rounded" />
+                    <div className="h-4 w-20 bg-[#1f1f1f] rounded" />
+                  </div>
+
+                  <div className="relative w-full h-80 sm:h-105 md:h-120 rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
+                    <div className="absolute inset-0 bg-linear-to-r from-[#1a1a1a] via-[#1f1f1f] to-[#1a1a1a]" />
+                  </div>
+
+                  <div className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 space-y-3">
+                    {Array.from({ length: 8 }).map((_, idx) => (
+                      <div
+                        key={`paragraph-skeleton-${idx}`}
+                        className="h-4 bg-[#1f1f1f] rounded w-full"
+                      />
+                    ))}
+                    <div className="h-4 bg-[#1f1f1f] rounded w-2/3" />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div className="mb-6">
+                    <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full">
+                      <Tag className="size-4 text-[#FFD11A]" />
+                      <span className="text-[#98989a] text-xs uppercase tracking-wide">
+                        {blog.category?.name ?? t("blogs.category", { defaultValue: "Blog" })}
+                      </span>
+                    </div>
+                  </div>
 
-              <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Kumbh Sans, sans-serif" }}>
-                {blog.title}
-              </h1>
+                  <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Kumbh Sans, sans-serif" }}>
+                    {blog.title}
+                  </h1>
 
-              <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
-                {blog.createdAt && (
-                  <time className="inline-flex items-center gap-2" dateTime={blog.createdAt} itemProp="datePublished">
-                    <Clock className="size-4" />
-                    {blog.createdAt}
-                  </time>
-                )}
-                <span className="inline-flex items-center gap-2" aria-label={`${blog.view} views`}>
-                  <Eye className="size-4" aria-hidden="true" />
-                  {blog.view}
-                </span>
-              </div>
+                  <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
+                    {blog.createdAt && (
+                      <time className="inline-flex items-center gap-2" dateTime={blog.createdAt} itemProp="datePublished">
+                        <Clock className="size-4" />
+                        {blog.createdAt}
+                      </time>
+                    )}
+                    <span className="inline-flex items-center gap-2" aria-label={`${blog.view} views`}>
+                      <Eye className="size-4" aria-hidden="true" />
+                      {blog.view}
+                    </span>
+                  </div>
 
-              <figure className="relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
-                <img
-                  src={getBlogImageUrl(blog.image, blog.updatedAt)}
-                  alt={blog.title}
-                  loading="lazy"
-                  decoding="async"
-                  width={1200}
-                  height={630}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  itemProp="image"
-                />
-              </figure>
+                  <figure className="relative w-full h-80 sm:h-105 md:h-120 rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
+                    <img
+                      src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                      alt={blog.title}
+                      loading="lazy"
+                      decoding="async"
+                      width={1200}
+                      height={630}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      itemProp="image"
+                    />
+                  </figure>
 
-              <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4" itemScope itemType="https://schema.org/BlogPosting">
-                <meta itemProp="headline" content={blog.title} />
-                <meta itemProp="description" content={blog.excerpt} />
-                {blogImageUrl && <meta itemProp="image" content={blogImageUrl} />}
-                <div
-                  className="prose prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
-                  itemProp="articleBody"
-                />
-              </article>
+                  <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4" itemScope itemType="https://schema.org/BlogPosting">
+                    <meta itemProp="headline" content={blog.title} />
+                    <meta itemProp="description" content={blog.excerpt} />
+                    {blogImageUrl && <meta itemProp="image" content={blogImageUrl} />}
+                    <div
+                      className="prose prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
+                      itemProp="articleBody"
+                    />
+                  </article>
+                </>
+              )}
             </div>
             {/* Sidebar */}
             <aside className="col-span-1" aria-label="Related articles">
               <div className="flex flex-col gap-6 sticky top-0">
                 <div>
                   <RandomAffiliateBanner />
-                </div>
+                </div>  
                 <div className="grid grid-cols-1 gap-4">
-                  {blog_translation.slice(0, 5).map((blog) => (
-                    <Link
-                      to={`/blog/${currentLang}/${blog.slug}`}
-                      state={{ blog }}
-                      key={`${currentLang}-${blog.id}`}
-                      className="group flex flex-col cursor-pointer"
-                    >
-                      <article className="flex flex-col h-full">
-                        <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
-                          <img
-                            src={getBlogImageUrl(blog.image, blog.updatedAt)}
-                            loading="lazy"
-                            decoding="async"
-                            alt={blog.title}
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-
+                  { isLoadingRelatedBlogPosts && blog_translation.length === 0
+                    ? Array.from({ length: 3 }).map((_, index) => (
+                      <div
+                        key={`related-skeleton-${index}`}
+                        className="flex flex-col h-full animate-pulse"
+                        aria-hidden="true"
+                      >
+                        <div className="relative h-45 rounded-[10px] overflow-hidden mb-4 bg-[#1f1f1f]" />
                         <div className="flex flex-col gap-2.5 flex-1">
-                          <div className="flex flex-col gap-1">
-                            <h3 className="text-white text-[16px] leading-normal tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
-                              {blog.title}
-                            </h3>
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                  {blog?.category?.name}
-                                </p>
-                              </div>
-                              <div className="flex items-center gap-[50px]">
-                                <div className="flex items-center gap-2">
-                                  <div className="flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                                    <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
-                                    <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                                      {blog.view}
-                                    </span>
+                          <div className="space-y-2">
+                            <div className="h-4 bg-[#262626] rounded w-4/5" />
+                            <div className="h-3 bg-[#1f1f1f] rounded w-2/5" />
+                          </div>
+                          <div className="flex items-center justify-between mt-2">
+                            <div className="h-3 bg-[#1f1f1f] rounded w-1/3" />
+                            <div className="h-3 bg-[#1f1f1f] rounded w-10" />
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                    : blog_translation.slice(0, 5).map((blog) => (
+                      <Link
+                        to={`/${preflix}/${currentLang}/${blog.slug}`}
+                        state={{ blog }}
+                        key={`${currentLang}-${blog.id}`}
+                        className="group flex flex-col cursor-pointer"
+                      >
+                        <article className="flex flex-col h-full">
+                          <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4">
+                            <img
+                              src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                              loading="lazy"
+                              decoding="async"
+                              alt={blog.title}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+
+                          <div className="flex flex-col gap-2.5 flex-1">
+                            <div className="flex flex-col gap-1">
+                              <h3 className="text-white text-[16px] leading-normal tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                                {blog.title}
+                              </h3>
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                    {blog?.category?.name}
+                                  </p>
+                                </div>
+                                <div className="flex items-center gap-12.5">
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                                      <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
+                                      <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                                        {blog.view}
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </article>
-                    </Link>
-                  ))}
+                        </article>
+                      </Link>
+                    ))}
                 </div>
 
                 <div>

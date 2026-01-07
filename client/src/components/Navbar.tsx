@@ -21,11 +21,12 @@ export function Navbar() {
     window.location.reload()
   };
   
-  const getCurrentPage = (): 'home' | 'news' | 'learn' | 'markets' | 'resources' | 'contact' => {
+  const getCurrentPage = (): 'home' | 'news' | 'learn' | 'guides' | 'market' | 'resources' | 'contact' => {
     if (location.pathname === '/') return 'home';
     if (location.pathname === '/news') return 'news';
     if (location.pathname === '/learn') return 'learn';
-    if (location.pathname === '/markets') return 'markets';
+    if (location.pathname === '/guides') return 'guides';
+    if (location.pathname === '/market') return 'market';
     if (location.pathname === '/resources') return 'resources';
     if (location.pathname === '/contact') return 'contact';
     return 'home';
@@ -49,7 +50,7 @@ export function Navbar() {
 
       {/* Navbar */}
       <nav className="bg-[#1a1a1a] border-b border-neutral-800 w-full sticky top-0 z-50">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-5 flex items-center justify-between">
+        <div className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-5 flex items-center justify-between">
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <div className="relative size-10 sm:size-12 bg-linear-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 shrink-0">
@@ -71,7 +72,9 @@ export function Navbar() {
             <Link
               to="/"
               className={`text-sm transition-colors ${
-                currentPage === 'home' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+                currentPage === 'home'
+                  ? 'text-white'
+                  : 'text-[#7e7e81] hover:text-white'
               }`}
             >
               {t('nav.home')}
@@ -79,7 +82,9 @@ export function Navbar() {
             <Link
               to="/news"
               className={`text-sm transition-colors ${
-                currentPage === 'news' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+                currentPage === 'news'
+                  ? 'text-white'
+                  : 'text-[#7e7e81] hover:text-white'
               }`}
             >
               {t('nav.news')}
@@ -87,22 +92,36 @@ export function Navbar() {
             <Link
               to="/learn"
               className={`text-sm transition-colors ${
-                currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+                currentPage === 'learn'
+                  ? 'text-white'
+                  : 'text-[#7e7e81] hover:text-white'
               }`}
             >
               {t('nav.learn')}
             </Link>
             <Link
-              to="/markets"
+              to="/guides"
               className={`text-sm transition-colors ${
-                currentPage === 'markets' ? 'text-white' : 'text-[#7e7e81] hover:text-white'
+                currentPage === 'guides'
+                  ? 'text-white'
+                  : 'text-[#7e7e81] hover:text-white'
+              }`}
+            >
+              {t('nav.guides')}
+            </Link>
+            <Link
+              to="/market"
+              className={`text-sm transition-colors ${
+                currentPage === 'market'
+                  ? 'text-white'
+                  : 'text-[#7e7e81] hover:text-white'
               }`}
             >
               {t('nav.markets')}
             </Link>
             <Link
               to="/resources"
-              className={`px-[18px] py-2.5 rounded-md text-sm transition-colors ${
+              className={`px-4.5 py-2.5 rounded-md text-sm transition-colors ${
                 currentPage === 'resources'
                   ? 'bg-[#262626] border border-[#333333] text-white'
                   : 'bg-[#141414] border border-[#333333] text-white hover:bg-[#1a1a1a]'
@@ -178,14 +197,27 @@ export function Navbar() {
               </Link>
               <Link 
                 to="/learn" 
-                className={`text-sm transition-colors py-2 ${currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'}`}
+                className={`text-sm transition-colors py-2 ${
+                  currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.learn')}
               </Link>
               <Link 
-                to="/markets" 
-                className={`text-sm transition-colors py-2 ${currentPage === 'markets' ? 'text-white' : 'text-[#7e7e81]'}`}
+                to="/guides" 
+                className={`text-sm transition-colors py-2 ${
+                  currentPage === 'guides' ? 'text-white' : 'text-[#7e7e81]'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t('nav.guides')}
+              </Link>
+              <Link 
+                to="/market" 
+                className={`text-sm transition-colors py-2 ${
+                  currentPage === 'market' ? 'text-white' : 'text-[#7e7e81]'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.markets')}

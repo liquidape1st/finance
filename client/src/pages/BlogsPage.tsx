@@ -11,7 +11,7 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 
 type BlogsPageProps = {
-  uiType: 'NEWS' | 'LEARN' | 'MARKET',
+  uiType: 'NEWS' | 'GUIDE' | 'MARKET' | 'LEARN',
   preflix: string
 }
 
@@ -21,6 +21,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   const { blog_translation, category_translation, tableData } = useAppSelector((state) => state.finance)
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   // Stable URL that stays cacheable but changes when the image is updated
   const getBlogImageUrl = (fileName: string, updatedAt: string) =>
@@ -50,12 +51,16 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   useEffect(() => {
     console.log('currentLang: ', currentLang)
     dispatch(getListClientCategoryTranslation(uiType))
+    setIsLoading(true)
     dispatch(getClientBlogTranslationPage(tableData))
+      .finally(() => setIsLoading(false))
   }, [dispatch, currentLang, uiType])
 
 
   useEffect(() => {
+    setIsLoading(true)
     dispatch(getClientBlogTranslationPage(tableData))
+      .finally(() => setIsLoading(false))
   }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType])
 
   const canonicalUrl = `${window.location.origin}/${preflix}`;
@@ -100,9 +105,9 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
     }))
   };
 
-  const uiTypeStyles: Record<BlogsPageProps['uiType'], string> = {
+  const uiTypeStyles: Record<string, string> = {
     NEWS: 'bg-blue-500/15 text-blue-100 border border-blue-400/40 shadow-blue-500/20',
-    LEARN: 'bg-emerald-500/15 text-emerald-100 border border-emerald-400/40 shadow-emerald-500/20',
+    BLOG: 'bg-emerald-500/15 text-emerald-100 border border-emerald-400/40 shadow-emerald-500/20',
     MARKET: 'bg-purple-500/15 text-purple-100 border border-purple-400/40 shadow-purple-500/20',
   };
 
@@ -152,7 +157,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
       <main>
         {/* Hero Section */}
-        <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16" aria-label="Blog listing">
+        <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16" aria-label="Blog listing">
           <div className="mb-8 sm:mb-10">
             <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 rounded-full mb-4">
               <div className="size-1.5 bg-[#FFD11A] rounded-full"></div>
@@ -213,79 +218,100 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
         </section>
 
         {/* Blog Grid - Figma Style Cards */}
-        <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-20 sm:pb-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blog_translation.map((blog) => (
-              <Link
-                to={`/${preflix}/${currentLang}/${blog.slug}`}
-                state={{ blog }}
-                key={`${currentLang}-${blog.id}`}
-                className="group flex flex-col cursor-pointer"
-              >
-                <article className="flex flex-col h-full">
-                  {/* Image */}
-                  <div className="relative h-[215px] rounded-[10px] overflow-hidden mb-4">
-                    <img
-                      src={getBlogImageUrl(blog.image, blog.updatedAt)}
-                      loading="lazy"
-                      decoding="async"
-                      alt={blog.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div
-                      className={`absolute top-2 right-2 z-30 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg shadow-black/30 ${uiTypeStyles[blog.uiType]}`}
-                    >
-                      {blog.uiType}
+        <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-20 sm:pb-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={preflix}>
+            {isLoading && blog_translation.length === 0
+              ? Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={`skeleton-${index}`}
+                  className="flex flex-col h-full animate-pulse"
+                  aria-hidden="true"
+                >
+                  <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4 bg-[#1f1f1f]">
+                    <div className="absolute inset-0 bg-linear-to-r from-[#1f1f1f] via-[#262626] to-[#1f1f1f]" />
+                  </div>
+                  <div className="flex flex-col gap-3 flex-1">
+                    <div className="space-y-2">
+                      <div className="h-4 bg-[#262626] rounded w-4/5" />
+                      <div className="h-3 bg-[#1f1f1f] rounded w-2/5" />
+                    </div>
+                    <div className="flex items-center gap-12.5 mt-2">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                          <div className="size-5 rounded-full bg-[#262626]" />
+                          <div className="h-3 w-10 bg-[#262626] rounded" />
+                        </div>
+                      </div>
+                      <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1">
+                        <div className="h-3 w-20 bg-[#1f1f1f] rounded" />
+                      </div>
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="flex flex-col gap-2.5 flex-1">
-                    {/* Title & Category */}
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-white text-[16px] leading-normal tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
-                        {blog.title}
-                      </h3>
-                      <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        {blog.category.name}
-                      </p>
+                </div>
+              ))
+              : blog_translation.map((blog) => (
+                <Link
+                  to={`/${preflix}/${currentLang}/${blog.slug}`}
+                  state={{ blog }}
+                  key={`${currentLang}-${blog.id}-${blog.updatedAt}-${preflix}`}
+                  className="group flex flex-col cursor-pointer"
+                >
+                  <article className="flex flex-col h-full">
+                    {/* Image */}
+                    <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4">
+                      <img
+                        src={getBlogImageUrl(blog.image, blog.updatedAt)}
+                        loading="lazy"
+                        decoding="async"
+                        alt={blog.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div
+                        className={`absolute top-2 right-2 z-30 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-lg shadow-black/30 ${uiTypeStyles[blog.uiType]}`}
+                      >
+                        {blog.uiType}
+                      </div>
                     </div>
 
-                    {/* Stats & Button */}
-                    <div className="flex items-center gap-[50px]">
-                      {/* Stats Pills */}
-                      <div className="flex items-center gap-2">
-                        {/* Views */}
-                        <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                          <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
-                          <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                            {blog.view}
-                          </span>
+                    {/* Content */}
+                    <div className="flex flex-col gap-2.5 flex-1">
+                      {/* Title & Category */}
+                      <div className="flex flex-col gap-1">
+                        <h3 className="text-white text-[16px] leading-normal tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                          {blog.title}
+                        </h3>
+                        <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                          {blog.category.name}
+                        </p>
+                      </div>
+
+                      {/* Stats & Button */}
+                      <div className="flex items-center gap-12.5">
+                        {/* Stats Pills */}
+                        <div className="flex items-center gap-2">
+                          {/* Views */}
+                          <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
+                            <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
+                            <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                              {blog.view}
+                            </span>
+                          </div>
                         </div>
 
-                        {/* Comments
-                      <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                        <MessageCircle className="size-5 text-[#666666]" strokeWidth={1.5} />
-                        <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                          {blog.comments}
-                        </span>
-                      </div> */}
-                      </div>
-
-                      {/* Read More Button */}
-                      <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
-                        <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
-                          {t('blogs.readNow')}
-                        </span>
-                        <svg className="size-5 shrink-0" fill="none" viewBox="0 0 20 20">
-                          <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
-                        </svg>
+                        {/* Read More Button */}
+                        <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn">
+                          <span className="text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            {t('blogs.readNow')}
+                          </span>
+                          <svg className="size-5 shrink-0" fill="none" viewBox="0 0 20 20">
+                            <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </article>
-              </Link>
-            ))}
+                  </article>
+                </Link>
+              ))}
           </div>
 
           {/* Load More */}
