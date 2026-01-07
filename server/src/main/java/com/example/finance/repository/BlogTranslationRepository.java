@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @Repository
 public interface BlogTranslationRepository extends JpaRepository<BlogTranslation, UUID> {
+    List<BlogTranslation>  findAllByBlog_Id(UUID id);
     @Query("""
                 SELECT new com.example.finance.schemas.response.BlogTranslationClientResponse(
                     bt.id,
@@ -207,5 +208,46 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                   AND b.enabled = true
             """)
     List<BlogTranslationClientResponse> findNonFeaturedOtherCategory(String langCode, UUID category);
+
+    @Query("""
+                SELECT new com.example.finance.schemas.response.BlogTranslationClientResponse(
+                    bt.id,
+                    bt.langCode,
+                    bt.slug,
+                    bt.title,
+                    bt.content,
+                    bt.excerpt,
+                    b.id,
+                    b.uiType,
+                    b.contentType,
+                    b.view,
+                    b.image,
+                    b.author,
+                    b.featured,
+                    b.estimatedReadTime,
+                    new com.example.finance.schemas.response.CategoryTranslationClientResponse(
+                        ct.id,
+                        ct.langCode,
+                        ct.name, c.id
+                    ),
+                    bt.createdAt, bt.updatedAt
+                )
+                FROM BlogTranslation bt
+                JOIN bt.blog b
+                JOIN b.category c
+                JOIN c.translations ct
+                WHERE bt.langCode = :langCode
+                  AND ct.langCode = :langCode
+                  AND (:category IS NULL OR c.id = :category)
+                  AND b.featured = false
+                  AND b.enabled = true
+                  AND (
+                    :#{#contentType} IS NULL OR b.contentType = :#{#contentType}
+                  )
+                  AND (
+                    :#{#uiType} IS NULL OR b.uiType = :#{#uiType}
+                  )
+            """)
+    List<BlogTranslationClientResponse> findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(String langCode, UUID category, Blog.ContentType contentType, Blog.UiType uiType);
 
 }

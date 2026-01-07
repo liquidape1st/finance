@@ -17,4 +17,11 @@ export type BlogTranslationClient = {
     category: CategoryTranslation;
     createdAt: string;   // ISO datetime
     updatedAt: string;   // ISO datetime
+
+    slugs?: Slug[];
+}
+
+export type Slug = {
+    slug: string;
+    langCode: string;
 }

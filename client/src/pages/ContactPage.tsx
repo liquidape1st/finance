@@ -15,7 +15,7 @@ export function ContactPage() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const to = "contact@goincome.vn";
+    const to = "contact@goincome.net";
     const mailSubject = encodeURIComponent(subject || t("contact.mail.defaultSubject"));
     const bodyLines = [
       `${t("contact.mail.nameLabel")} ${name || t("contact.mail.missingValue")}`,
@@ -44,11 +44,11 @@ export function ContactPage() {
     "mainEntity": {
       "@type": "Organization",
       "name": "GOIncome",
-      "email": "contact@goincome.vn",
+      "email": "contact@goincome.net",
       "url": window.location.origin,
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "contact@goincome.vn",
+        "email": "contact@goincome.net",
         "contactType": "customer service"
       }
     }
@@ -96,7 +96,7 @@ export function ContactPage() {
       </Helmet>
       <Navbar />
 
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">
+      <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start" aria-label="Contact information and form">
           <div>
             <div className="bg-[#333333] inline-block px-3 py-1 rounded mb-3 sm:mb-4">
@@ -116,10 +116,10 @@ export function ContactPage() {
               <p className="text-[#98989a]">
                 {t("contact.supportEmail")}&nbsp;
                 <a
-                  href="mailto:contact@goincome.vn"
+                  href="mailto:contact@goincome.net"
                   className="text-[#FFD11A] hover:underline"
                 >
-                  contact@goincome.vn
+                  contact@goincome.net
                 </a>
               </p>
               <p className="text-[#666666] text-xs sm:text-sm leading-relaxed">

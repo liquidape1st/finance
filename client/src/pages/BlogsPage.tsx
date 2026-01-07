@@ -18,10 +18,9 @@ type BlogsPageProps = {
 export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
-  const { blog_translation, category_translation, tableData } = useAppSelector((state) => state.finance)
+  const { blog_translation, category_translation, tableData, isLoadingBlogPostList } = useAppSelector((state) => state.finance)
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const [search, setSearch] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
 
   // Stable URL that stays cacheable but changes when the image is updated
   const getBlogImageUrl = (fileName: string, updatedAt: string) =>
@@ -44,24 +43,20 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   useEffect(() => {
     if (uiType) {
       dispatch(setTableData({ ...tableData, uiType: uiType }))
+      dispatch(getListClientCategoryTranslation(uiType))
     }
   }, [uiType])
 
+  // useEffect(() => {
+  //   console.log('currentLang: ', currentLang)
+  //   dispatch(getClientBlogTranslationPage(tableData))
+  // }, [dispatch, currentLang])
 
   useEffect(() => {
-    console.log('currentLang: ', currentLang)
-    dispatch(getListClientCategoryTranslation(uiType))
-    setIsLoading(true)
-    dispatch(getClientBlogTranslationPage(tableData))
-      .finally(() => setIsLoading(false))
-  }, [dispatch, currentLang, uiType])
-
-
-  useEffect(() => {
-    setIsLoading(true)
-    dispatch(getClientBlogTranslationPage(tableData))
-      .finally(() => setIsLoading(false))
-  }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType])
+    if (tableData.uiType) {
+      dispatch(getClientBlogTranslationPage(tableData))
+    }
+  }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType, currentLang])
 
   const canonicalUrl = `${window.location.origin}/${preflix}`;
   const siteImage = `${window.location.origin}/logo.png`;
@@ -220,7 +215,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
         {/* Blog Grid - Figma Style Cards */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-20 sm:pb-24">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={preflix}>
-            {isLoading && blog_translation.length === 0
+            {isLoadingBlogPostList && blog_translation.length === 0
               ? Array.from({ length: 6 }).map((_, index) => (
                 <div
                   key={`skeleton-${index}`}

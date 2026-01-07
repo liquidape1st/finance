@@ -9,6 +9,7 @@ export const SLICENAME = 'financeSlice'
 
 export type FinanceState = {
     selected_blog_translation: BlogTranslationClient;
+    related_selected_blog_translation_list: BlogTranslationClient[];
     blog_translation: BlogTranslationClient[];
     home_page_featured_blog_list: BlogTranslationClient[];
     category_translation: CategoryTranslation[];
@@ -17,9 +18,11 @@ export type FinanceState = {
     isLoadingBlogPostList: boolean;
     isLoadingCategoryList: boolean;
     isLoadingRelatedBlogPosts: boolean;
+    isLoadingFeaturedBlogList: boolean
 }
 const initState: FinanceState = {
     home_page_featured_blog_list: [],
+    related_selected_blog_translation_list: [],
     selected_blog_translation: {
         author: "",
         category: {
@@ -47,6 +50,7 @@ const initState: FinanceState = {
     isLoadingBlogPostList: false,
     isLoadingCategoryList: false,
     isLoadingRelatedBlogPosts: false,
+    isLoadingFeaturedBlogList: false,
     blog_translation: [],
     category_translation: [],
     tableData: {
@@ -109,6 +113,16 @@ export const getHomePageFeaturedBlogTranslationList = createAsyncThunk(
     },
 )
 
+export const getRelatedClientBlogTranslationList = createAsyncThunk(
+    SLICENAME + '/getRelatedClientBlogTranslationList',
+    async ({ uuid }: { uuid: string }) => {
+        const response = await apiGetSystem<ApiResponse<BlogTranslationClient[]>>(
+            `/blog-translations/${uuid}/related`
+        )
+        return response.data
+    }
+)
+
 const slice = createSlice({
     name: SLICENAME,
     initialState: initState,
@@ -141,9 +155,16 @@ const slice = createSlice({
         })
         builder.addCase(getHomePageFeaturedBlogTranslationList.fulfilled, (state, action) => {
             state.home_page_featured_blog_list = action.payload.data
-            state.isLoadingRelatedBlogPosts = false;
+            state.isLoadingFeaturedBlogList = false;
         })
         builder.addCase(getHomePageFeaturedBlogTranslationList.pending, (state) => {
+            state.isLoadingFeaturedBlogList = true;
+        })
+        builder.addCase(getRelatedClientBlogTranslationList.fulfilled, (state, action) => {
+            state.related_selected_blog_translation_list = action.payload.data
+            state.isLoadingRelatedBlogPosts = false;
+        })
+        builder.addCase(getRelatedClientBlogTranslationList.pending, (state) => {
             state.isLoadingRelatedBlogPosts = true;
         })
     }

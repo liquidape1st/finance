@@ -1,6 +1,8 @@
 package com.example.finance.service;
 
+import com.example.finance.exception.BusinessException;
 import com.example.finance.model.Blog;
+import com.example.finance.model.BlogTranslation;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
@@ -16,6 +18,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -39,8 +43,17 @@ public class BlogTranslationService {
             blogRepository.findById(uid).ifPresent(blog -> {
                 blog.setView(blog.getView() + 1);
                 blogRepository.save(blog);
+
+                List<BlogTranslation> childBlogTranslations = blogTranslationRepository.findAllByBlog_Id(blog.getId());
+                for (BlogTranslation blogTranslation : childBlogTranslations) {
+                    blogTranslationClientResponse.getSlugs().add(new BlogTranslationClientResponse.Slug(
+                            blogTranslation.getSlug(),
+                            blogTranslation.getLangCode()
+                    ));
+                }
             });
         }
+
         return blogTranslationClientResponse;
     }
 
@@ -74,4 +87,25 @@ public class BlogTranslationService {
         return result;
     }
 
+    public List<BlogTranslationClientResponse> findRelatedForCurrentBlog(UUID uuid) {
+        BlogTranslation currentBlogTranslation = blogTranslationRepository.findById(uuid).orElseThrow(() -> new BusinessException("Không xác định được bài viết"));
+        Blog currentBlog = currentBlogTranslation.getBlog();
+        List<BlogTranslationClientResponse> relatedBlogList = blogTranslationRepository.findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(
+                currentBlogTranslation.getLangCode(),
+                currentBlog.getCategory().getId(),
+                currentBlog.getContentType(),
+                currentBlog.getUiType()
+        );
+        List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository.findNonFeaturedSameCategory(currentBlogTranslation.getLangCode(), currentBlog.getCategory().getId());
+
+        return Stream.concat(relatedBlogList.stream(), sameCategory.stream())
+                .collect(Collectors.toMap(
+                        BlogTranslationClientResponse::getId,
+                        item -> item,
+                        (oldVal, newVal) -> oldVal   // nếu trùng, giữ cái cũ
+                ))
+                .values()
+                .stream()
+                .toList();
+    }
 }

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/blog-translations")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -65,6 +67,16 @@ public class BlogTranslationController extends BaseController {
     ) {
         return createResponse(
                 blogTranslationService.findFeaturedBlogList(language, featuredClientBlogTranslation.getCategory(), featuredClientBlogTranslation.getSeed()),
+                "blog.translation.search.success.title",
+                "blog.translation.search.success.detail",
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "{uuid}/related")
+    public ResponseEntity<ResponsePayload> findRelatedForCurrentBlog(@PathVariable("uuid") UUID uid) {
+        return createResponse(
+                blogTranslationService.findRelatedForCurrentBlog(uid),
                 "blog.translation.search.success.title",
                 "blog.translation.search.success.detail",
                 HttpStatus.OK

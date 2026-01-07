@@ -1,6 +1,6 @@
 import appConfig from "@/configs/app.config";
 import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
-import { getClientBlogTranslationPage } from "@/store/slices/finance/financeSlice";
+import { getRelatedClientBlogTranslationList } from "@/store/slices/finance/financeSlice";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
@@ -26,13 +26,21 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
   const dispatch = useAppDispatch();
 
   const currentLang = useAppSelector((state) => state.locale.currentLang)
-  const blog_translation = useAppSelector((state) => state.finance.blog_translation)
+  const related_selected_blog_translation_list = useAppSelector((state) => state.finance.related_selected_blog_translation_list)
   const blog = useAppSelector((state) => state.finance.selected_blog_translation)
-  const { tableData, isLoadingSelectedBlogPost, isLoadingRelatedBlogPosts } = useAppSelector((state) => state.finance)
+  const { isLoadingSelectedBlogPost, isLoadingRelatedBlogPosts } = useAppSelector((state) => state.finance)
 
   useEffect(() => {
-    dispatch(getClientBlogTranslationPage(tableData))
-  }, [])
+    if (blog?.id) {
+      dispatch(getRelatedClientBlogTranslationList({ uuid: blog.id }))
+      if (currentLang !== lang) {
+        let expectedSlug = blog.slugs?.filter(s => s.langCode === currentLang)[0]?.slug;
+        if (expectedSlug && expectedSlug !== slug) {
+          navigate(`/${preflix}/${currentLang}/${expectedSlug}`, { replace: true });
+        }
+      }
+    }
+  }, [currentLang, blog])
 
   useEffect(() => {
     if (!lang || !slug) {
@@ -44,13 +52,12 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
     }))
   }, [lang, slug])
 
-
-  const blogImageUrl = blog.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
+  const blogImageUrl = blog?.image ? getBlogImageUrl(blog.image, blog.updatedAt) : '';
   const canonicalUrl = `${window.location.origin}${location.pathname}`;
   const blogListUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}`;
   const alternateLang = lang === 'vi' ? 'en' : 'vi';
   const alternateUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}/${alternateLang}/${slug}`;
-  
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -121,7 +128,7 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
         <title>{`GOIncome - ${blog.title}`}</title>
         <meta name="description" content={blog.excerpt} />
         <meta name="robots" content="index,follow" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${blog.title}`} />
         <meta property="og:description" content={blog.excerpt} />
@@ -129,32 +136,32 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="GOIncome" />
-        
+
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`GOIncome - ${blog.title}`} />
         <meta name="twitter:description" content={blog.excerpt} />
         {blogImageUrl && <meta name="twitter:image" content={blogImageUrl} />}
-        
+
         {/* Canonical */}
         <link rel="canonical" href={canonicalUrl} />
-        
+
         {/* Hreflang for multilingual SEO */}
         <link rel="alternate" hrefLang={lang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
         <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={alternateUrl} />
         <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-        
+
         {/* Article Meta Tags */}
         <meta name="article:published_time" content={blog.createdAt} />
         <meta name="article:modified_time" content={blog.updatedAt} />
         <meta name="article:author" content="GOIncome" />
         <meta name="article:section" content={blog.category?.name || "Blog"} />
         {blog.category?.name && <meta name="article:tag" content={blog.category.name} />}
-        
+
         {/* Additional SEO */}
         <meta name="theme-color" content="#141414" />
         <meta name="language" content={lang === 'vi' ? 'Vietnamese' : 'English'} />
-        
+
         {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -166,7 +173,6 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
       </Helmet>
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
-
         <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
           <button
             onClick={() => navigate(-1)}
@@ -269,9 +275,9 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
               <div className="flex flex-col gap-6 sticky top-0">
                 <div>
                   <RandomAffiliateBanner />
-                </div>  
+                </div>
                 <div className="grid grid-cols-1 gap-4">
-                  { isLoadingRelatedBlogPosts && blog_translation.length === 0
+                  {isLoadingRelatedBlogPosts && related_selected_blog_translation_list.length === 0
                     ? Array.from({ length: 3 }).map((_, index) => (
                       <div
                         key={`related-skeleton-${index}`}
@@ -291,7 +297,7 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                         </div>
                       </div>
                     ))
-                    : blog_translation.slice(0, 5).map((blog) => (
+                    : related_selected_blog_translation_list.slice(0, 5).map((blog) => (
                       <Link
                         to={`/${preflix}/${currentLang}/${blog.slug}`}
                         state={{ blog }}
