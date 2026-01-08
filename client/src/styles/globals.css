@@ -189,6 +189,9 @@ html {
   font-size: var(--font-size);
   zoom: var(--zoom);
 }
+#root {
+  height: calc(100dvh * var(--zoom-compensate));
+}
 
 body {
   height: calc(100dvh * var(--zoom-compensate));

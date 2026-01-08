@@ -90,7 +90,7 @@ export function ResourcesPage() {
 
       <main>
       {/* Hero Section */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Resources hero section">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Resources hero section">
         <div className="bg-[#333333] inline-block px-3 py-1 rounded mb-3 sm:mb-4">
           <span className="text-white text-xs sm:text-sm">{t('resources.badge')}</span>
         </div>
@@ -115,7 +115,7 @@ export function ResourcesPage() {
       </section>
 
       {/* Tabs & Resources */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
+      <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800">
         {/* Tab Navigation */}
         <div className="bg-[#1a1a1a] border border-neutral-800 rounded-xl p-2 sm:p-2.5 flex flex-wrap gap-2 sm:gap-2.5 w-full sm:w-fit mb-8 sm:mb-10 md:mb-12">
           <button 
