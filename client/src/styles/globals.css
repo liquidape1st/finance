@@ -181,8 +181,8 @@
 }
 
 :root {
-  --zoom: 0.66666;
-  --zoom-compensate: 1.5;
+  --zoom: 0.75;
+  --zoom-compensate: 1.334;
 }
 
 html {
@@ -195,4 +195,8 @@ html {
 
 body {
   height: calc(100dvh * var(--zoom-compensate));
+}
+
+.min-h-screen {
+    min-height: calc(100dvh * var(--zoom-compensate));
 }
