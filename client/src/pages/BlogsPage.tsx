@@ -107,7 +107,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
   };
 
   return (
-    <div className="bg-[#141414] h-full w-full">
+    <div className="bg-[#141414] min-h-screen w-full">
       <Helmet>
         <title>{`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`}</title>
         <meta name="description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
