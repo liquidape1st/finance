@@ -180,6 +180,16 @@
   }
 }
 
+:root {
+  --zoom: 0.66666;
+  --zoom-compensate: 1.5;
+}
+
 html {
   font-size: var(--font-size);
+  zoom: var(--zoom);
+}
+
+body {
+  height: calc(100dvh * var(--zoom-compensate));
 }

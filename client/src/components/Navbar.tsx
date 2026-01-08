@@ -119,7 +119,7 @@ export function Navbar() {
             >
               {t('nav.markets')}
             </Link>
-            {/* <Link
+            <Link
               to="/resources"
               className={`px-4.5 py-2.5 rounded-md text-sm transition-colors ${
                 currentPage === 'resources'
@@ -128,7 +128,7 @@ export function Navbar() {
               }`}
             >
               {t('nav.resources')}
-            </Link> */}
+            </Link>
           </div>
 
           {/* Language Switcher & CTA Button */}
