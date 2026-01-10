@@ -64,6 +64,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "https://portal.goincome.net",
+                "https://www.goincome.net",
                 "https://goincome.net",
                 "http://localhost:6866",
                 "http://localhost:3000",
