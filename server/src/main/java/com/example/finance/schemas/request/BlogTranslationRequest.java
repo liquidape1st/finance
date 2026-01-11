@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogTranslationRequest {
-    @NotNull(groups = {UpdateMethod.class})
     private UUID id;
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
