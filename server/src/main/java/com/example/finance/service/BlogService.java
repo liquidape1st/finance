@@ -12,7 +12,6 @@ import com.example.finance.repository.CategoryRepository;
 import com.example.finance.repository.TagRepository;
 import com.example.finance.schemas.request.BlogRequest;
 import com.example.finance.schemas.request.BlogTranslationRequest;
-import com.example.finance.schemas.request.TagRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
