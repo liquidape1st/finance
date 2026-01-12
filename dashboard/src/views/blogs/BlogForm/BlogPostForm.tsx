@@ -1003,11 +1003,12 @@ const BlogPostForm = () => {
                                                             {({ field, form }: FieldProps<string, BlogRequest>) => (
                                                                 <RichTextEditor
                                                                     value={field.value}
-                                                                    onChange={(val: string) =>
+                                                                    onChange={(val: string) => {
                                                                         form.setFieldValue(
                                                                             field.name,
                                                                             val,
                                                                         )
+                                                                    }
                                                                     }
                                                                 />
                                                             )}
