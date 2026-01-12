@@ -106,7 +106,7 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
     };
 
     return (
-        <Card bodyClass='h-full'>
+        <Card bodyClass={`h-full rounded-md ${blog.enabled ? '': 'bg-gray-100 dark:bg-gray-700'}`}>
             <div className='relative h-full'>
                 <div className={`z-20 absolute top-4 right-4 text-white px-2 py-1 rounded-bl-lg font-medium text-sm  ${getContentTypeBadgeClass(blog?.contentType)}`}>
                     {blog?.contentType || "Unknown"}
@@ -145,8 +145,8 @@ const BlogCard = ({ blog }: { blog: BlogResponse }) => {
 
                         <div className="flex flex-wrap gap-2 min-h-[50px]">
                             {
-                                blog.tags.map(tag => (
-                                    <span key={tag.id} className="inline-flex items-center px-3 py-1 text-xs font-medium bg-slate-700 text-slate-300 rounded-lg border border-slate-600 hover:bg-slate-600 transition-colors h-[24px]">
+                                blog.tags.map((tag, idx) => (
+                                    <span key={idx} className="inline-flex items-center px-3 py-1 text-xs font-medium bg-slate-700 text-slate-300 rounded-lg border border-slate-600 hover:bg-slate-600 transition-colors h-[24px]">
                                         {tag.translations[0]?.name}
                                     </span>
                                 ))
