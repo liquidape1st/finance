@@ -93,7 +93,6 @@ public class BlogTranslationService {
         List<BlogTranslationClientResponse> relatedBlogList = blogTranslationRepository.findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(
                 currentBlogTranslation.getLangCode(),
                 currentBlog.getCategory().getId(),
-                currentBlog.getContentType(),
                 currentBlog.getUiType()
         );
         List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository.findNonFeaturedSameCategory(currentBlogTranslation.getLangCode(), currentBlog.getCategory().getId());

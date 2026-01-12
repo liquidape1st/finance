@@ -27,7 +27,6 @@ public class BlogTranslationClientResponse {
     private UUID blogId;
 
     private Blog.UiType uiType;
-    private Blog.ContentType contentType;
 
     private Integer view;
     private String image;
@@ -41,7 +40,7 @@ public class BlogTranslationClientResponse {
 
     private List<Slug> slugs;
 
-    public BlogTranslationClientResponse(UUID id, String langCode, String slug, String title, String content, String excerpt, UUID blogId, Blog.UiType uiType, Blog.ContentType contentType, Integer view, String image, String author, Boolean featured, Integer estimatedReadTime, CategoryTranslationClientResponse category, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public BlogTranslationClientResponse(UUID id, String langCode, String slug, String title, String content, String excerpt, UUID blogId, Blog.UiType uiType, Integer view, String image, String author, Boolean featured, Integer estimatedReadTime, CategoryTranslationClientResponse category, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.langCode = langCode;
         this.slug = slug;
@@ -50,7 +49,6 @@ public class BlogTranslationClientResponse {
         this.excerpt = excerpt;
         this.blogId = blogId;
         this.uiType = uiType;
-        this.contentType = contentType;
         this.view = view;
         this.image = image;
         this.author = author;

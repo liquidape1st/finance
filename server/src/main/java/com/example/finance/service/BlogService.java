@@ -110,7 +110,6 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
     public void mapRequestToEntity(Blog entity, BlogRequest request) {
         setIfNotNull(entity::setImage, request.getImage());
         setIfNotNull(entity::setUiType, request.getUiType());
-        setIfNotNull(entity::setContentType, request.getContentType());
         setIfNotNull(entity::setEstimatedReadTime, request.getEstimatedReadTime());
 
         for (UUID uid : request.getTags()) {

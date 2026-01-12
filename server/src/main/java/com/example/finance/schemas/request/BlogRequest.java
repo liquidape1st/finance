@@ -31,9 +31,6 @@ public class BlogRequest {
     private Blog.UiType uiType;
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
-    private Blog.ContentType contentType;
-
-    @NotNull(groups = {CreateMethod.class, UpdateMethod.class})
     private Integer estimatedReadTime;
 
     @NotNull(groups = {CreateMethod.class, UpdateMethod.class})

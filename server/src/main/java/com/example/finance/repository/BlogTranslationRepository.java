@@ -26,7 +26,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -71,7 +70,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -108,7 +106,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -148,7 +145,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -184,7 +180,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -219,7 +214,6 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                     bt.excerpt,
                     b.id,
                     b.uiType,
-                    b.contentType,
                     b.view,
                     b.image,
                     b.author,
@@ -242,12 +236,9 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                   AND b.featured = false
                   AND b.enabled = true
                   AND (
-                    :#{#contentType} IS NULL OR b.contentType = :#{#contentType}
-                  )
-                  AND (
                     :#{#uiType} IS NULL OR b.uiType = :#{#uiType}
                   )
             """)
-    List<BlogTranslationClientResponse> findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(String langCode, UUID category, Blog.ContentType contentType, Blog.UiType uiType);
+    List<BlogTranslationClientResponse> findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(String langCode, UUID category, Blog.UiType uiType);
 
 }

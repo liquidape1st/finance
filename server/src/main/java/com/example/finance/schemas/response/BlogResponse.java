@@ -18,7 +18,6 @@ public class BlogResponse {
     private MinCategoryResponse category;
     private List<TagResponse> tags;
     private Blog.UiType uiType;
-    private Blog.ContentType contentType;
     private List<BlogTranslationClientResponse> translations;
     private LocalDateTime publishedAt;
     private LocalDateTime createdAt;

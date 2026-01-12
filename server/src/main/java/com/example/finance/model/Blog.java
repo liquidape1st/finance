@@ -31,12 +31,6 @@ public class Blog {
         LEARN,    // Học tài chính, kiến thức nền tảng
         MARKET,   // Phân tích thị trường, xu hướng, vĩ mô
     }
-    public enum ContentType {
-        GUIDE,
-        SHARING,
-        COMPARISON,
-        NEWS
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -54,12 +48,6 @@ public class Blog {
     @Enumerated(EnumType.STRING)
     @Column(name = "ui_type", nullable = false)
     private UiType uiType; // BLOG | NEWS
-
-
-    /* PHÂN LOẠI NỘI DUNG THẬT */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "content_type", nullable = false)
-    private ContentType contentType; // GUIDE | SHARING | COMPARISON | NEWS
 
     private Integer view = 0;
 
