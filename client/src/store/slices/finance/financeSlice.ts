@@ -55,7 +55,7 @@ const initState: FinanceState = {
     category_translation: [],
     tableData: {
         pageIndex: 1,
-        pageSize: 10,
+        pageSize: 50,
         query: "",
         sort: {
             key: "",
