@@ -190,10 +190,10 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void createSystemAdminAccount() {
-        User admin = userRepository.findByEmail("liquidape@finance.com").orElse(new User());
+        User admin = userRepository.findByEmail("liquidape@goincome.net").orElse(new User());
         if (admin.getId() == null) {
             // Set or update user properties
-            admin.setEmail("liquidape@finance.com");
+            admin.setEmail("liquidape@goincome.net");
             admin.setPassword(passwordEncoder.encode("liquidape123@#"));
             admin.setFullName("Administrator");
             admin.setPhone("0123456789");
