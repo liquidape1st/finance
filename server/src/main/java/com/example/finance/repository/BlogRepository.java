@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, UUID> {
-    @Query("SELECT b FROM Blog b ORDER BY b.createdAt")
+    @Query("SELECT b FROM Blog b ORDER BY b.createdAt desc")
     Page<Blog> search(@Param("query") String query, Pageable pageable);
 }
 
