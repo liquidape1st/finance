@@ -628,8 +628,16 @@ const BlogPostForm = () => {
                                                     value: "NEWS"
                                                 },
                                                 {
-                                                    label: "Blog",
-                                                    value: "BLOG"
+                                                    label: "Guide",
+                                                    value: "GUIDE"
+                                                },
+                                                {
+                                                    label: "Learn",
+                                                    value: "LEARN"
+                                                },
+                                                {
+                                                    label: "Market",
+                                                    value: "MARKET"
                                                 },
                                             ]
                                             return (
