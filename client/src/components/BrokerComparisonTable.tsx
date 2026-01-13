@@ -67,11 +67,19 @@ export function BrokerComparisonTable() {
     },
     {
       name: "ONUS",
-      logo: "https://cdn.brandfetch.io/idIo7ZtNyM/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1762459907240",
+      logo: "https://cdn.brandfetch.io/idIo7ZtNyM/w/400/h/400/idHTT1eRxG.jpeg?c=1dxbfHSJFAPEGdCLU4o5B",
       license: "Nền tảng đầu tư tài sản số (VN), vận hành theo mô hình doanh nghiệp fintech",
       platform: t('resources.brokers.onus.platform'),
       bonus: t('resources.brokers.onus.bonus'),
       affiliateLink: "https://goonus.io/signup/6277729719995316126?utm_campaign=invite"
+    },
+    {
+      name: "MEXC",
+      logo: "https://cdn.brandfetch.io/idCHi7bZkV/w/200/h/200/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+      license: "Đăng ký tại Seychelles, hoạt động toàn cầu",
+      platform: t('resources.brokers.mexc.platform'),
+      bonus: t('resources.brokers.mexc.bonus'),
+      affiliateLink: "https://www.mexc.com/vi-VN/acquisition/custom-sign-up?shareCode=mexc-GOINCOME"
     }
   ];
 

@@ -457,22 +457,24 @@
                 "description": "Updates on market movements and indicators like NFP, CPI to give you a broader economic view."
             },
             "rebate": {
-                "title": "Trading Rebates",
-                "description": "Get spread/commission rebates when you register via referral links. Save costs, increase returns."
+                "title": "Trading Resources",
+                "description": "Information about trading platforms and support tools. Compare platforms to learn and choose what suits your needs."
             }
         },
         "articles": {
-            "title": "Learn More",
-            "heading": "Articles and Knowledge",
+            "title": "Free Resources",
+            "heading": "Ebooks and Educational Materials",
+            "description": "Download free educational materials on finance, crypto and forex. All content is for knowledge sharing only, not investment advice.",
             "tabs": {
                 "whitepapers": "Whitepapers",
                 "learning": "Learning",
                 "guides": "Guides"
             },
-            "downloadPdf": "Download PDF Now",
-            "publicationDate": "Publication Date",
+            "downloadPdf": "Download Free Ebook",
+            "publicationDate": "Published",
             "category": "Category",
-            "author": "Author"
+            "format": "Format",
+            "note": "Note: This material is for educational and knowledge sharing purposes only, not investment advice."
         },
         "ebooks": {
             "viewMore": "View More",
@@ -507,9 +509,9 @@
             }
         },
         "affiliate": {
-            "title": "🚀 Start Your Trading Journey",
-            "description": "Open a free demo account and practice trading without risk. Learn to use analysis tools and risk management before going live.",
-            "cta": "Open Demo Account"
+            "title": "Resources and Support Tools",
+            "description": "Browse broker comparison tables and educational materials. All information is for reference only, helping you learn and make informed decisions.",
+            "cta": "View Resources"
         }
     },
     "blogs": {
@@ -545,8 +547,8 @@
             "description": "Educational content to build your financial knowledge from basics to advanced concepts"
         },
         "newsletter": {
-            "title": "Don't Miss Any Knowledge",
-            "description": "Get weekly newsletters with market analysis, trading guides and expert insights",
+            "title": "Subscribe to Financial Knowledge Newsletter",
+            "description": "Receive new articles on finance, market analysis and educational content updated regularly",
             "emailPlaceholder": "Your email",
             "subscribe": "Subscribe",
             "footer": "Free • Cancel anytime • We respect your privacy"
@@ -664,6 +666,10 @@
             "onus": {
                 "platform": "Crypto (Cryptocurrency) - 500+ different digital assets",
                 "bonus": "Earn 12.8% VNDC interest and easy to use for Vietnamese users"
+            },
+            "mexc": {
+                "platform": "Crypto (Cryptocurrency) - 1,700+ coins and tokens",
+                "bonus": "Low trading fees and multiple profit opportunities"
             }
         }
     },
@@ -747,6 +753,20 @@
             "emailLabel": "Email:",
             "contentLabel": "Content:",
             "missingValue": "(not provided)"
+        }
+    },
+    "notFound": {
+        "title": "Page Not Found",
+        "heading": "The page you're looking for doesn't exist",
+        "description": "It seems the page you're looking for has been moved or no longer exists. Please check the URL or return to the homepage.",
+        "backToHome": "Back to Home",
+        "goBack": "Go Back",
+        "quickLinks": "Quick Links",
+        "quickLinksDesc": {
+            "homeDesc": "GOIncome homepage",
+            "newsDesc": "Latest financial news",
+            "learnDesc": "Financial learning materials",
+            "resourcesDesc": "Trading resources and tools"
         }
     }
 }

@@ -7,6 +7,7 @@ import { ResourcesPage } from "./pages/ResourcesPage";
 import { ContactPage } from "./pages/ContactPage";
 import { TermsPage } from "./pages/TermsPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { useAppSelector } from "./store";
 import { Helmet } from "react-helmet";
 
@@ -49,6 +50,9 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        
+        {/* 404 Not Found - Must be last */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

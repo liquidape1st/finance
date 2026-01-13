@@ -457,22 +457,24 @@
                 "description": "Cập nhật thông tin và diễn biến thị trường, các chỉ số như NFP, CPI để bạn có cái nhìn tổng quan hơn về kinh tế."
             },
             "rebate": {
-                "title": "Hoàn Phí Giao Dịch",
-                "description": "Nhận hoàn lại phí giao dịch (spread, commission) khi đăng ký qua link giới thiệu. Tiết kiệm chi phí, tăng lợi nhuận."
+                "title": "Tài Nguyên Giao Dịch",
+                "description": "Thông tin về các sàn giao dịch và công cụ hỗ trợ. So sánh các nền tảng để tìm hiểu và lựa chọn phù hợp với nhu cầu của bạn."
             }
         },
         "articles": {
-            "title": "Tìm Hiểu Thêm",
-            "heading": "Bài Viết và Kiến Thức",
+            "title": "Tài Liệu Miễn Phí",
+            "heading": "Ebook và Tài Liệu Giáo Dục",
+            "description": "Tải xuống các tài liệu giáo dục miễn phí về tài chính, crypto và forex. Tất cả nội dung chỉ mang tính chia sẻ kiến thức, không phải lời khuyên đầu tư.",
             "tabs": {
                 "whitepapers": "Bài Viết Chuyên Sâu",
                 "learning": "Tài Liệu Học",
                 "guides": "Hướng Dẫn"
             },
-            "downloadPdf": "Tải PDF Ngay",
-            "publicationDate": "Ngày Xuất Bản",
+            "downloadPdf": "Tải Ebook Miễn Phí",
+            "publicationDate": "Ngày Phát Hành",
             "category": "Danh Mục",
-            "author": "Tác Giả"
+            "format": "Định Dạng",
+            "note": "Lưu ý: Tài liệu này chỉ mang tính giáo dục và chia sẻ kiến thức, không phải lời khuyên đầu tư."
         },
         "ebooks": {
             "viewMore": "Xem Thêm",
@@ -507,9 +509,9 @@
             }
         },
         "affiliate": {
-            "title": "🚀 Bắt Đầu Hành Trình Giao Dịch Của Bạn",
-            "description": "Mở tài khoản demo miễn phí và thực hành giao dịch không rủi ro. Học cách sử dụng các công cụ phân tích và quản lý rủi ro trước khi giao dịch thật.",
-            "cta": "Mở Tài Khoản Demo"
+            "title": "Tài Nguyên và Công Cụ Hỗ Trợ",
+            "description": "Tham khảo bảng so sánh sàn giao dịch và các tài liệu hướng dẫn. Tất cả thông tin chỉ mang tính tham khảo, giúp bạn tìm hiểu và đưa ra quyết định phù hợp.",
+            "cta": "Xem Tài Nguyên"
         }
     },
     "blogs": {
@@ -545,8 +547,8 @@
             "description": "Nội dung giáo dục để xây dựng kiến thức tài chính của bạn từ cơ bản đến nâng cao"
         },
         "newsletter": {
-            "title": "Đừng Bỏ Lỡ Bất Kỳ Kiến Thức Nào",
-            "description": "Nhận bản tin hàng tuần với phân tích thị trường, hướng dẫn trading và insights từ chuyên gia",
+            "title": "Nhận Bản Tin Kiến Thức Tài Chính",
+            "description": "Đăng ký để nhận các bài viết mới về tài chính, phân tích thị trường và kiến thức giáo dục được cập nhật thường xuyên",
             "emailPlaceholder": "Email của bạn",
             "subscribe": "Đăng Ký",
             "footer": "Miễn phí • Hủy bất cứ lúc nào • Chúng tôi tôn trọng quyền riêng tư của bạn"
@@ -664,6 +666,10 @@
             "onus": {
                 "platform": "Crypto (Tiền mã hóa) - 500+ loại tài sản số khác nhau",
                 "bonus": "Nhận lãi VNDC 12.8% và dễ dùng cho người Việt"
+            },
+            "mexc": {
+                "platform": "Crypto (Tiền mã hóa) - 1,700+ đồng coin và token",
+                "bonus": "Phí giao dịch thấp và nhiều cơ hội kiếm lời"
             }
         }
     },
@@ -747,6 +753,20 @@
             "emailLabel": "Email:",
             "contentLabel": "Nội dung:",
             "missingValue": "(chưa cung cấp)"
+        }
+    },
+    "notFound": {
+        "title": "Trang Không Tìm Thấy",
+        "heading": "Trang bạn đang tìm kiếm không tồn tại",
+        "description": "Có vẻ như trang bạn đang tìm kiếm đã bị di chuyển hoặc không còn tồn tại. Vui lòng kiểm tra lại đường dẫn hoặc quay về trang chủ.",
+        "backToHome": "Về Trang Chủ",
+        "goBack": "Quay Lại",
+        "quickLinks": "Liên Kết Nhanh",
+        "quickLinksDesc": {
+            "homeDesc": "Trang chủ của GOIncome",
+            "newsDesc": "Tin tức tài chính mới nhất",
+            "learnDesc": "Tài liệu học tập về tài chính",
+            "resourcesDesc": "Tài nguyên và công cụ giao dịch"
         }
     }
 }

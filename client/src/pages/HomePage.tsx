@@ -38,7 +38,7 @@ export function HomePage() {
     { value: "100+", label: t('home.stats.countries') },
   ];
 
-  const whitepapers = [
+  const ebooks = [
     {
       id: 1,
       title: t('home.whitepapers.crypto.title'),
@@ -46,7 +46,8 @@ export function HomePage() {
       image: imgImage,
       publicationDate: "Tháng 12, 2024",
       category: t('home.whitepapers.crypto.category'),
-      author: "Sarah Chen",
+      format: "PDF",
+      pdfPath: '/pdf/Ebook - Cryptocurrency for beginners.pdf',
       shortDesc: t('home.whitepapers.crypto.shortDesc')
     },
     {
@@ -56,7 +57,8 @@ export function HomePage() {
       image: imgImage1,
       publicationDate: "Tháng 12, 2024",
       category: t('home.whitepapers.forex.category'),
-      author: "Michael Rodriguez",
+      format: "PDF",
+      pdfPath: '/pdf/Ebook - Forex for beginners.pdf',
       shortDesc: t('home.whitepapers.forex.shortDesc')
     },
   ];
@@ -235,9 +237,11 @@ export function HomePage() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white text-base sm:text-lg">{t('home.features.basic.title')}</h3>
                   <div className="bg-[#ffd11a] p-2.5 sm:p-3 rounded-full">
-                    <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
-                      <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
-                    </svg>
+                    <Link to="/learn">
+                      <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
+                        <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
                 <p className="text-[#98989a] text-sm sm:text-base">
@@ -249,9 +253,11 @@ export function HomePage() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white text-base sm:text-lg">{t('home.features.market.title')}</h3>
                   <div className="bg-[#ffd11a] p-2.5 sm:p-3 rounded-full">
-                    <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
-                      <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
-                    </svg>
+                    <Link to="/news">
+                      <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
+                        <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
                 <p className="text-[#98989a] text-sm sm:text-base">
@@ -263,9 +269,11 @@ export function HomePage() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white text-base sm:text-lg">{t('home.features.rebate.title')}</h3>
                   <div className="bg-[#ffd11a] p-2.5 sm:p-3 rounded-full">
-                    <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
-                      <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
-                    </svg>
+                    <Link to="/resources">
+                      <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
+                        <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
                 <p className="text-[#98989a] text-sm sm:text-base">
@@ -276,35 +284,26 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Tabs & Content Section */}
-        <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Articles and whitepapers">
+        {/* Ebooks Section */}
+        <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Free ebooks and educational materials">
           <div className="bg-[#1a1a1a] rounded-xl p-6 sm:p-8 md:p-12 border border-neutral-800">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 sm:mb-10 md:mb-12 gap-6">
-              <header className="flex-1">
+            <div className="mb-8 sm:mb-10 md:mb-12">
+              <header className="mb-6 sm:mb-8">
                 <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-2.5">
                   <span className="text-white text-sm sm:text-base">{t('home.articles.title')}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white leading-tight tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white leading-tight tracking-tight mb-3 sm:mb-4" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
                   {t('home.articles.heading')}
                 </h2>
+                <p className="text-[#7e7e81] text-sm sm:text-base leading-relaxed max-w-3xl">
+                  {t('home.articles.description')}
+                </p>
               </header>
-
-              <div className="bg-[#141414] border border-neutral-800 rounded-xl p-2 sm:p-2.5 flex flex-col sm:flex-row gap-2 sm:gap-2.5">
-                <button className="bg-neutral-800 border border-neutral-800 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-lg text-white text-xs sm:text-sm w-full sm:w-auto">
-                  {t('home.articles.tabs.whitepapers')}
-                </button>
-                <button className="px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#1a1a1a] transition-colors w-full sm:w-auto">
-                  {t('home.articles.tabs.learning')}
-                </button>
-                <button className="px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#1a1a1a] transition-colors w-full sm:w-auto">
-                  {t('home.articles.tabs.guides')}
-                </button>
-              </div>
             </div>
 
-            {/* Whitepapers List */}
-            {whitepapers.map((paper, index) => (
-              <div key={paper.id} className={`flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 items-start ${index > 0 ? 'border-t border-neutral-800 pt-8 sm:pt-12 md:pt-16 mt-8 sm:mt-12 md:mt-16' : ''}`}>
+            {/* Ebooks List */}
+            {ebooks.map((ebook, index) => (
+              <div key={ebook.id} className={`flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-16 items-start ${index > 0 ? 'border-t border-neutral-800 pt-8 sm:pt-12 md:pt-16 mt-8 sm:mt-12 md:mt-16' : ''}`}>
                 {/* Left Side - Icon & Description */}
                 <div className="w-full lg:w-103 lg:shrink-0">
                   <div className="size-12 sm:size-14 md:size-15 mb-6 sm:mb-8 md:mb-10 relative">
@@ -325,10 +324,10 @@ export function HomePage() {
                     </svg>
                   </div>
                   <h3 className="text-xl sm:text-2xl md:text-[30px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                    {paper.title}
+                    {ebook.title}
                   </h3>
                   <p className="text-[#98989a] text-sm sm:text-base leading-relaxed">
-                    {paper.shortDesc}
+                    {ebook.shortDesc}
                   </p>
                 </div>
 
@@ -336,29 +335,29 @@ export function HomePage() {
                 <div className="flex-1 w-full lg:border-l border-neutral-800 lg:pl-12 xl:pl-16">
                   <div className="mb-8 sm:mb-10">
                     <img
-                      src={paper.image}
-                      alt={paper.title}
+                      src={ebook.image}
+                      alt={ebook.title}
                       className="w-full h-48 sm:h-64 md:h-75.75 object-cover rounded-xl mb-4 sm:mb-5 md:mb-6"
                     />
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
                       <div className="flex-1">
-                        <h4 className="text-white text-lg sm:text-xl mb-2 sm:mb-2.5">{paper.title}</h4>
-                        <p className="text-[#98989a] text-sm sm:text-base leading-relaxed">{paper.description}</p>
+                        <h4 className="text-white text-lg sm:text-xl mb-2 sm:mb-2.5">{ebook.title}</h4>
+                        <p className="text-[#98989a] text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">{ebook.description}</p>
                       </div>
                       <button
                         onClick={() => {
                           const link = document.createElement('a');
-                          link.href = '/pdf/Ebook - Cryptocurrency for beginners.pdf';
-                          link.download = 'Ebook - Cryptocurrency for beginners.pdf';
+                          link.href = ebook.pdfPath;
+                          link.download = ebook.pdfPath.split('/').pop() || 'ebook.pdf';
                           document.body.appendChild(link);
                           link.click();
                           document.body.removeChild(link);
                         }}
-                        className="bg-[#1a1a1a] border border-neutral-800 px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-lg text-[#98989a] text-xs sm:text-sm hover:bg-[#262626] transition-colors flex items-center gap-1 whitespace-nowrap self-start sm:self-auto"
+                        className="bg-[#FFD11A] text-[#141414] px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-lg hover:bg-[#ffdb4d] transition-colors flex items-center gap-2 text-xs sm:text-sm font-medium whitespace-nowrap self-start sm:self-auto shadow-lg shadow-[#FFD11A]/20"
                       >
                         {t('home.articles.downloadPdf')}
                         <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
-                          <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#FFD11A" fillRule="evenodd" />
+                          <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
                         </svg>
                       </button>
                     </div>
@@ -367,20 +366,27 @@ export function HomePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                     <div className="bg-[#1a1a1a] border border-neutral-800 rounded-lg p-4 sm:p-6">
                       <p className="text-[#98989a] text-sm sm:text-base mb-0.5">{t('home.articles.publicationDate')}</p>
-                      <p className="text-white text-sm sm:text-base">{paper.publicationDate}</p>
+                      <p className="text-white text-sm sm:text-base">{ebook.publicationDate}</p>
                     </div>
                     <div className="bg-[#1a1a1a] border border-neutral-800 rounded-lg p-4 sm:p-6">
                       <p className="text-[#98989a] text-sm sm:text-base mb-0.5">{t('home.articles.category')}</p>
-                      <p className="text-white text-sm sm:text-base">{paper.category}</p>
+                      <p className="text-white text-sm sm:text-base">{ebook.category}</p>
                     </div>
                     <div className="bg-[#1a1a1a] border border-neutral-800 rounded-lg p-4 sm:p-6">
-                      <p className="text-[#98989a] text-sm sm:text-base mb-0.5">{t('home.articles.author')}</p>
-                      <p className="text-white text-sm sm:text-base">{paper.author}</p>
+                      <p className="text-[#98989a] text-sm sm:text-base mb-0.5">{t('home.articles.format')}</p>
+                      <p className="text-white text-sm sm:text-base">{ebook.format}</p>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
+
+            {/* Educational Note */}
+            <div className="mt-8 sm:mt-10 md:mt-12 pt-8 sm:pt-10 border-t border-neutral-800">
+              <p className="text-[#7e7e81] text-xs sm:text-sm leading-relaxed">
+                {t('home.articles.note')}
+              </p>
+            </div>
           </div>
 
           {/* Risk Warning at Bottom */}
