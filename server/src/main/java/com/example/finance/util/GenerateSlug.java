@@ -1,6 +1,7 @@
 package com.example.finance.util;
 
 import java.text.Normalizer;
+import java.util.UUID;
 
 public class GenerateSlug {
     public static String generateSlug(String title) {
@@ -19,5 +20,12 @@ public class GenerateSlug {
                 .replaceAll("\\s+", "-")
                 .replaceAll("-+", "-")
                 .trim();
+    }
+
+    public static String uuidShort(int length) {
+        return UUID.randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, length);
     }
 }

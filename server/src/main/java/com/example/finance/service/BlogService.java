@@ -12,6 +12,7 @@ import com.example.finance.repository.CategoryRepository;
 import com.example.finance.repository.TagRepository;
 import com.example.finance.schemas.request.BlogRequest;
 import com.example.finance.schemas.request.BlogTranslationRequest;
+import com.example.finance.util.GenerateSlug;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,7 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
         for (BlogTranslationRequest blogTranslationRequest : listBlogTranslationRequest) {
             BlogTranslation translation = new BlogTranslation();
             mapBlogTranslation(blog, blogTranslationRequest, translation);
+            translation.setSlug(blogTranslationRequest.getSlug() + GenerateSlug.uuidShort(6));
         }
         // Set time publish
         blog.setPublishedAt(LocalDateTime.now());
@@ -72,6 +74,7 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
         for (BlogTranslationRequest blogTranslationRequest : listBlogTranslationRequest) {
             BlogTranslation translation = blogTranslationRepository.findById(blogTranslationRequest.getId()).orElse(new BlogTranslation());
             mapBlogTranslation(blog, blogTranslationRequest, translation);
+            translation.setSlug(blogTranslationRequest.getSlug());
         }
         return blogRepository.save(blog);
     }
@@ -135,7 +138,7 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
 
     private void mapBlogTranslation(Blog blog, BlogTranslationRequest blogTranslationRequest, BlogTranslation translation) {
         translation.setLangCode(blogTranslationRequest.getLangCode());
-        translation.setSlug(blogTranslationRequest.getSlug());
+
         translation.setTitle(blogTranslationRequest.getTitle());
         translation.setContent(blogTranslationRequest.getContent());
         translation.setExcerpt(blogTranslationRequest.getExcerpt());
