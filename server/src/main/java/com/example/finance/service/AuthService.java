@@ -85,5 +85,20 @@ public class AuthService {
 
         return answerAuthenticateResponse(user);
     }
+
+    public AuthResponse refresh(String refreshToken) {
+        String username = jwtTokenProvider.extractUsername(refreshToken);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        if (!jwtTokenProvider.validateToken(refreshToken, userDetails)) {
+            throw new RuntimeException("Invalid or expired refresh token");
+        }
+
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return answerAuthenticateResponse(user);
+    }
 }
 

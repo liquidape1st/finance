@@ -3,6 +3,7 @@ package com.example.finance.controller;
 import com.example.finance.repository.UserRepository;
 import com.example.finance.schemas.request.AuthRequest;
 import com.example.finance.schemas.request.RegisterRequest;
+import com.example.finance.schemas.request.RefreshTokenRequest;
 import com.example.finance.schemas.response.ResponsePayload;
 import com.example.finance.service.AuthService;
 import jakarta.validation.Valid;
@@ -44,6 +45,16 @@ public class AuthController extends BaseController {
         return createResponse(
                 authService.login(request),
                 "auth.login.success",
+                "200",
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ResponsePayload> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+        return createResponse(
+                authService.refresh(request.getRefreshToken()),
+                "auth.refresh.success",
                 "200",
                 HttpStatus.OK
         );
