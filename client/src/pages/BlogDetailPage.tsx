@@ -181,7 +181,7 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
             <ArrowLeft className="size-4" />
             <span>{t("blogs.back", { defaultValue: "Back to blogs" })}</span>
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-6 gap-y-6">
             <div className="col-span-2">
               {isLoadingSelectedBlogPost ? (
                 <div className="animate-pulse">

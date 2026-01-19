@@ -455,7 +455,7 @@ const BlogPostForm = () => {
                             slug: blog?.translations[0]?.slug || '',
                             title: blog?.translations[0]?.title || '',
                             content: blog?.translations[0]?.content || '',
-                            excerpt: blog?.translations[0]?.excerpt || ''
+                            excerpt: blog?.translations[0]?.excerpt || '',
                         },
                         {
                             langCode: 'vi',
@@ -1102,7 +1102,7 @@ const BlogPostForm = () => {
                             onRequestClose={closeCropDialog}
                         >
                             <h5 className="mb-4">Chỉnh sửa ảnh</h5>
-                            <div className="relative h-[500px] bg-gray-900">
+                            <div className="relative h-[600px] bg-gray-900">
                                 {cropImageSrc && (
                                     <Cropper
                                         image={cropImageSrc}
