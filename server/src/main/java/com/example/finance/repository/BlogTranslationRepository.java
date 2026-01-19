@@ -55,7 +55,7 @@ public interface BlogTranslationRepository extends JpaRepository<BlogTranslation
                 AND (
                     LOWER(bt.title) LIKE LOWER(CONCAT('%', :query, '%'))
                     OR LOWER(bt.excerpt) LIKE LOWER(CONCAT('%', :query, '%'))
-                ) AND b.enabled = true
+                ) AND b.enabled = true ORDER BY b.createdAt desc
             """)
     Page<BlogTranslationClientResponse> findPageBlogTranslation(@Param("query") String query, @Param("langCode") String langCode, @Param("category") UUID category, @Param("uiType") Blog.UiType uiType, Pageable pageable);
 
