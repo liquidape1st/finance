@@ -5,7 +5,8 @@ import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { BlogCard } from "../components/BlogCard";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
@@ -24,6 +25,10 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
   const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  // ... (I need to jump to the render part to fix the colon)
+  // Wait, I can't replace the whole file or large chunk easily just to add import and fix below.
+  // I will use multi_replace.
+
 
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const related_selected_blog_translation_list = useAppSelector((state) => state.finance.related_selected_blog_translation_list)
@@ -298,49 +303,12 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                       </div>
                     ))
                     : related_selected_blog_translation_list.slice(0, 5).map((blog) => (
-                      <Link
-                        to={`/${preflix}/${currentLang}/${blog.slug}`}
-                        state={{ blog }}
-                        key={`${currentLang}-${blog.id}`}
-                        className="group flex flex-col cursor-pointer"
-                      >
-                        <article className="flex flex-col h-full">
-                          <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4">
-                            <img
-                              src={getBlogImageUrl(blog.image, blog.updatedAt)}
-                              loading="lazy"
-                              decoding="async"
-                              alt={blog.title}
-                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          </div>
-
-                          <div className="flex flex-col gap-2.5 flex-1">
-                            <div className="flex flex-col gap-1">
-                              <h3 className="text-white text-[16px] leading-normal tracking-[-0.48px] group-hover:text-[#FFD11A] transition-colors line-clamp-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
-                                {blog.title}
-                              </h3>
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <p className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                    {blog?.category?.name}
-                                  </p>
-                                </div>
-                                <div className="flex items-center gap-12.5">
-                                  <div className="flex items-center gap-2">
-                                    <div className="flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                                      <Eye className="size-5 text-[#666666]" strokeWidth={1.5} />
-                                      <span className="text-[#98989a] text-[14px] tracking-[-0.42px]" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
-                                        {blog.view}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </article>
-                      </Link>
+                      <BlogCard
+                        key={`${currentLang}-${blog.id}-detail`}
+                        blog={blog}
+                        currentLang={currentLang || 'vi'}
+                        prefix={preflix}
+                      />
                     ))}
                 </div>
 

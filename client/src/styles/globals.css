@@ -189,6 +189,7 @@ html {
   font-size: var(--font-size);
   zoom: var(--zoom);
 }
+
 #root {
   height: calc(100dvh * var(--zoom-compensate));
 }
@@ -198,5 +199,5 @@ body {
 }
 
 .min-h-screen {
-    min-height: calc(100dvh * var(--zoom-compensate));
+  min-height: calc(100dvh * var(--zoom-compensate));
 }
