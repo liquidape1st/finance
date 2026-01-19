@@ -75,7 +75,7 @@ export function BlogCard({
                             {blog.category?.name}
                         </p>
                     </div>
-                    <div className="id-excerpt text-gray-200 line-clamp-2">
+                    <div className="id-excerpt text-gray-200 line-clamp-2 text-xs sm:text-sm">
                         {blog.excerpt}
                     </div>
 
