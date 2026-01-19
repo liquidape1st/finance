@@ -7,14 +7,17 @@ import { Provider } from "react-redux";
 import store, { persistor } from "./store/storeSetup.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import "./locales/locales.ts";
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PersistGate>
-    </Provider>
+    <HelmetProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
+    </HelmetProvider>
+  </Provider>
 
 );

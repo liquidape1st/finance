@@ -10,7 +10,7 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export function HomePage() {
   const dispatch = useAppDispatch()

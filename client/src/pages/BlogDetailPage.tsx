@@ -3,7 +3,7 @@ import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "
 import { getRelatedClientBlogTranslationList } from "@/store/slices/finance/financeSlice";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlogCard } from "../components/BlogCard";

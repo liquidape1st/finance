@@ -9,7 +9,7 @@ import { TermsPage } from "./pages/TermsPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { useAppSelector } from "./store";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 
 export default function App() {
@@ -34,23 +34,23 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        <Route path="/news" element={<BlogsPage uiType="NEWS" preflix="news"/>} />
+        <Route path="/news" element={<BlogsPage uiType="NEWS" preflix="news" />} />
         <Route path="/news/:lang/:slug" element={<BlogDetailPage preflix="news" />} />
 
-        <Route path="/learn" element={<BlogsPage uiType="LEARN" preflix="learn"/>} />
+        <Route path="/learn" element={<BlogsPage uiType="LEARN" preflix="learn" />} />
         <Route path="/learn/:lang/:slug" element={<BlogDetailPage preflix="learn" />} />
 
-        <Route path="/guides" element={<BlogsPage uiType="GUIDE" preflix="guides"/>} />
+        <Route path="/guides" element={<BlogsPage uiType="GUIDE" preflix="guides" />} />
         <Route path="/guides/:lang/:slug" element={<BlogDetailPage preflix="guides" />} />
 
-        <Route path="/market" element={<BlogsPage uiType="MARKET" preflix="market"/>} />
+        <Route path="/market" element={<BlogsPage uiType="MARKET" preflix="market" />} />
         <Route path="/market/:lang/:slug" element={<BlogDetailPage preflix="market" />} />
 
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
-        
+
         {/* 404 Not Found - Must be last */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

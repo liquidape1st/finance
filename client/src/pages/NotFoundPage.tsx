@@ -3,7 +3,7 @@ import { Home, ArrowLeft, Newspaper, BookOpen, BarChart3 } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export function NotFoundPage() {
   const { t } = useTranslation();
@@ -16,14 +16,14 @@ export function NotFoundPage() {
         <title>{`GOIncome - ${t('notFound.title')}`}</title>
         <meta name="description" content={t('notFound.description')} />
         <meta name="robots" content="noindex,nofollow" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('notFound.title')}`} />
         <meta property="og:description" content={t('notFound.description')} />
         <meta property="og:image" content={siteImage} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
-        
+
         {/* Canonical */}
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
@@ -36,13 +36,13 @@ export function NotFoundPage() {
             <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-3 sm:mb-4">
               <span className="text-white text-xs sm:text-sm">{t('notFound.title')}</span>
             </div>
-            <h1 
+            <h1
               className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-[#FFD11A] mb-4 sm:mb-5 tracking-tight"
               style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
             >
               404
             </h1>
-            <h2 
+            <h2
               className="text-2xl sm:text-3xl md:text-4xl text-white mb-3 sm:mb-4 tracking-tight leading-tight"
               style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
             >
@@ -73,7 +73,7 @@ export function NotFoundPage() {
 
           {/* Quick Links */}
           <div className="border-t border-neutral-800 pt-8 sm:pt-10 md:pt-12">
-            <h3 
+            <h3
               className="text-lg sm:text-xl text-white mb-5 sm:mb-6 tracking-tight"
               style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
             >

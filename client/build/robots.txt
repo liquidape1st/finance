@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://goincome.net/sitemap.xml

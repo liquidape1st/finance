@@ -1,7 +1,7 @@
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useAppSelector } from "@/store";
 
 export function TermsPage() {
@@ -31,7 +31,7 @@ export function TermsPage() {
         <title>{`GOIncome - ${t('terms.title')}`}</title>
         <meta name="description" content={t('terms.description')} />
         <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-        
+
         {/* Open Graph */}
         <meta property="og:title" content={`GOIncome - ${t('terms.title')}`} />
         <meta property="og:description" content={t('terms.description')} />
@@ -40,27 +40,27 @@ export function TermsPage() {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="GOIncome" />
         <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
-        
+
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`GOIncome - ${t('terms.title')}`} />
         <meta name="twitter:description" content={t('terms.description')} />
         <meta name="twitter:image" content={siteImage} />
         <meta name="twitter:site" content="@goincome" />
-        
+
         {/* Canonical */}
         <link rel="canonical" href={canonicalUrl} />
-        
+
         {/* Hreflang for multilingual SEO */}
         <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
         <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
         <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-        
+
         {/* Additional SEO */}
         <meta name="theme-color" content="#141414" />
         <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
         <meta name="robots" content="index, follow" />
-        
+
         {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(termsPageSchema)}
