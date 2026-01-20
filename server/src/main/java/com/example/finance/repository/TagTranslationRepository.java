@@ -12,12 +12,12 @@ import java.util.UUID;
 @Repository
 public interface TagTranslationRepository extends JpaRepository<TagTranslation, UUID> {
     @Query("""
-                SELECT tt
-                FROM TagTranslation tt
-                JOIN tt.tag t
-                JOIN t.blogs b
+                SELECT DISTINCT tt
+                FROM Blog b
+                JOIN b.tags t
+                JOIN t.translations tt
                 WHERE b.id = :blogId
-                  AND tt.langCode = :langCode
+                  AND UPPER(tt.langCode) = UPPER(:langCode)
             """)
     List<TagTranslation> findByBlogIdAndLangCode(@Param("blogId") UUID blogId, @Param("langCode") String langCode);
 }
