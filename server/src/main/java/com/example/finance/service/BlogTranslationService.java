@@ -1,10 +1,13 @@
 package com.example.finance.service;
 
 import com.example.finance.exception.BusinessException;
+import com.example.finance.mapper.TagTranslationResponseMapper;
 import com.example.finance.model.Blog;
 import com.example.finance.model.BlogTranslation;
+import com.example.finance.model.TagTranslation;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
+import com.example.finance.repository.TagTranslationRepository;
 import com.example.finance.schemas.response.BlogTranslationClientResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogTranslationService {
+    TagTranslationResponseMapper tagTranslationResponseMapper;
     BlogTranslationRepository blogTranslationRepository;
+    TagTranslationRepository tagTranslationRepository;
     BlogRepository blogRepository;
 
     public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable, Blog.UiType uiType) {
@@ -50,6 +55,11 @@ public class BlogTranslationService {
                             blogTranslation.getSlug(),
                             blogTranslation.getLangCode()
                     ));
+                    List<TagTranslation> tagTranslationList = tagTranslationRepository.findByBlogIdAndLangCode(
+                            blog.getId(),
+                            langCode
+                    );
+                    blogTranslationClientResponse.setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
                 }
             });
         }
