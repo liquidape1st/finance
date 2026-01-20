@@ -1,8 +1,9 @@
 package com.example.finance.schemas.response;
 
 import com.example.finance.model.Blog;
-import com.example.finance.model.Tag;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class BlogTranslationClientResponse {
         private String slug;
         private String langCode;
     }
+
     private UUID id;
     private String langCode;
     private String slug;
@@ -39,8 +41,8 @@ public class BlogTranslationClientResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Slug> slugs;
-    private List<TagTranslationResponse> tags;
+    private List<Slug> slugs = new ArrayList<>();
+    private List<TagTranslationResponse> tags = new ArrayList<>();
 
     public BlogTranslationClientResponse(UUID id, String langCode, String slug, String title, String content, String excerpt, UUID blogId, Blog.UiType uiType, Integer view, String image, String author, Boolean featured, Integer estimatedReadTime, CategoryTranslationClientResponse category, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;

@@ -33,11 +33,12 @@ public class BlogTranslationService {
     TagTranslationRepository tagTranslationRepository;
     BlogRepository blogRepository;
 
+    @Transactional
     public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable, Blog.UiType uiType) {
         System.out.println("UI Type: " + uiType);
         System.out.println(uiType.getClass().getSimpleName());
         System.out.println("UI Type class: " + uiType.getClass());
-        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, uiType, pageable);
+        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, uiType, pageable).map(s -> assignTags(s, langCode));
     }
 
     @Transactional
@@ -67,6 +68,7 @@ public class BlogTranslationService {
         return blogTranslationClientResponse;
     }
 
+    @Transactional
     public List<BlogTranslationClientResponse> findFeaturedBlogList(String langCode, UUID category, Long seed) {
         int required = 6;
         List<BlogTranslationClientResponse> result = blogTranslationRepository.findFeaturedBlogList(langCode, category);
@@ -94,9 +96,10 @@ public class BlogTranslationService {
             }
         }
 
-        return result;
+        return result.stream().map(s -> assignTags(s, langCode)).toList();
     }
 
+    @Transactional
     public List<BlogTranslationClientResponse> findRelatedForCurrentBlog(UUID uuid) {
         BlogTranslation currentBlogTranslation = blogTranslationRepository.findById(uuid).orElseThrow(() -> new BusinessException("Không xác định được bài viết"));
         Blog currentBlog = currentBlogTranslation.getBlog();
@@ -107,7 +110,7 @@ public class BlogTranslationService {
         );
         List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository.findNonFeaturedSameCategory(currentBlogTranslation.getLangCode(), currentBlog.getCategory().getId());
 
-        return Stream.concat(relatedBlogList.stream(), sameCategory.stream())
+        List<BlogTranslationClientResponse> result =  Stream.concat(relatedBlogList.stream(), sameCategory.stream())
                 .collect(Collectors.toMap(
                         BlogTranslationClientResponse::getId,
                         item -> item,
@@ -116,5 +119,17 @@ public class BlogTranslationService {
                 .values()
                 .stream()
                 .toList();
+
+        return result.stream().map(s -> assignTags(s, currentBlogTranslation.getLangCode())).toList();
+    }
+
+    @Transactional
+    public BlogTranslationClientResponse assignTags(BlogTranslationClientResponse blogTranslationClientResponse, String langCode) {
+        List<TagTranslation> tagTranslationList = tagTranslationRepository.findByBlogIdAndLangCode(
+                blogTranslationClientResponse.getBlogId(),
+                langCode
+        );
+        blogTranslationClientResponse.setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
+        return blogTranslationClientResponse;
     }
 }
