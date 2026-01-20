@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import { useAppSelector } from "@/store";
 
 export function ContactPage() {
@@ -32,8 +32,6 @@ export function ContactPage() {
   const canonicalUrl = `${window.location.origin}/contact`;
   const siteImage = `${window.location.origin}/logo.png`;
   const currentLang = useAppSelector((state) => state.locale.currentLang);
-  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
-
   const contactPageSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -56,44 +54,14 @@ export function ContactPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Helmet>
-        <title>{`GOIncome - ${t('contact.title')}`}</title>
-        <meta name="description" content={t('contact.description')} />
-        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t('contact.title')}`} />
-        <meta property="og:description" content={t('contact.description')} />
-        <meta property="og:image" content={siteImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="GOIncome" />
-        <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${t('contact.title')}`} />
-        <meta name="twitter:description" content={t('contact.description')} />
-        <meta name="twitter:image" content={siteImage} />
-        <meta name="twitter:site" content="@goincome" />
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
-        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-
-        {/* Additional SEO */}
-        <meta name="theme-color" content="#141414" />
-        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(contactPageSchema)}
-        </script>
-      </Helmet>
+      <SEO
+        title={t('contact.title')}
+        description={t('contact.description')}
+        image={siteImage}
+        imageAlt={t('contact.title')}
+        url={canonicalUrl}
+        structuredData={contactPageSchema}
+      />
       <Navbar />
 
       <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">

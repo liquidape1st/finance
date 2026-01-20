@@ -1,0 +1,71 @@
+{
+    "name": "GOIncome - Tài Chính Cá Nhân & Đầu Tư",
+    "short_name": "GOIncome",
+    "description": "Nền tảng kiến thức tài chính cá nhân, hướng dẫn affiliate forex và hoàn phí sàn giao dịch. Tài nguyên chuyên nghiệp cho nhà đầu tư.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#141414",
+    "theme_color": "#FFD11A",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "vi",
+    "dir": "ltr",
+    "categories": [
+        "finance",
+        "education",
+        "business"
+    ],
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Tin tức",
+            "short_name": "News",
+            "description": "Xem tin tức tài chính mới nhất",
+            "url": "/news",
+            "icons": [
+                {
+                    "src": "/logo.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Học tập",
+            "short_name": "Learn",
+            "description": "Bài học về tài chính và đầu tư",
+            "url": "/learn",
+            "icons": [
+                {
+                    "src": "/logo.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Tài nguyên",
+            "short_name": "Resources",
+            "description": "Công cụ và tài nguyên đầu tư",
+            "url": "/resources",
+            "icons": [
+                {
+                    "src": "/logo.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "prefer_related_applications": false
+}

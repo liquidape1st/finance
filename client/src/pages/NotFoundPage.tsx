@@ -3,7 +3,7 @@ import { Home, ArrowLeft, Newspaper, BookOpen, BarChart3 } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 
 export function NotFoundPage() {
   const { t } = useTranslation();
@@ -12,21 +12,14 @@ export function NotFoundPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Helmet>
-        <title>{`GOIncome - ${t('notFound.title')}`}</title>
-        <meta name="description" content={t('notFound.description')} />
-        <meta name="robots" content="noindex,nofollow" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t('notFound.title')}`} />
-        <meta property="og:description" content={t('notFound.description')} />
-        <meta property="og:image" content={siteImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-      </Helmet>
+      <SEO
+        title={t('notFound.title')}
+        description={t('notFound.description')}
+        image={siteImage}
+        imageAlt={t('notFound.title')}
+        url={canonicalUrl}
+        noindex={true}
+      />
       <Navbar />
 
       <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">

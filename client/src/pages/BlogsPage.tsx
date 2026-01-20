@@ -4,7 +4,7 @@ import { setTableData } from "@/store/slices/finance/financeSlice";
 import { debounce } from "lodash";
 import { ArrowRight, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import { useTranslation } from "react-i18next";
 import { BlogCard } from "../components/BlogCard";
 import { Footer } from "../components/Footer";
@@ -60,8 +60,6 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
   const canonicalUrl = `${window.location.origin}/${preflix}`;
   const siteImage = `${window.location.origin}/logo.png`;
-  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -104,46 +102,14 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Helmet>
-        <title>{`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`}</title>
-        <meta name="description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
-        <meta name="robots" content="index,follow" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`} />
-        <meta property="og:description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
-        <meta property="og:image" content={siteImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="GOIncome" />
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${t(`blogs.${uiType.toLowerCase()}.title`)}`} />
-        <meta name="twitter:description" content={t(`blogs.${uiType.toLowerCase()}.description`)} />
-        <meta name="twitter:image" content={siteImage} />
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
-        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-
-        {/* Additional SEO */}
-        <meta name="theme-color" content="#141414" />
-        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        {/* ItemList Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(itemListData)}
-        </script>
-      </Helmet>
+      <SEO
+        title={t(`blogs.${uiType.toLowerCase()}.title`)}
+        description={t(`blogs.${uiType.toLowerCase()}.description`)}
+        image={siteImage}
+        imageAlt={t(`blogs.${uiType.toLowerCase()}.title`)}
+        url={canonicalUrl}
+        structuredData={[structuredData, itemListData]}
+      />
       <Navbar />
 
       <main>

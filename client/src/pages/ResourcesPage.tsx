@@ -6,7 +6,7 @@ import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import { BrokerComparisonTable } from "../components/BrokerComparisonTable";
 import { GlossaryList } from "../components/KeyTermsGlossary";
 import { useTranslation } from "react-i18next";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 import { useAppSelector } from "@/store";
 
 export function ResourcesPage() {
@@ -16,8 +16,6 @@ export function ResourcesPage() {
   const canonicalUrl = `${window.location.origin}/resources`;
   const siteImage = `${window.location.origin}/logo.png`;
   const currentLang = useAppSelector((state) => state.locale.currentLang);
-  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
-
   const resourcesPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -48,44 +46,14 @@ export function ResourcesPage() {
 
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Helmet>
-        <title>{`GOIncome - ${t('resources.title')}`}</title>
-        <meta name="description" content={t('resources.description')} />
-        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t('resources.title')}`} />
-        <meta property="og:description" content={t('resources.description')} />
-        <meta property="og:image" content={siteImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="GOIncome" />
-        <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${t('resources.title')}`} />
-        <meta name="twitter:description" content={t('resources.description')} />
-        <meta name="twitter:image" content={siteImage} />
-        <meta name="twitter:site" content="@goincome" />
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
-        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-
-        {/* Additional SEO */}
-        <meta name="theme-color" content="#141414" />
-        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(resourcesPageSchema)}
-        </script>
-      </Helmet>
+      <SEO
+        title={t('resources.title')}
+        description={t('resources.description')}
+        image={siteImage}
+        imageAlt={t('resources.title')}
+        url={canonicalUrl}
+        structuredData={resourcesPageSchema}
+      />
       <Navbar />
 
       <main>

@@ -10,7 +10,7 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
-import { Helmet } from "react-helmet-async";
+import SEO from "../components/SEO";
 
 export function HomePage() {
   const dispatch = useAppDispatch()
@@ -67,7 +67,6 @@ export function HomePage() {
 
   const canonicalUrl = `${window.location.origin}/`;
   const siteImage = `${window.location.origin}/logo.png`;
-  const alternateLang = currentLang === 'vi' ? 'en' : 'vi';
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -113,61 +112,25 @@ export function HomePage() {
     }
   };
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "GOIncome",
+    "url": canonicalUrl,
+    "logo": siteImage,
+    "sameAs": []
+  };
+
   return (
     <div className="bg-[#141414] min-h-screen w-full">
-      <Helmet>
-        {/* Organization Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "GOIncome",
-            "url": canonicalUrl,
-            "logo": siteImage,
-            "sameAs": []
-          })}
-        </script>
-        <title>{`GOIncome - ${t('home.title')}`}</title>
-        <meta name="description" content={t('home.description')} />
-        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${t('home.title')}`} />
-        <meta property="og:description" content={t('home.description')} />
-        <meta property="og:image" content={siteImage} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="GOIncome" />
-        <meta property="og:locale" content={currentLang === 'vi' ? 'vi_VN' : 'en_US'} />
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${t('home.title')}`} />
-        <meta name="twitter:description" content={t('home.description')} />
-        <meta name="twitter:image" content={siteImage} />
-        <meta name="twitter:site" content="@goincome" />
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang={currentLang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
-        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={`${canonicalUrl}?lang=${alternateLang}`} />
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-
-        {/* Additional SEO Meta Tags */}
-        <meta name="theme-color" content="#141414" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="geo.region" content="VN" />
-        <meta name="language" content={currentLang === 'vi' ? 'Vietnamese' : 'English'} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      </Helmet>
+      <SEO
+        title={t('home.title')}
+        description={t('home.description')}
+        image={siteImage}
+        imageAlt={t('home.title')}
+        url={canonicalUrl}
+        structuredData={[organizationSchema, structuredData]}
+      />
       <Navbar />
 
       <main>

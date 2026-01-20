@@ -3,7 +3,7 @@ import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "
 import { getRelatedClientBlogTranslationList } from "@/store/slices/finance/financeSlice";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO, { generateArticleSchema, generateBreadcrumbSchema } from "../components/SEO";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlogCard } from "../components/BlogCard";
@@ -61,121 +61,47 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
   const canonicalUrl = `${window.location.origin}${location.pathname}`;
   const blogListUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}`;
   const alternateLang = lang === 'vi' ? 'en' : 'vi';
-  const alternateUrl = `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}/${alternateLang}/${slug}`;
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": blog.title,
-    "description": blog.excerpt,
-    "image": blogImageUrl ? [{
-      "@type": "ImageObject",
-      "url": blogImageUrl,
-      "width": 1200,
-      "height": 630
-    }] : [],
-    "datePublished": blog.createdAt,
-    "dateModified": blog.updatedAt,
-    "url": canonicalUrl,
-    "inLanguage": lang === 'vi' ? 'vi-VN' : 'en-US',
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": canonicalUrl
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "GOIncome",
-      "url": window.location.origin
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "GOIncome",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${window.location.origin}/logo.png`,
-        "width": 512,
-        "height": 512
-      }
-    },
-    "articleSection": blog.category?.name || "Blog",
-    "keywords": blog.category?.name || "",
-    "wordCount": blog.content ? blog.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0
-  };
-
-  const breadcrumbData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": window.location.origin
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": blogListUrl
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": blog.title,
-        "item": canonicalUrl
-      }
-    ]
-  };
+  const alternateUrl = slug
+    ? `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}/${alternateLang}/${slug}`
+    : canonicalUrl;
+  const blogTitle = blog?.title || t("blogs.detail.title", { defaultValue: "Bài viết" });
+  const blogDescription = blog?.excerpt || t("blogs.detail.description", { defaultValue: "Chi tiết bài viết từ GOIncome." });
+  const pageImage = blogImageUrl || `${window.location.origin}/logo.png`;
+  const wordCount = blog?.content ? blog.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0;
+  const articleSchema = generateArticleSchema({
+    title: blogTitle,
+    description: blogDescription,
+    imageUrl: blogImageUrl || undefined,
+    publishedTime: blog.createdAt,
+    modifiedTime: blog.updatedAt,
+    url: canonicalUrl,
+    wordCount: wordCount || undefined,
+    section: blog.category?.name || "Blog",
+  });
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: t("nav.home", { defaultValue: "Home" }), url: window.location.origin },
+    { name: t("nav.blogs", { defaultValue: "Blog" }), url: blogListUrl },
+    { name: blogTitle, url: canonicalUrl }
+  ]);
 
   return (
     <>
-      <Helmet>
-        <title>{`GOIncome - ${blog.title}`}</title>
-        <meta name="description" content={blog.excerpt} />
-        <meta name="robots" content="index,follow" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`GOIncome - ${blog.title}`} />
-        <meta property="og:description" content={blog.excerpt} />
-        {blogImageUrl && <meta property="og:image" content={blogImageUrl} />}
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="GOIncome" />
-
-        {/* Twitter Cards */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`GOIncome - ${blog.title}`} />
-        <meta name="twitter:description" content={blog.excerpt} />
-        {blogImageUrl && <meta name="twitter:image" content={blogImageUrl} />}
-
-        {/* Canonical */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* Hreflang for multilingual SEO */}
-        <link rel="alternate" hrefLang={lang === 'vi' ? 'vi-VN' : 'en-US'} href={canonicalUrl} />
-        <link rel="alternate" hrefLang={alternateLang === 'vi' ? 'vi-VN' : 'en-US'} href={alternateUrl} />
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
-
-        {/* Article Meta Tags */}
-        <meta name="article:published_time" content={blog.createdAt} />
-        <meta name="article:modified_time" content={blog.updatedAt} />
-        <meta name="article:author" content="GOIncome" />
-        <meta name="article:section" content={blog.category?.name || "Blog"} />
-        {blog.category?.name && <meta name="article:tag" content={blog.category.name} />}
-
-        {/* Additional SEO */}
-        <meta name="theme-color" content="#141414" />
-        <meta name="language" content={lang === 'vi' ? 'Vietnamese' : 'English'} />
-
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        {/* Breadcrumb Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbData)}
-        </script>
-      </Helmet>
+      <SEO
+        title={blogTitle}
+        description={blogDescription}
+        image={pageImage}
+        imageAlt={blogTitle}
+        url={canonicalUrl}
+        alternateUrl={alternateUrl}
+        type="article"
+        publishedTime={blog.createdAt}
+        modifiedTime={blog.updatedAt}
+        author="GOIncome"
+        section={blog.category?.name || "Blog"}
+        tags={blog.category?.name ? [blog.category.name] : []}
+        structuredData={[articleSchema, breadcrumbSchema]}
+        currentLangOverride={lang === "vi" || lang === "en" ? lang : undefined}
+      />
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
         <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
