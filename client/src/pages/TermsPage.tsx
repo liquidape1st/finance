@@ -45,7 +45,7 @@ export function TermsPage() {
           </div>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-[1.1] mb-4"
-            style={{ fontFamily: "Kumbh Sans, sans-serif" }}
+            style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             {t("terms.title")}
           </h1>

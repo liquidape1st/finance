@@ -72,7 +72,7 @@ export function ContactPage() {
             </div>
             <h1
               className="text-3xl sm:text-4xl md:text-5xl text-white mb-4 sm:mb-5 tracking-tight leading-tight"
-              style={{ fontFamily: "Kumbh Sans, sans-serif" }}
+              style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               {t("contact.title")}
             </h1>
@@ -99,7 +99,7 @@ export function ContactPage() {
           <div className="bg-[#1a1a1a] border border-neutral-800 rounded-xl p-6 sm:p-8">
             <h2
               className="text-xl sm:text-2xl text-white mb-4 sm:mb-6"
-              style={{ fontFamily: "Kumbh Sans, sans-serif" }}
+              style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
             >
               {t("contact.form.title")}
             </h2>

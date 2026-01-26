@@ -1,6 +1,6 @@
 import imgImage from "@/assets/6fbe74e4c1500ee56eb703cd4ca7bed8f5ab1e79.png";
 import imgImage1 from "@/assets/92ed7407e1ea241277ee1cb9c161bc12787080a5.png";
-import { getClientBlogTranslationPage, getHomePageFeaturedBlogTranslationList, useAppDispatch, useAppSelector } from "@/store";
+import { getHomePageFeaturedBlogTranslationList, useAppDispatch, useAppSelector } from "@/store";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -15,20 +15,17 @@ import SEO from "../components/SEO";
 export function HomePage() {
   const dispatch = useAppDispatch()
   const { t } = useTranslation();
-  const { tableData, home_page_featured_blog_list } = useAppSelector((state) => state.finance)
+  const { home_page_featured_blog_list } = useAppSelector((state) => state.finance)
   const currentLang = useAppSelector((state) => state.locale.currentLang)
 
 
 
 
   useEffect(() => {
-    if (tableData.uiType) {
-      dispatch(getClientBlogTranslationPage(tableData))
-    }
     dispatch(getHomePageFeaturedBlogTranslationList({
       langCode: currentLang,
     }))
-  }, [dispatch])
+  }, [dispatch, currentLang])
 
 
   const stats = [
@@ -97,7 +94,7 @@ export function HomePage() {
     }
   };
 
-  const getPreflixBlog = (uiType: string) => {
+  const getPrefixBlog = (uiType: string) => {
     switch (uiType) {
       case 'NEWS':
         return 'news';
@@ -136,7 +133,7 @@ export function HomePage() {
       <main>
         {/* Hero Section */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12" aria-label="Hero section">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             {t('home.title')}
           </h1>
 
@@ -159,7 +156,7 @@ export function HomePage() {
               <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-2.5">
                 <span className="text-white text-sm sm:text-base">{t('nav.find_out_about_personal_finance')}</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                 {t('home.subtitle')}
               </h2>
               <p className="text-[#7e7e81] text-sm sm:text-base leading-relaxed">
@@ -169,7 +166,7 @@ export function HomePage() {
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 lg:gap-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {t('home.daily')}
             </h2>
             <p className="flex-1 text-[#98989a] text-sm sm:text-base leading-relaxed" role="text">
@@ -192,7 +189,7 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Ebooks Grid */}
+        {/* Top Featured Blogs */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {home_page_featured_blog_list.slice(0, 3).map((blog) => (
@@ -200,7 +197,7 @@ export function HomePage() {
                 key={`${currentLang}-${blog.id}`}
                 blog={blog}
                 currentLang={currentLang || 'vi'}
-                prefix={getPreflixBlog(blog.uiType)}
+                prefix={getPrefixBlog(blog.uiType)}
                 showBadge={false}
                 showReadMore={true}
               />
@@ -248,7 +245,7 @@ export function HomePage() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white text-base sm:text-lg">{t('home.features.rebate.title')}</h3>
                   <div className="bg-[#ffd11a] p-2.5 sm:p-3 rounded-full">
-                    <Link to="/resources">
+                    <Link to="/contact">
                       <svg className="size-4 sm:size-5" fill="none" viewBox="0 0 20 20">
                         <path clipRule="evenodd" d={svgPaths.p19aaf200} fill="#141414" fillRule="evenodd" />
                       </svg>
@@ -271,7 +268,7 @@ export function HomePage() {
                 <div className="bg-[#333333] inline-block px-2 py-1 rounded mb-2.5">
                   <span className="text-white text-sm sm:text-base">{t('home.articles.title')}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white leading-tight tracking-tight mb-3 sm:mb-4" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] text-white leading-tight tracking-tight mb-3 sm:mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   {t('home.articles.heading')}
                 </h2>
                 <p className="text-[#7e7e81] text-sm sm:text-base leading-relaxed max-w-3xl">
@@ -302,7 +299,7 @@ export function HomePage() {
                       )}
                     </svg>
                   </div>
-                  <h3 className="text-xl sm:text-2xl md:text-[30px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                  <h3 className="text-xl sm:text-2xl md:text-[30px] text-white mb-3 sm:mb-4 md:mb-5 leading-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {ebook.title}
                   </h3>
                   <p className="text-[#98989a] text-sm sm:text-base leading-relaxed">
@@ -374,7 +371,7 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Ebooks Grid */}
+        {/* All Featured Blogs */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {home_page_featured_blog_list.map((blog) => (
@@ -382,7 +379,7 @@ export function HomePage() {
                 key={`${currentLang}-${blog.id}`}
                 blog={blog}
                 currentLang={currentLang || 'vi'}
-                prefix={getPreflixBlog(blog.uiType)}
+                prefix={getPrefixBlog(blog.uiType)}
                 showBadge={false}
                 showReadMore={true}
               />
@@ -395,7 +392,7 @@ export function HomePage() {
               title={t('home.affiliate.title')}
               description={t('home.affiliate.description')}
               ctaText={t('home.affiliate.cta')}
-              ctaLink="/resources"
+              ctaLink="/contact"
               variant="dark"
             />
           </div>

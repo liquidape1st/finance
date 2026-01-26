@@ -52,7 +52,7 @@ export function SEO({
         ? `${window.location.origin}${window.location.pathname}`
         : siteUrl);
     const siteImage = image || `${siteUrl}/logo.png`;
-    const fullTitle = title.includes(siteName) ? title : `${siteName} - ${title}`;
+    const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     const alternateLang = resolvedLang === "vi" ? "en" : "vi";
     const locale = resolvedLang === "vi" ? "vi_VN" : "en_US";
     const hreflangCurrent = resolvedLang === "vi" ? "vi-VN" : "en-US";

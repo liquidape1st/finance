@@ -63,7 +63,7 @@ export function ResourcesPage() {
             <span className="text-white text-xs sm:text-sm">{t('resources.badge')}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight leading-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[55px] text-white mb-4 sm:mb-5 tracking-tight leading-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             {t('resources.heroTitle')}
           </h1>
           <p className="text-[#98989a] text-sm sm:text-base leading-relaxed max-w-3xl mb-8 sm:mb-10 md:mb-12">
@@ -89,8 +89,8 @@ export function ResourcesPage() {
             <button
               onClick={() => setActiveTab('broker')}
               className={`px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 rounded-lg text-xs sm:text-sm transition-colors flex-1 sm:flex-none ${activeTab === 'broker'
-                  ? 'bg-[#FFD11A] text-[#141414]'
-                  : 'text-[#98989a] hover:bg-[#262626]'
+                ? 'bg-[#FFD11A] text-[#141414]'
+                : 'text-[#98989a] hover:bg-[#262626]'
                 }`}
             >
               {t('resources.tabs.broker')}
@@ -98,8 +98,8 @@ export function ResourcesPage() {
             <button
               onClick={() => setActiveTab('glossary')}
               className={`px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 rounded-lg text-xs sm:text-sm transition-colors flex-1 sm:flex-none ${activeTab === 'glossary'
-                  ? 'bg-[#FFD11A] text-[#141414]'
-                  : 'text-[#98989a] hover:bg-[#262626]'
+                ? 'bg-[#FFD11A] text-[#141414]'
+                : 'text-[#98989a] hover:bg-[#262626]'
                 }`}
             >
               {t('resources.tabs.glossary')}
@@ -110,7 +110,7 @@ export function ResourcesPage() {
           {activeTab === 'broker' && (
             <div className="space-y-6 sm:space-y-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   {t('resources.brokerTab.title')}
                 </h2>
                 <p className="text-[#98989a] text-sm sm:text-base mb-6 sm:mb-8">
@@ -130,7 +130,7 @@ export function ResourcesPage() {
           {activeTab === 'glossary' && (
             <div className="space-y-6 sm:space-y-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h2 className="text-2xl sm:text-3xl md:text-[32px] text-white tracking-tight mb-2 sm:mb-3" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   {t('resources.glossaryTab.title')}
                 </h2>
                 <p className="text-[#98989a] text-sm sm:text-base mb-6 sm:mb-8">

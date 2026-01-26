@@ -19,7 +19,7 @@ export type BlogTranslationClient = {
     updatedAt: string;   // ISO datetime
 
     slugs?: Slug[];
-    tag: Tag[]
+    tags: Tag[]
 }
 
 export type Slug = {

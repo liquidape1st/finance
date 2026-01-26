@@ -1,48 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
   <url>
     <loc>https://goincome.net/</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goincome.net/"/>
   </url>
+  
+  <!-- Learn Section -->
   <url>
     <loc>https://goincome.net/learn</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/learn?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/learn?lang=en"/>
   </url>
+  
+  <!-- Market Section -->
   <url>
     <loc>https://goincome.net/market</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/market?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/market?lang=en"/>
   </url>
+  
+  <!-- News Section -->
   <url>
     <loc>https://goincome.net/news</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/news?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/news?lang=en"/>
   </url>
+  
+  <!-- Guides Section -->
   <url>
     <loc>https://goincome.net/guides</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/guides?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/guides?lang=en"/>
   </url>
+  
+  <!-- Resources Section -->
   <url>
     <loc>https://goincome.net/resources</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/resources?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/resources?lang=en"/>
   </url>
+  
+  <!-- Contact Page -->
   <url>
     <loc>https://goincome.net/contact</loc>
+    <lastmod>2026-01-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://goincome.net/contact?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goincome.net/contact?lang=en"/>
   </url>
+  
+  <!-- Privacy Policy -->
   <url>
     <loc>https://goincome.net/privacy</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  
+  <!-- Terms of Service -->
   <url>
     <loc>https://goincome.net/terms</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  
 </urlset>

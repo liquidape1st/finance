@@ -1,6 +1,6 @@
 import { BlogTranslationClient } from "@/@types/blog.translation.client";
 import appConfig from "@/configs/app.config";
-import { Eye } from "lucide-react";
+import { Eye, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -83,12 +83,29 @@ export function BlogCard({
                     <div className="md:flex items-center justify-between mt-auto hidden">
                         {/* Stats Pills */}
                         <div className="flex items-center gap-2">
+                            {/* Date */}
+                            <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full">
+                                <Clock className="size-3.5 sm:size-4 text-[#666666]" strokeWidth={1.5} />
+                                <time
+                                    dateTime={blog.createdAt}
+                                    itemProp="datePublished"
+                                    className="text-[#98989a] text-[12px] sm:text-[14px] tracking-[-0.42px]"
+                                    style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+                                >
+                                    {new Date(blog.createdAt).toLocaleDateString(currentLang === 'vi' ? 'vi-VN' : 'en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric'
+                                    })}
+                                </time>
+                            </div>
+
                             {/* Views */}
                             <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full">
-                                <Eye className="size-4 sm:size-5 text-[#666666]" strokeWidth={1.5} />
+                                <Eye className="size-3.5 sm:size-4 text-[#666666]" strokeWidth={1.5} />
                                 <span
                                     className="text-[#98989a] text-[12px] sm:text-[14px] tracking-[-0.42px]"
-                                    style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
+                                    style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
                                 >
                                     {blog.view}
                                 </span>

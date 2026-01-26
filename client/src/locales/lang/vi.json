@@ -1,16 +1,16 @@
 {
     "nav": {
-        "find_out_about_personal_finance": "Tìm hiểu về tài chính cá nhân",
+        "find_out_about_personal_finance": "Kiến thức & Chiến lược Đầu tư Chuyên Sâu",
         "home": "Trang Chủ",
         "news": "Tin tức",
-        "learn": "Học tài chính",
+        "learn": "Học viện",
         "guides": "Hướng Dẫn",
         "markets": "Thị trường",
         "blog": "Blog",
         "resources": "Tài Nguyên",
         "contact": "Liên Hệ",
         "newsletter": "Đăng ký nhận bản tin để cập nhật bài viết và tài liệu mới",
-        "platform": "Nền Tảng Kiến Thức Tài Chính",
+        "platform": "Nền Tảng Phân Tích & Đầu Tư Tài Chính",
         "apps": "Ứng dụng",
         "appDashboard": {
             "analytics": "Phân tích",
@@ -436,11 +436,11 @@
     "mailbox.faq.q9.question": "Tôi quên mật khẩu, có cách nào để bạn có thể đặt lại mật khẩu không?",
     "mailbox.faq.q9.answer": "Không, không có cách nào chúng tôi có thể đặt lại mật khẩu của bạn. Mật khẩu của bạn đang được tạo ra trong trình duyệt của bạn và nó đang được lưu trữ mã hóa.",
     "home": {
-        "title": "Kiến Thức Tài Chính",
-        "subtitle": "Nơi Chia Sẻ và Học Hỏi",
-        "description": "Khám phá các bài viết và kiến thức về tài chính cá nhân, từ cách quản lý chi tiêu, tiết kiệm đến hiểu biết về các khái niệm đầu tư cơ bản. Nội dung chỉ mang tính chia sẻ kiến thức, không phải lời khuyên tài chính.",
-        "daily": "Hàng Ngày",
-        "dailyDescription": "Cập nhật các bài viết về kiến thức tài chính, từ những khái niệm cơ bản về ngân sách, tiết kiệm, đến các thông tin tổng quan về thị trường. Mục đích là để bạn có thêm hiểu biết về tài chính, giúp đưa ra quyết định phù hợp với bản thân.",
+        "title": "Chiến Lược Tài Chính",
+        "subtitle": "Tối Ưu Hóa Danh Mục & Gia Tăng Tài Sản",
+        "description": "Nền tảng cung cấp các phân tích thị trường chuyên sâu, chiến lược quản trị rủi ro và công cụ tối ưu hóa danh mục đầu tư. Dành cho nhà đầu tư nghiêm túc muốn nâng cao hiệu suất tài sản.",
+        "daily": "Thị Trường & Xu Hướng",
+        "dailyDescription": "Cập nhật liên tục các phân tích kỹ thuật, dữ liệu on-chain và biến động vĩ mô. Thông tin được tổng hợp từ nhiều nguồn uy tín để hỗ trợ quyết định đầu tư chính xác và kịp thời.",
         "stats": {
             "resources": "Tài Nguyên Có Sẵn",
             "downloads": "Tổng Lượt Tải Xuống",
@@ -552,7 +552,20 @@
             "emailPlaceholder": "Email của bạn",
             "subscribe": "Đăng Ký",
             "footer": "Miễn phí • Hủy bất cứ lúc nào • Chúng tôi tôn trọng quyền riêng tư của bạn"
-        }
+        },
+        "back": "Quay lại",
+        "category": "Danh mục"
+    },
+    "blog": {
+        "toc": {
+            "title": "Mục lục",
+            "hint": "Click để chuyển đến mục"
+        },
+        "reading": {
+            "minutes": "phút đọc",
+            "words": "từ"
+        },
+        "related": "Bài viết liên quan"
     },
     "resources": {
         "title": "Tài Nguyên & Công Cụ Giao Dịch",

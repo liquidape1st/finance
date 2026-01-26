@@ -1,7 +1,7 @@
 import appConfig from "@/configs/app.config";
 import { getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { setTableData } from "@/store/slices/finance/financeSlice";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { ArrowRight, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import SEO from "../components/SEO";
@@ -12,10 +12,10 @@ import { Navbar } from "../components/Navbar";
 
 type BlogsPageProps = {
   uiType: 'NEWS' | 'GUIDE' | 'MARKET' | 'LEARN',
-  preflix: string
+  prefix: string
 }
 
-export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
+export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch()
   const { blog_translation, category_translation, tableData, isLoadingBlogPostList } = useAppSelector((state) => state.finance)
@@ -58,7 +58,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
     }
   }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType, currentLang])
 
-  const canonicalUrl = `${window.location.origin}/${preflix}`;
+  const canonicalUrl = `${window.location.origin}/${prefix}`;
   const siteImage = `${window.location.origin}/logo.png`;
   const structuredData = {
     "@context": "https://schema.org",
@@ -92,7 +92,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
         "@type": "BlogPosting",
         "headline": blog.title,
         "description": blog.excerpt,
-        "url": `${window.location.origin}/${preflix}/${currentLang}/${blog.slug}`,
+        "url": `${window.location.origin}/${prefix}/${currentLang}/${blog.slug}`,
         "image": getBlogImageUrl(blog.image, blog.updatedAt)
       }
     }))
@@ -120,7 +120,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
               <div className="size-1.5 bg-[#FFD11A] rounded-full"></div>
               <span className="text-[#98989a] text-xs tracking-wider uppercase">{t('blogs.badge')}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mb-3" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mb-3" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {t(`blogs.${uiType.toLowerCase()}.title`)}
             </h1>
             <p className="text-[#7e7e81] text-base sm:text-lg leading-relaxed max-w-2xl">
@@ -176,7 +176,7 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
 
         {/* Blog Grid - Figma Style Cards */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-20 sm:pb-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={preflix}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={prefix}>
             {isLoadingBlogPostList && blog_translation.length === 0
               ? Array.from({ length: 6 }).map((_, index) => (
                 <div
@@ -208,10 +208,10 @@ export function BlogsPage({ uiType, preflix }: BlogsPageProps) {
               ))
               : blog_translation.map((blog) => (
                 <BlogCard
-                  key={`${currentLang}-${blog.id}-${blog.updatedAt}-${preflix}`}
+                  key={`${currentLang}-${blog.id}-${blog.updatedAt}-${prefix}`}
                   blog={blog}
                   currentLang={currentLang || 'vi'}
-                  prefix={preflix}
+                  prefix={prefix}
                   showBadge={true}
                   showReadMore={true}
                 />

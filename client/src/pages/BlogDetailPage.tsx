@@ -2,7 +2,7 @@ import appConfig from "@/configs/app.config";
 import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { getRelatedClientBlogTranslationList } from "@/store/slices/finance/financeSlice";
 import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import SEO, { generateArticleSchema, generateBreadcrumbSchema } from "../components/SEO";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -10,16 +10,20 @@ import { BlogCard } from "../components/BlogCard";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { RandomAffiliateBanner } from "../components/RandomAffiliateBanner";
+import { Breadcrumb } from "../components/Breadcrumb";
+import { ReadingTime } from "../components/ReadingTime";
+import { TableOfContents } from "../components/TableOfContents";
+import { addHeadingIds } from "../utils/contentProcessor";
 
 const getBlogImageUrl = (fileName: string, updatedAt: string) =>
   `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`;
 
 type DetailBlogPageProps = {
-  preflix: string
+  prefix: string
 }
 
 
-export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
+export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
   const { lang, slug } = useParams()
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,7 +45,7 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
       if (currentLang !== lang) {
         let expectedSlug = blog.slugs?.filter(s => s.langCode === currentLang)[0]?.slug;
         if (expectedSlug && expectedSlug !== slug) {
-          navigate(`/${preflix}/${currentLang}/${expectedSlug}`, { replace: true });
+          navigate(`/${prefix}/${currentLang}/${expectedSlug}`, { replace: true });
         }
       }
     }
@@ -67,7 +71,13 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
   const blogTitle = blog?.title || t("blogs.detail.title", { defaultValue: "Bài viết" });
   const blogDescription = blog?.excerpt || t("blogs.detail.description", { defaultValue: "Chi tiết bài viết từ GOIncome." });
   const pageImage = blogImageUrl || `${window.location.origin}/logo.png`;
-  const wordCount = blog?.content ? blog.content.replace(/<[^>]*>/g, '').split(/\s+/).length : 0;
+
+  // Process content to add IDs to headings for TOC navigation
+  const processedContent = useMemo(() => {
+    return addHeadingIds(blog?.content || blog?.excerpt || "");
+  }, [blog?.content, blog?.excerpt]);
+
+  const wordCount = processedContent ? processedContent.replace(/<[^>]*>/g, '').split(/\s+/).length : 0;
   const articleSchema = generateArticleSchema({
     title: blogTitle,
     description: blogDescription,
@@ -105,12 +115,22 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
         <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb
+            items={[
+              { name: t("nav.home", { defaultValue: "Trang chủ" }), url: "/" },
+              { name: t(`blogs.${prefix}.title`, { defaultValue: prefix }), url: `/${prefix}` },
+              { name: blogTitle, url: location.pathname }
+            ]}
+            className="mb-6"
+          />
+
           <button
             onClick={() => navigate(-1)}
             className="inline-flex items-center gap-2 text-[#98989a] hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="size-4" />
-            <span>{t("blogs.back", { defaultValue: "Back to blogs" })}</span>
+            <span>{t("blogs.back", { defaultValue: "Quay lại" })}</span>
           </button>
           <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-6 gap-y-6">
             <div className="col-span-2">
@@ -158,11 +178,11 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                     </div>
                   </div>
 
-                  <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Kumbh Sans, sans-serif" }}>
+                  <h1 className="text-white text-3xl sm:text-4xl md:text-[42px] leading-tight tracking-tight mb-4" style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>
                     {blog.title}
                   </h1>
 
-                  <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-8">
+                  <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-4">
                     {blog.createdAt && (
                       <time className="inline-flex items-center gap-2" dateTime={blog.createdAt} itemProp="datePublished">
                         <Clock className="size-4" />
@@ -174,6 +194,13 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                       {blog.view}
                     </span>
                   </div>
+
+                  {/* Reading Time */}
+                  <ReadingTime
+                    content={blog.content || ""}
+                    showWordCount={true}
+                    className="mb-8"
+                  />
 
                   <figure className="relative w-full h-80 sm:h-105 md:h-120 rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
                     <img
@@ -194,7 +221,7 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                     {blogImageUrl && <meta itemProp="image" content={blogImageUrl} />}
                     <div
                       className="prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: blog.content || blog.excerpt || "" }}
+                      dangerouslySetInnerHTML={{ __html: processedContent }}
                       itemProp="articleBody"
                     />
                   </article>
@@ -203,7 +230,15 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
             </div>
             {/* Sidebar */}
             <aside className="col-span-1" aria-label="Related articles">
-              <div className="flex flex-col gap-6 sticky top-0">
+              <div className="flex flex-col gap-6 sticky top-24">
+                {/* Table of Contents */}
+                {!isLoadingSelectedBlogPost && processedContent && (
+                  <TableOfContents
+                    content={processedContent}
+                    maxLevel={3}
+                  />
+                )}
+
                 <div>
                   <RandomAffiliateBanner />
                 </div>
@@ -228,12 +263,12 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
                         </div>
                       </div>
                     ))
-                    : related_selected_blog_translation_list.slice(0, 5).map((blog) => (
+                    : related_selected_blog_translation_list.slice(0, 3).map((blog) => (
                       <BlogCard
                         key={`${currentLang}-${blog.id}-detail`}
                         blog={blog}
                         currentLang={currentLang || 'vi'}
-                        prefix={preflix}
+                        prefix={prefix}
                       />
                     ))}
                 </div>
@@ -244,6 +279,42 @@ export function BlogDetailPage({ preflix }: DetailBlogPageProps) {
               </div>
             </aside>
           </div>
+
+          {/* Bottom Related Posts Section */}
+          <section className="mt-16 sm:mt-24 border-t border-[#262626] pt-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+              {t('blog.related', { defaultValue: 'Bài viết liên quan' })}
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {isLoadingRelatedBlogPosts && related_selected_blog_translation_list.length === 0
+                ? Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={`bottom-related-skeleton-${index}`}
+                    className="flex flex-col h-full animate-pulse"
+                  >
+                    <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4 bg-[#1f1f1f]">
+                      <div className="absolute inset-0 bg-linear-to-r from-[#1f1f1f] via-[#262626] to-[#1f1f1f]" />
+                    </div>
+                    <div className="flex flex-col gap-3 flex-1">
+                      <div className="space-y-2">
+                        <div className="h-4 bg-[#262626] rounded w-4/5" />
+                        <div className="h-3 bg-[#1f1f1f] rounded w-2/5" />
+                      </div>
+                    </div>
+                  </div>
+                ))
+                : related_selected_blog_translation_list.slice(0, 6).map((blog) => (
+                  <BlogCard
+                    key={`${currentLang}-${blog.id}-bottom-related`}
+                    blog={blog}
+                    currentLang={currentLang || 'vi'}
+                    prefix={prefix}
+                    showBadge={true}
+                  />
+                ))}
+            </div>
+          </section>
         </main>
 
         <Footer />

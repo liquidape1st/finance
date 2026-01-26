@@ -35,7 +35,7 @@ export function TradingCalculator() {
       <div className="bg-[#141414] border-b border-neutral-800 px-8 py-6 flex items-center gap-3">
         <Calculator className="size-6 text-[#FFD11A]" />
         <div>
-          <h3 className="text-white text-xl" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+          <h3 className="text-white text-xl" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             Công Cụ Tính Toán Giao Dịch
           </h3>
           <p className="text-[#98989a] text-sm mt-1">
@@ -123,10 +123,10 @@ export function TradingCalculator() {
         {/* Results */}
         {result && (
           <div className="bg-[#141414] border border-neutral-800 rounded-xl p-6">
-            <h4 className="text-white text-lg mb-4" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h4 className="text-white text-lg mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               Kết Quả Tính Toán
             </h4>
-            
+
             <div className="grid grid-cols-3 gap-6">
               <div>
                 <p className="text-[#98989a] text-sm mb-1">Số Tiền Rủi Ro</p>

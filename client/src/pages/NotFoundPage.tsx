@@ -31,13 +31,13 @@ export function NotFoundPage() {
             </div>
             <h1
               className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-[#FFD11A] mb-4 sm:mb-5 tracking-tight"
-              style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               404
             </h1>
             <h2
               className="text-2xl sm:text-3xl md:text-4xl text-white mb-3 sm:mb-4 tracking-tight leading-tight"
-              style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               {t('notFound.heading')}
             </h2>
@@ -68,7 +68,7 @@ export function NotFoundPage() {
           <div className="border-t border-neutral-800 pt-8 sm:pt-10 md:pt-12">
             <h3
               className="text-lg sm:text-xl text-white mb-5 sm:mb-6 tracking-tight"
-              style={{ fontFamily: 'Kumbh Sans, sans-serif' }}
+              style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
             >
               {t('notFound.quickLinks')}
             </h3>
@@ -79,7 +79,7 @@ export function NotFoundPage() {
               >
                 <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <Home className="size-5 text-[#FFD11A]" />
-                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {t('nav.home')}
                   </p>
                 </div>
@@ -94,7 +94,7 @@ export function NotFoundPage() {
               >
                 <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <Newspaper className="size-5 text-[#FFD11A]" />
-                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {t('nav.news')}
                   </p>
                 </div>
@@ -109,7 +109,7 @@ export function NotFoundPage() {
               >
                 <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <BookOpen className="size-5 text-[#FFD11A]" />
-                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {t('nav.learn')}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export function NotFoundPage() {
               >
                 <div className="flex items-center gap-3 mb-2 sm:mb-3">
                   <BarChart3 className="size-5 text-[#FFD11A]" />
-                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                  <p className="text-white text-sm sm:text-base font-medium" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                     {t('nav.resources')}
                   </p>
                 </div>

@@ -20,7 +20,7 @@ export function Navbar() {
     dispatch(setLang(lng))
     window.location.reload()
   };
-  
+
   const getCurrentPage = (): 'home' | 'news' | 'learn' | 'guides' | 'market' | 'resources' | 'contact' => {
     if (location.pathname === '/') return 'home';
     if (location.pathname === '/news') return 'news';
@@ -31,7 +31,7 @@ export function Navbar() {
     if (location.pathname === '/contact') return 'contact';
     return 'home';
   };
-  
+
   const currentPage = getCurrentPage();
 
   return (
@@ -54,72 +54,67 @@ export function Navbar() {
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <div className="relative size-10 sm:size-12 bg-linear-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 shrink-0">
-              <img src={logoImage} alt="GO Income" className="scale-[280%]"/>
+              <img src={logoImage} alt="GO Income" className="scale-[280%]" />
             </div>
             <div>
               <div className="flex items-baseline">
-                <h1 className="text-white text-lg sm:text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h1 className="text-white text-lg sm:text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   GO
                 </h1>
-                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>Income</span>
+                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Income</span>
               </div>
               <p className="text-[#666666] text-xs tracking-wide hidden sm:block">{t('nav.platform')}</p>
             </div>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link
               to="/"
-              className={`text-sm transition-colors ${
-                currentPage === 'home'
-                  ? 'text-white'
-                  : 'text-[#7e7e81] hover:text-white'
-              }`}
+              className={`text-sm transition-colors ${currentPage === 'home'
+                ? 'text-white'
+                : 'text-[#7e7e81] hover:text-white'
+                }`}
             >
               {t('nav.home')}
             </Link>
             <Link
               to="/news"
-              className={`text-sm transition-colors ${
-                currentPage === 'news'
-                  ? 'text-white'
-                  : 'text-[#7e7e81] hover:text-white'
-              }`}
+              className={`text-sm transition-colors ${currentPage === 'news'
+                ? 'text-white'
+                : 'text-[#7e7e81] hover:text-white'
+                }`}
             >
               {t('nav.news')}
             </Link>
             <Link
               to="/learn"
-              className={`text-sm transition-colors ${
-                currentPage === 'learn'
-                  ? 'text-white'
-                  : 'text-[#7e7e81] hover:text-white'
-              }`}
+              className={`text-sm transition-colors ${currentPage === 'learn'
+                ? 'text-white'
+                : 'text-[#7e7e81] hover:text-white'
+                }`}
             >
               {t('nav.learn')}
             </Link>
             <Link
               to="/guides"
-              className={`text-sm transition-colors ${
-                currentPage === 'guides'
-                  ? 'text-white'
-                  : 'text-[#7e7e81] hover:text-white'
-              }`}
+              className={`text-sm transition-colors ${currentPage === 'guides'
+                ? 'text-white'
+                : 'text-[#7e7e81] hover:text-white'
+                }`}
             >
               {t('nav.guides')}
             </Link>
             <Link
               to="/market"
-              className={`text-sm transition-colors ${
-                currentPage === 'market'
-                  ? 'text-white'
-                  : 'text-[#7e7e81] hover:text-white'
-              }`}
+              className={`text-sm transition-colors ${currentPage === 'market'
+                ? 'text-white'
+                : 'text-[#7e7e81] hover:text-white'
+                }`}
             >
               {t('nav.markets')}
             </Link>
-            <Link
+            {/* <Link
               to="/resources"
               className={`px-4.5 py-2.5 rounded-md text-sm transition-colors ${
                 currentPage === 'resources'
@@ -128,7 +123,7 @@ export function Navbar() {
               }`}
             >
               {t('nav.resources')}
-            </Link>
+            </Link> */}
           </div>
 
           {/* Language Switcher & CTA Button */}
@@ -136,39 +131,36 @@ export function Navbar() {
             <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-md overflow-hidden">
               <button
                 onClick={() => changeLanguage('vi')}
-                className={`px-3.5 py-2.5 text-sm transition-colors ${
-                  currentLang === 'vi' 
-                    ? 'bg-[#ffd11a] text-[#141414]' 
-                    : 'text-[#98989a] hover:text-white'
-                }`}
+                className={`px-3.5 py-2.5 text-sm transition-colors ${currentLang === 'vi'
+                  ? 'bg-[#ffd11a] text-[#141414]'
+                  : 'text-[#98989a] hover:text-white'
+                  }`}
               >
                 VI
               </button>
               <button
                 onClick={() => changeLanguage('en')}
-                className={`px-3.5 py-2.5 text-sm transition-colors ${
-                  currentLang === 'en' 
-                    ? 'bg-[#ffd11a] text-[#141414]' 
-                    : 'text-[#98989a] hover:text-white'
-                }`}
+                className={`px-3.5 py-2.5 text-sm transition-colors ${currentLang === 'en'
+                  ? 'bg-[#ffd11a] text-[#141414]'
+                  : 'text-[#98989a] hover:text-white'
+                  }`}
               >
                 EN
               </button>
             </div>
             <Link
               to="/contact"
-              className={`px-3.5 py-2.5 rounded-md text-sm transition-colors ${
-                currentPage === 'contact'
-                  ? 'bg-[#ffd11a] text-[#141414]'
-                  : 'bg-[#141414] text-white hover:bg-[#ffd11a] hover:text-[#141414]'
-              }`}
+              className={`px-3.5 py-2.5 rounded-md text-sm transition-colors ${currentPage === 'contact'
+                ? 'bg-[#ffd11a] text-[#141414]'
+                : 'bg-[#141414] text-white hover:bg-[#ffd11a] hover:text-[#141414]'
+                }`}
             >
               {t('nav.contact')}
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="md:hidden text-white p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
@@ -181,48 +173,45 @@ export function Navbar() {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-neutral-800 bg-[#1a1a1a]">
             <div className="px-4 py-4 flex flex-col gap-4">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className={`text-sm transition-colors py-2 ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.home')}
               </Link>
-              <Link 
-                to="/news" 
+              <Link
+                to="/news"
                 className={`text-sm transition-colors py-2 ${currentPage === 'news' ? 'text-white' : 'text-[#7e7e81]'}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.news')}
               </Link>
-              <Link 
-                to="/learn" 
-                className={`text-sm transition-colors py-2 ${
-                  currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'
-                }`}
+              <Link
+                to="/learn"
+                className={`text-sm transition-colors py-2 ${currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.learn')}
               </Link>
-              <Link 
-                to="/guides" 
-                className={`text-sm transition-colors py-2 ${
-                  currentPage === 'guides' ? 'text-white' : 'text-[#7e7e81]'
-                }`}
+              <Link
+                to="/guides"
+                className={`text-sm transition-colors py-2 ${currentPage === 'guides' ? 'text-white' : 'text-[#7e7e81]'
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.guides')}
               </Link>
-              <Link 
-                to="/market" 
-                className={`text-sm transition-colors py-2 ${
-                  currentPage === 'market' ? 'text-white' : 'text-[#7e7e81]'
-                }`}
+              <Link
+                to="/market"
+                className={`text-sm transition-colors py-2 ${currentPage === 'market' ? 'text-white' : 'text-[#7e7e81]'
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.markets')}
               </Link>
-              <Link 
+              {/* <Link 
                 to="/resources" 
                 className={`px-4 py-2.5 rounded-md text-sm transition-colors text-center ${
                   currentPage === 'resources' 
@@ -232,25 +221,23 @@ export function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {t('nav.resources')}
-              </Link>
+              </Link> */}
               <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-md overflow-hidden">
                 <button
                   onClick={() => changeLanguage('vi')}
-                  className={`flex-1 px-3 py-2 text-xs transition-colors ${
-                    i18n.language === 'vi' 
-                      ? 'bg-[#ffd11a] text-[#141414]' 
-                      : 'text-[#98989a] hover:text-white'
-                  }`}
+                  className={`flex-1 px-3 py-2 text-xs transition-colors ${i18n.language === 'vi'
+                    ? 'bg-[#ffd11a] text-[#141414]'
+                    : 'text-[#98989a] hover:text-white'
+                    }`}
                 >
                   VN
                 </button>
                 <button
                   onClick={() => changeLanguage('en')}
-                  className={`flex-1 px-3 py-2 text-xs transition-colors ${
-                    i18n.language === 'en' 
-                      ? 'bg-[#ffd11a] text-[#141414]' 
-                      : 'text-[#98989a] hover:text-white'
-                  }`}
+                  className={`flex-1 px-3 py-2 text-xs transition-colors ${i18n.language === 'en'
+                    ? 'bg-[#ffd11a] text-[#141414]'
+                    : 'text-[#98989a] hover:text-white'
+                    }`}
                 >
                   EN
                 </button>

@@ -12,7 +12,7 @@ interface Broker {
 
 export function BrokerComparisonTable() {
   const { t } = useTranslation();
-  
+
   const brokers: Broker[] = [
     {
       name: "Exness",
@@ -90,7 +90,7 @@ export function BrokerComparisonTable() {
         {/* Desktop / Tablet tables */}
         <div className="hidden sm:block">
           <div className="bg-linear-to-r border-b px-8 py-6">
-            <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {t('resources.forexSection.title')}
             </h3>
             <p className="text-[#98989a] text-sm">
@@ -154,7 +154,7 @@ export function BrokerComparisonTable() {
         {/* Desktop / Tablet tables */}
         <div className="hidden sm:block">
           <div className="bg-linear-to-r border-b  px-8 py-6">
-            <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h3 className="text-white text-2xl mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {t('resources.cryptoSection.title')}
             </h3>
             <p className="text-[#98989a] text-sm">

@@ -7,7 +7,7 @@ interface RiskWarningDisclosureProps {
 
 export function RiskWarningDisclosure({ variant = 'full' }: RiskWarningDisclosureProps) {
   const { t } = useTranslation();
-  
+
   if (variant === 'compact') {
     return (
       <div className="bg-red-900/20 border border-red-800/50 rounded-lg p-3 sm:p-4 flex items-start gap-2 sm:gap-3">
@@ -26,7 +26,7 @@ export function RiskWarningDisclosure({ variant = 'full' }: RiskWarningDisclosur
           <AlertTriangle className="size-5 sm:size-6 text-white" />
         </div>
         <div>
-          <h3 className="text-red-300 text-lg sm:text-xl mb-1 sm:mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+          <h3 className="text-red-300 text-lg sm:text-xl mb-1 sm:mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             {t('resources.riskDisclosure.full.title')}
           </h3>
           <p className="text-red-200 text-xs sm:text-sm">
@@ -37,16 +37,16 @@ export function RiskWarningDisclosure({ variant = 'full' }: RiskWarningDisclosur
 
       <div className="space-y-3 sm:space-y-4 text-red-200 text-xs sm:text-sm leading-relaxed">
         <p>
-          <strong>{t('resources.riskDisclosure.full.paragraph1.strong')}</strong> 
+          <strong>{t('resources.riskDisclosure.full.paragraph1.strong')}</strong>
           {' '}{t('resources.riskDisclosure.full.paragraph1.text')}
         </p>
-        
+
         <p>
           {t('resources.riskDisclosure.full.paragraph2')}
         </p>
 
         <p>
-          <strong>{t('resources.riskDisclosure.full.paragraph3.strong')}</strong> 
+          <strong>{t('resources.riskDisclosure.full.paragraph3.strong')}</strong>
           {' '}{t('resources.riskDisclosure.full.paragraph3.text')}
         </p>
 
@@ -55,7 +55,7 @@ export function RiskWarningDisclosure({ variant = 'full' }: RiskWarningDisclosur
         </p>
 
         <p className="pt-3 sm:pt-4 border-t border-red-800/50">
-          <strong>{t('resources.riskDisclosure.full.paragraph5.strong')}</strong> 
+          <strong>{t('resources.riskDisclosure.full.paragraph5.strong')}</strong>
           {' '}{t('resources.riskDisclosure.full.paragraph5.text')}
         </p>
       </div>

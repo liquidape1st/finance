@@ -38,7 +38,7 @@ export function AffiliateBanner({
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         let { hours, minutes, seconds } = prev;
-        
+
         if (seconds > 0) {
           seconds--;
         } else if (minutes > 0) {
@@ -49,7 +49,7 @@ export function AffiliateBanner({
           minutes = 59;
           seconds = 59;
         }
-        
+
         return { hours, minutes, seconds };
       });
     }, 1000);
@@ -101,7 +101,7 @@ export function AffiliateBanner({
               )}
             </div>
 
-            <h3 className={`${titleClass} ${textColor} mb-2 sm:mb-3`} style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+            <h3 className={`${titleClass} ${textColor} mb-2 sm:mb-3`} style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
               {title}
             </h3>
             <p className={`${subTextColor} ${descClass} leading-relaxed max-w-2xl`}>

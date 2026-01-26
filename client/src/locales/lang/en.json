@@ -552,7 +552,20 @@
             "emailPlaceholder": "Your email",
             "subscribe": "Subscribe",
             "footer": "Free • Cancel anytime • We respect your privacy"
-        }
+        },
+        "back": "Go back",
+        "category": "Category"
+    },
+    "blog": {
+        "toc": {
+            "title": "Table of Contents",
+            "hint": "Click to jump to section"
+        },
+        "reading": {
+            "minutes": "min read",
+            "words": "words"
+        },
+        "related": "Related Posts"
     },
     "resources": {
         "title": "Trading Resources & Tools",

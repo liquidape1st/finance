@@ -29,7 +29,7 @@ const initState: FinanceState = {
             categoryId: "",
             id: "",
             langCode: "",
-            name: ""
+            name: "",
         },
         uiType: "LEARN",
         contentType: "",
@@ -44,7 +44,8 @@ const initState: FinanceState = {
         slug: "",
         title: "",
         updatedAt: "",
-        view: 0
+        view: 0,
+        tags: []
     },
     isLoadingSelectedBlogPost: false,
     isLoadingBlogPostList: false,
@@ -100,7 +101,7 @@ export const getDetailClientBlogTranslation = createAsyncThunk(
 
 export const getHomePageFeaturedBlogTranslationList = createAsyncThunk(
     SLICENAME + '/getHomePageFeaturedBlogTranslationList',
-    async ({langCode}: {langCode: string}) => {
+    async ({ langCode }: { langCode: string }) => {
         const response = await apiPostSystem<ApiResponse<BlogTranslationClient[]>, Record<string, string | number>>(
             '/blog-translations/featured',
             {

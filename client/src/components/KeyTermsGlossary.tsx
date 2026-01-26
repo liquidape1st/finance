@@ -42,13 +42,13 @@ export function KeyTermsGlossary({ term, children }: KeyTermsGlossaryProps) {
       >
         {children}
       </span>
-      
+
       {isHovered && (
         <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 z-50 block animate-in fade-in slide-in-from-bottom-1 duration-200">
           <span className="bg-[#141414] border border-[#FFD11A]/30 rounded-lg p-4 shadow-xl block">
             <span className="flex items-start gap-2 mb-2">
               <HelpCircle className="size-4 text-[#FFD11A] shrink-0 mt-0.5" />
-              <span className="text-[#FFD11A] text-sm block" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+              <span className="text-[#FFD11A] text-sm block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                 {term}
               </span>
             </span>
@@ -77,22 +77,22 @@ export function GlossaryList() {
 
   return (
     <div className="bg-[#1a1a1a] border border-neutral-800 rounded-xl p-8">
-      <h2 className="text-white text-2xl mb-6" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+      <h2 className="text-white text-2xl mb-6" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
         Từ Điển Thuật Ngữ Giao Dịch
       </h2>
 
       {Object.entries(categories).map(([category, termsList]) => (
         <div key={category} className="mb-8 last:mb-0">
-          <h3 className="text-[#FFD11A] text-lg mb-4" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+          <h3 className="text-[#FFD11A] text-lg mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
             {category}
           </h3>
           <div className="space-y-4">
             {termsList.map(term => (
-              <div 
+              <div
                 key={term}
                 className="bg-[#141414] border border-neutral-800 rounded-lg p-5 hover:border-[#FFD11A]/30 transition-colors"
               >
-                <h4 className="text-white text-base mb-2" style={{ fontFamily: 'Kumbh Sans, sans-serif' }}>
+                <h4 className="text-white text-base mb-2" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   {term}
                 </h4>
                 <p className="text-[#98989a] text-sm leading-relaxed">
