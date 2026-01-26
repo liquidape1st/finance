@@ -436,11 +436,11 @@
     "mailbox.faq.q9.question": "Tôi quên mật khẩu, có cách nào để bạn có thể đặt lại mật khẩu không?",
     "mailbox.faq.q9.answer": "Không, không có cách nào chúng tôi có thể đặt lại mật khẩu của bạn. Mật khẩu của bạn đang được tạo ra trong trình duyệt của bạn và nó đang được lưu trữ mã hóa.",
     "home": {
-        "title": "Chiến Lược Tài Chính",
-        "subtitle": "Tối Ưu Hóa Danh Mục & Gia Tăng Tài Sản",
-        "description": "Nền tảng cung cấp các phân tích thị trường chuyên sâu, chiến lược quản trị rủi ro và công cụ tối ưu hóa danh mục đầu tư. Dành cho nhà đầu tư nghiêm túc muốn nâng cao hiệu suất tài sản.",
+        "title": "Góc Nhìn Tài Chính",
+        "subtitle": "Chia Sẻ Kiến Thức & Thông Tin Thị Trường",
+        "description": "Nơi tổng hợp các tin tức, phân tích và góc nhìn về thị trường tài chính. Cùng nhau trao đổi và học hỏi để đưa ra những quyết định đầu tư phù hợp nhất.",
         "daily": "Thị Trường & Xu Hướng",
-        "dailyDescription": "Cập nhật liên tục các phân tích kỹ thuật, dữ liệu on-chain và biến động vĩ mô. Thông tin được tổng hợp từ nhiều nguồn uy tín để hỗ trợ quyết định đầu tư chính xác và kịp thời.",
+        "dailyDescription": "Cập nhật liên tục các tin tức và biến động thị trường. Thông tin được tổng hợp từ nhiều nguồn để bạn có thêm góc nhìn tham khảo cho các quyết định của mình.",
         "stats": {
             "resources": "Tài Nguyên Có Sẵn",
             "downloads": "Tổng Lượt Tải Xuống",
