@@ -80,7 +80,7 @@ export function BlogCard({
                     </div>
 
                     {/* Stats & Button */}
-                    <div className="md:flex items-center justify-between mt-auto hidden">
+                    <div className="hidden sm:flex items-center justify-between mt-auto">
                         {/* Stats Pills */}
                         <div className="flex items-center gap-2">
                             {/* Date */}

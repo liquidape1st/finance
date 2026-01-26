@@ -1,7 +1,7 @@
 import appConfig from "@/configs/app.config";
 import { getDetailClientBlogTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { getRelatedClientBlogTranslationList } from "@/store/slices/finance/financeSlice";
-import { ArrowLeft, Clock, Eye, Tag } from "lucide-react";
+import { Calendar, Eye, Tag } from "lucide-react";
 import { useEffect, useMemo } from "react";
 import SEO, { generateArticleSchema, generateBreadcrumbSchema } from "../components/SEO";
 import { useTranslation } from "react-i18next";
@@ -125,13 +125,13 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
             className="mb-6"
           />
 
-          <button
+          {/* <button
             onClick={() => navigate(-1)}
             className="inline-flex items-center gap-2 text-[#98989a] hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="size-4" />
             <span>{t("blogs.back", { defaultValue: "Quay lại" })}</span>
-          </button>
+          </button> */}
           <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-6 gap-y-6">
             <div className="col-span-2">
               {isLoadingSelectedBlogPost ? (
@@ -185,8 +185,12 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                   <div className="flex flex-wrap items-center gap-4 text-[#98989a] text-sm mb-4">
                     {blog.createdAt && (
                       <time className="inline-flex items-center gap-2" dateTime={blog.createdAt} itemProp="datePublished">
-                        <Clock className="size-4" />
-                        {blog.createdAt}
+                        <Calendar className="size-4" />
+                        {new Date(blog.createdAt).toLocaleDateString(currentLang === 'vi' ? 'vi-VN' : 'en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
                       </time>
                     )}
                     <span className="inline-flex items-center gap-2" aria-label={`${blog.view} views`}>
@@ -202,7 +206,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                     className="mb-8"
                   />
 
-                  <figure className="relative w-full h-80 sm:h-105 md:h-120 rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
+                  {/* <figure className="relative w-full h-80 sm:h-105 md:h-120 rounded-2xl overflow-hidden mb-10 bg-[#1a1a1a]">
                     <img
                       src={getBlogImageUrl(blog.image, blog.updatedAt)}
                       alt={blog.title}
@@ -213,7 +217,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                       className="absolute inset-0 w-full h-full object-cover"
                       itemProp="image"
                     />
-                  </figure>
+                  </figure> */}
 
                   <article className="bg-[#1a1a1a] border border-[#262626] rounded-2xl p-6 sm:p-8 text-white leading-7 space-y-4" itemScope itemType="https://schema.org/BlogPosting">
                     <meta itemProp="headline" content={blog.title} />
@@ -233,7 +237,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
               <div className="flex flex-col gap-6 sticky top-24">
                 {/* Table of Contents */}
                 {!isLoadingSelectedBlogPost && processedContent && (
-                  <TableOfContents
+                  <TableOfContents className="hidden md:block"
                     content={processedContent}
                     maxLevel={3}
                   />
@@ -244,7 +248,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                 </div>
                 <div className="grid grid-cols-1 gap-4">
                   {isLoadingRelatedBlogPosts && related_selected_blog_translation_list.length === 0
-                    ? Array.from({ length: 3 }).map((_, index) => (
+                    ? Array.from({ length: 1 }).map((_, index) => (
                       <div
                         key={`related-skeleton-${index}`}
                         className="flex flex-col h-full animate-pulse"
@@ -263,7 +267,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                         </div>
                       </div>
                     ))
-                    : related_selected_blog_translation_list.slice(0, 3).map((blog) => (
+                    : related_selected_blog_translation_list.slice(0, wordCount < 600 ? 2 : wordCount < 1000 ? 3 : wordCount < 1500 ? 4 : 5).map((blog) => (
                       <BlogCard
                         key={`${currentLang}-${blog.id}-detail`}
                         blog={blog}
@@ -273,9 +277,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                     ))}
                 </div>
 
-                <div>
-                  <RandomAffiliateBanner />
-                </div>
+
               </div>
             </aside>
           </div>
