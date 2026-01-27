@@ -23,7 +23,6 @@ const initState: BlogFormState = {
             id: '',
         },
         author: '',
-        contentType: "",
         uiType: "",
         enabled: false,
         publishedAt: 0,

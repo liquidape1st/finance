@@ -90,7 +90,7 @@ public class TagService extends BaseService<Tag, UUID> implements AService<Tag, 
 
     private void mapTagTranslation(Tag tag, TagTranslationRequest tagTranslationRequest, TagTranslation translation) {
         translation.setLangCode(tagTranslationRequest.getLangCode());
-        translation.setSlug(tagTranslationRequest.getSlug());
+        translation.setSlug(tagTranslationRequest.getSlug().toLowerCase());
         translation.setName(tagTranslationRequest.getName());
         translation.setTag(tag);
         tag.getTranslations().add(translation);

@@ -61,7 +61,6 @@ const validationSchema = Yup.object({
     category: Yup.object({
         id: Yup.string().required('Chọn category'),
     }),
-    contentType: Yup.string().required('Chọn content type'),
     uiType: Yup.string().required('Chọn UI type'),
     tags: Yup.array()
         .of(Yup.string().required())
@@ -446,7 +445,6 @@ const BlogPostForm = () => {
                     estimatedReadTime: blog.estimatedReadTime || 5,
                     category: { id: blog?.category?.id || '' },
                     uiType: blog.uiType || '',
-                    contentType: blog.contentType || '',
                     tags: blog.tags.map(s => s.id) || [],
                     translations: [
                         {
@@ -547,61 +545,6 @@ const BlogPostForm = () => {
                                                         form.setFieldValue(
                                                             field.name,
                                                             selected.map(s => s.value),
-                                                        )
-                                                    }
-                                                />
-                                            )
-                                        }}
-                                    </Field>
-                                </FormItem>
-                                <FormItem
-                                    label="Content Type"
-                                    invalid={
-                                        errors?.contentType &&
-                                        touched?.contentType
-                                    }
-                                    errorMessage={errors?.contentType}
-                                >
-                                    <Field name="contentType">
-                                        {({
-                                            field,
-                                            form,
-                                        }: FieldProps<string, BlogRequest>) => {
-                                            const transformedData: Option[] = [
-                                                {
-                                                    label: "Guide",
-                                                    value: "GUIDE"
-                                                },
-                                                {
-                                                    label: "Comparison",
-                                                    value: "COMPARISON"
-                                                },
-                                                {
-                                                    label: "Sharing",
-                                                    value: "SHARING"
-                                                },
-                                                {
-                                                    label: "News",
-                                                    value: "NEWS"
-                                                },
-                                            ]
-                                            return (
-                                                <Select
-                                                    placeholder="Content Type"
-                                                    field={field}
-                                                    form={form}
-                                                    options={transformedData}
-                                                    value={transformedData.filter(
-                                                        (s: Option) =>
-                                                            s.value ===
-                                                            values?.contentType,
-                                                    )}
-                                                    onChange={(
-                                                        s: Option | null,
-                                                    ) =>
-                                                        form.setFieldValue(
-                                                            field.name,
-                                                            s?.value || '',
                                                         )
                                                     }
                                                 />

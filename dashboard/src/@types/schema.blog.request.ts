@@ -5,7 +5,6 @@ export type BlogRequest = {
     featured: boolean
     image: string
     uiType: string
-    contentType: string
     tags: string[] // list of tag IDs
     estimatedReadTime: number
     category: {
