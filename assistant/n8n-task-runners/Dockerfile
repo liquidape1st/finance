@@ -10,6 +10,6 @@ RUN mkdir -p /opt/runners/task-runner-javascript && \
 RUN cd /opt/runners/task-runner-javascript && pnpm add moment uuid
 
 # Cài đặt thư viện Python
-RUN cd /opt/runners/task-runner-python && uv pip install numpy pandas requests newspaper3k lxml[html_clean]
+RUN cd /opt/runners/task-runner-python && uv pip install playwright numpy pandas requests playwright newspaper3k lxml[html_clean]
 
 USER runner
