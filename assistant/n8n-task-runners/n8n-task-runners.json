@@ -33,7 +33,10 @@
 			"runner-type": "python",
 			"workdir": "/home/runner",
 			"command": "/opt/runners/task-runner-python/.venv/bin/python",
-			"args": ["-m", "src.main"],
+			"args": [
+				"-m",
+				"src.main"
+			],
 			"health-check-server-port": "5682",
 			"allowed-env": [
 				"PATH",
@@ -49,7 +52,7 @@
 			"env-overrides": {
 				"PYTHONPATH": "/opt/runners/task-runner-python",
 				"N8N_RUNNERS_STDLIB_ALLOW": "*",
-				"N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,pandas,requests,newspaper"
+				"N8N_RUNNERS_EXTERNAL_ALLOW": "numpy,pandas,requests,newspaper,playwright"
 			}
 		}
 	]
