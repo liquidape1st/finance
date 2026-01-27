@@ -48,11 +48,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/s3/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
-                        .anyRequest().permitAll()
-                )
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -66,10 +64,12 @@ public class SecurityConfig {
                 "https://portal.goincome.net",
                 "https://www.goincome.net",
                 "https://goincome.net",
+                "https://portal.goinsight.org",
+                "https://www.goinsight.org",
+                "https://goinsight.org",
                 "http://localhost:6866",
                 "http://localhost:3000",
-                "http://localhost:8268"
-        ));
+                "http://localhost:8268"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -97,4 +97,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
