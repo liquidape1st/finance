@@ -54,14 +54,14 @@ export function Navbar() {
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
             <div className="relative size-10 sm:size-12 bg-linear-to-br from-[#FFD11A] to-[#FFA500] rounded-lg p-1.5 sm:p-2 shadow-lg shadow-[#FFD11A]/20 shrink-0">
-              <img src={logoImage} alt="GO Income" className="scale-[280%]" />
+              <img src={logoImage} alt="GO Insight" className="scale-[280%]" />
             </div>
             <div>
               <div className="flex items-baseline">
                 <h1 className="text-white text-lg sm:text-xl md:text-2xl tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                   GO
                 </h1>
-                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Income</span>
+                <span className="text-[#FFD11A] text-lg sm:text-xl md:text-2xl" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Insight</span>
               </div>
               <p className="text-[#666666] text-xs tracking-wide hidden sm:block">{t('nav.platform')}</p>
             </div>
