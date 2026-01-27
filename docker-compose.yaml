@@ -25,7 +25,7 @@ services:
       MYSQL_ROOT_PASSWORD: ComplexPa$$w0rd123@
       MYSQL_DATABASE: finance
       # Xóa: MYSQL_USER, MYSQL_PASSWORD, MYSQL_USER_HOST
-      MYSQL_ROOT_HOST: "%" 
+      MYSQL_ROOT_HOST: "%"
       TZ: "Asia/Ho_Chi_Minh"
     ports:
       - "3306:3306"
@@ -42,7 +42,7 @@ services:
       timeout: 20s
       retries: 10
       start_period: 10s
-  
+
   # redisinsight:
   #   image: redis/redisinsight:latest
   #   restart: unless-stopped
@@ -77,7 +77,7 @@ services:
     networks:
       - microservices-net
     healthcheck:
-      test: ["CMD-SHELL", "curl -f -s http://localhost:8886/actuator/health || exit 1"]
+      test: [ "CMD-SHELL", "curl -f -s http://localhost:8886/actuator/health || exit 1" ]
       interval: 20s
       timeout: 15s
       retries: 10
@@ -135,7 +135,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     restart: unless-stopped
-  
+
   n8n:
     container_name: n8n
     build:
@@ -159,7 +159,21 @@ services:
     restart: unless-stopped
     networks:
       - microservices-net
-  
+
+  playwright-api:
+    container_name: playwright-api
+    build:
+      context: ./playwright-api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    shm_size: "1gb"
+    networks:
+      - microservices-net
+    # Khuyến nghị: chỉ dùng nội bộ, không cần mở port ra Internet
+    # Nếu bạn cần test từ host thì mở port:
+    ports:
+      - "8000:8000"
+
   task-runners:
     container_name: n8n-runners
     build:
@@ -174,7 +188,7 @@ services:
     depends_on:
       - n8n
     networks:
-      - microservices-net  
+      - microservices-net
     volumes:
       - ./assistant/n8n-task-runners/n8n-task-runners.json:/etc/n8n-task-runners.json
     restart: unless-stopped
@@ -185,13 +199,13 @@ services:
     build:
       context: .
       dockerfile: nginx/Dockerfile
-    ports:        
+    ports:
       - 80:80
     depends_on:
       - client
       - dashboard
     volumes:
-    - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     deploy:
       resources:
         limits:
