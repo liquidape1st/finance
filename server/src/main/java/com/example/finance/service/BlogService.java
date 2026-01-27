@@ -56,7 +56,7 @@ public class BlogService extends BaseService<Blog, UUID> implements AService<Blo
         for (BlogTranslationRequest blogTranslationRequest : listBlogTranslationRequest) {
             BlogTranslation translation = new BlogTranslation();
             mapBlogTranslation(blog, blogTranslationRequest, translation);
-            translation.setSlug(blogTranslationRequest.getSlug() + GenerateSlug.uuidShort(6));
+            translation.setSlug(blogTranslationRequest.getSlug() + "-" + GenerateSlug.uuidShort(6));
         }
         // Set time publish
         blog.setPublishedAt(LocalDateTime.now());
