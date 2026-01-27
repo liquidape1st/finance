@@ -15,7 +15,7 @@ export function ContactPage() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const to = "contact@goincome.net";
+    const to = "contact@goinsight.org";
     const mailSubject = encodeURIComponent(subject || t("contact.mail.defaultSubject"));
     const bodyLines = [
       `${t("contact.mail.nameLabel")} ${name || t("contact.mail.missingValue")}`,
@@ -41,12 +41,12 @@ export function ContactPage() {
     "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
     "mainEntity": {
       "@type": "Organization",
-      "name": "GOIncome",
-      "email": "contact@goincome.net",
+      "name": "GOInsight",
+      "email": "contact@goinsight.org",
       "url": window.location.origin,
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "contact@goincome.net",
+        "email": "contact@goinsight.org",
         "contactType": "customer service"
       }
     }
@@ -84,10 +84,10 @@ export function ContactPage() {
               <p className="text-[#98989a]">
                 {t("contact.supportEmail")}&nbsp;
                 <a
-                  href="mailto:contact@goincome.net"
+                  href="mailto:contact@goinsight.org"
                   className="text-[#FFD11A] hover:underline"
                 >
-                  contact@goincome.net
+                  contact@goinsight.org
                 </a>
               </p>
               <p className="text-[#666666] text-xs sm:text-sm leading-relaxed">

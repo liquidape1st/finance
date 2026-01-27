@@ -1,4 +1,4 @@
-# SEO Optimization Checklist - GOIncome
+# SEO Optimization Checklist - GOInsight
 
 ## ✅ Đã triển khai (Completed)
 

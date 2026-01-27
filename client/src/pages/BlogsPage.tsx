@@ -69,7 +69,7 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
     "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
     "publisher": {
       "@type": "Organization",
-      "name": "GOIncome",
+      "name": "GOInsight",
       "logo": {
         "@type": "ImageObject",
         "url": siteImage,

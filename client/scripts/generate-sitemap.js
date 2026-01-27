@@ -14,8 +14,8 @@ const path = require('path');
 
 // Configuration
 const config = {
-    baseUrl: 'https://goincome.net',
-    apiUrl: process.env.API_URL || 'https://api.goincome.net/api',
+    baseUrl: 'https://goinsight.org',
+    apiUrl: process.env.API_URL || 'https://api.goinsight.org/api',
     outputPath: path.resolve(__dirname, '../public/sitemap.xml'),
     sections: ['learn', 'news', 'guides', 'market'],
     languages: ['vi', 'en'],

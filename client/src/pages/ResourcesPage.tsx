@@ -75,7 +75,7 @@ export function ResourcesPage() {
             title={t('resources.affiliate.title')}
             description={t('resources.affiliate.description')}
             ctaText={t('resources.affiliate.ctaText')}
-            ctaLink="https://accounts.binance.com/register?ref=GOINCOME"
+            ctaLink="https://accounts.binance.com/register?ref=GOINSIGHT"
             bonusAmount={t('resources.affiliate.bonusAmount')}
             hasCountdown={true}
             variant="dark"

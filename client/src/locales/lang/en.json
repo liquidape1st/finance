@@ -397,7 +397,7 @@
         "legal": {
             "terms": "Terms & Conditions",
             "privacy": "Privacy Policy",
-            "copyright": "© 2026 GOIncome. All rights reserved."
+            "copyright": "© 2026 GOInsight. All rights reserved."
         },
         "newsletter": {
             "title": "Get a free note-taking workflow",
@@ -744,7 +744,7 @@
     },
     "contact": {
         "badge": "Contact",
-        "title": "Connect with the GOIncome team",
+        "title": "Connect with the GOInsight team",
         "description": "If you have questions about content, partnerships, advertising or feedback to improve the platform, send us a message. We'll respond as soon as possible.",
         "supportEmail": "Support email:",
         "note": "Note: the information you send is only used to contact and support you, not for investment advice or trading recommendations.",
@@ -761,7 +761,7 @@
             "submit": "Send message"
         },
         "mail": {
-            "defaultSubject": "Contact from GOIncome",
+            "defaultSubject": "Contact from GOInsight",
             "nameLabel": "Name:",
             "emailLabel": "Email:",
             "contentLabel": "Content:",
@@ -776,7 +776,7 @@
         "goBack": "Go Back",
         "quickLinks": "Quick Links",
         "quickLinksDesc": {
-            "homeDesc": "GOIncome homepage",
+            "homeDesc": "GOInsight homepage",
             "newsDesc": "Latest financial news",
             "learnDesc": "Financial learning materials",
             "resourcesDesc": "Trading resources and tools"

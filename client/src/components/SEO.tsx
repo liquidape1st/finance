@@ -36,17 +36,17 @@ export function SEO({
     noindex = false,
     publishedTime,
     modifiedTime,
-    author = "GOIncome",
+    author = "GOInsight",
     section,
     tags = [],
     structuredData,
     currentLangOverride,
-    siteName = "GOIncome",
-    twitterHandle = "@goincome",
+    siteName = "GOInsight",
+    twitterHandle = "@goinsight",
 }: SEOProps) {
     const currentLang = useAppSelector((state) => state.locale.currentLang);
 
-    const siteUrl = "https://goincome.net";
+    const siteUrl = "https://goinsight.org";
     const resolvedLang = currentLangOverride || currentLang;
     const canonicalUrl = url || (typeof window !== "undefined"
         ? `${window.location.origin}${window.location.pathname}`
@@ -177,7 +177,7 @@ export function generateArticleSchema({
     imageUrl,
     publishedTime,
     modifiedTime,
-    authorName = "GOIncome",
+    authorName = "GOInsight",
     url,
     wordCount,
     section,
@@ -213,14 +213,14 @@ export function generateArticleSchema({
         "author": {
             "@type": "Organization",
             "name": authorName,
-            "url": "https://goincome.net"
+            "url": "https://goinsight.org"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "GOIncome",
+            "name": "GOInsight",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://goincome.net/logo.png",
+                "url": "https://goinsight.org/logo.png",
                 "width": 512,
                 "height": 512
             }

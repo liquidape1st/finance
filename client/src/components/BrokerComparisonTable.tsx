@@ -39,7 +39,7 @@ export function BrokerComparisonTable() {
       license: "Nhiều giấy phép khu vực (châu Âu, APAC...)",
       platform: t('resources.brokers.binance.platform'),
       bonus: t('resources.brokers.binance.bonus'),
-      affiliateLink: "https://accounts.binance.com/register?ref=GOINCOME"
+      affiliateLink: "https://accounts.binance.com/register?ref=GOINSIGHT"
     },
     {
       name: "Bybit",
@@ -63,7 +63,7 @@ export function BrokerComparisonTable() {
       license: "Đăng ký tại Lithuania & Canada (MSB)",
       platform: t('resources.brokers.bingx.platform'),
       bonus: t('resources.brokers.bingx.bonus'),
-      affiliateLink: "https://bingxzone.com/partner/goincome/"
+      affiliateLink: "https://bingxzone.com/partner/goinsight/"
     },
     {
       name: "ONUS",
@@ -79,7 +79,7 @@ export function BrokerComparisonTable() {
       license: "Đăng ký tại Seychelles, hoạt động toàn cầu",
       platform: t('resources.brokers.mexc.platform'),
       bonus: t('resources.brokers.mexc.bonus'),
-      affiliateLink: "https://www.mexc.com/vi-VN/acquisition/custom-sign-up?shareCode=mexc-GOINCOME"
+      affiliateLink: "https://www.mexc.com/vi-VN/acquisition/custom-sign-up?shareCode=mexc-GOINSIGHT"
     }
   ];
 

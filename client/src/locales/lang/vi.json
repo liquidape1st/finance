@@ -397,7 +397,7 @@
         "legal": {
             "terms": "Terms & Conditions",
             "privacy": "Privacy Policy",
-            "copyright": "© 2026 GOIncome. All rights reserved."
+            "copyright": "© 2026 GOInsight. All rights reserved."
         },
         "newsletter": {
             "title": "Nhận quy trình ghi chú miễn phí",
@@ -744,7 +744,7 @@
     },
     "contact": {
         "badge": "Liên hệ",
-        "title": "Kết nối với đội ngũ GOIncome",
+        "title": "Kết nối với đội ngũ GOInsight",
         "description": "Nếu bạn có câu hỏi về nội dung, hợp tác, quảng cáo hoặc góp ý cải thiện nền tảng, hãy gửi cho chúng tôi một tin nhắn. Chúng tôi sẽ phản hồi sớm nhất có thể.",
         "supportEmail": "Email hỗ trợ:",
         "note": "Lưu ý: thông tin bạn gửi chỉ được dùng để liên hệ và hỗ trợ, không phải là tư vấn đầu tư hay khuyến nghị giao dịch.",
@@ -761,7 +761,7 @@
             "submit": "Gửi tin nhắn"
         },
         "mail": {
-            "defaultSubject": "Liên hệ từ GOIncome",
+            "defaultSubject": "Liên hệ từ GOInsight",
             "nameLabel": "Họ tên:",
             "emailLabel": "Email:",
             "contentLabel": "Nội dung:",
@@ -776,7 +776,7 @@
         "goBack": "Quay Lại",
         "quickLinks": "Liên Kết Nhanh",
         "quickLinksDesc": {
-            "homeDesc": "Trang chủ của GOIncome",
+            "homeDesc": "Trang chủ của GOInsight",
             "newsDesc": "Tin tức tài chính mới nhất",
             "learnDesc": "Tài liệu học tập về tài chính",
             "resourcesDesc": "Tài nguyên và công cụ giao dịch"

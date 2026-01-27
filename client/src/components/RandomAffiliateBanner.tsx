@@ -3,11 +3,11 @@ import { useMemo } from "react";
 const AFFILIATE_CAMPAIGNS = [
   {
     image: "/banner/bingx/poster.png",
-    link: "https://bingxzone.com/partner/goincome/"
+    link: "https://bingxzone.com/partner/goinsight/"
   },
   {
     image: "/banner/binance/poster.png",
-    link: "https://accounts.binance.com/register?ref=GOINCOME"
+    link: "https://accounts.binance.com/register?ref=GOINSIGHT"
   },
   {
     image: "/banner/bybit/poster.png",

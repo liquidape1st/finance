@@ -1,5 +1,5 @@
-# robots.txt for GOIncome
-# https://goincome.net
+# robots.txt for GOInsight
+# https://goinsight.org
 
 User-agent: *
 Allow: /
@@ -24,7 +24,7 @@ Disallow: /.git/
 Disallow: /*.map$
 
 # Sitemaps
-Sitemap: https://goincome.net/sitemap.xml
+Sitemap: https://goinsight.org/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

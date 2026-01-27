@@ -69,7 +69,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
     ? `${window.location.origin}/${location.pathname.split('/')[1] || 'blog'}/${alternateLang}/${slug}`
     : canonicalUrl;
   const blogTitle = blog?.title || t("blogs.detail.title", { defaultValue: "Bài viết" });
-  const blogDescription = blog?.excerpt || t("blogs.detail.description", { defaultValue: "Chi tiết bài viết từ GOIncome." });
+  const blogDescription = blog?.excerpt || t("blogs.detail.description", { defaultValue: "Chi tiết bài viết từ GOInsight." });
   const pageImage = blogImageUrl || `${window.location.origin}/logo.png`;
 
   // Process content to add IDs to headings for TOC navigation
@@ -106,7 +106,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
         type="article"
         publishedTime={blog.createdAt}
         modifiedTime={blog.updatedAt}
-        author="GOIncome"
+        author="GOInsight"
         section={blog.category?.name || "Blog"}
         tags={blog.category?.name ? [blog.category.name] : []}
         structuredData={[articleSchema, breadcrumbSchema]}

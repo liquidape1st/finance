@@ -68,7 +68,7 @@ export function HomePage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "GOIncome",
+    "name": "GOInsight",
     "url": canonicalUrl,
     "description": t('home.description'),
     "inLanguage": currentLang === 'vi' ? 'vi-VN' : 'en-US',
@@ -82,7 +82,7 @@ export function HomePage() {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "GOIncome",
+      "name": "GOInsight",
       "logo": {
         "@type": "ImageObject",
         "url": siteImage,
@@ -112,7 +112,7 @@ export function HomePage() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "GOIncome",
+    "name": "GOInsight",
     "url": canonicalUrl,
     "logo": siteImage,
     "sameAs": []
