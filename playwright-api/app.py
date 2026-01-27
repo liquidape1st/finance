@@ -40,9 +40,9 @@ async def fetch(req: FetchRequest):
                 headless=True,
             )
             page = await browser.new_page()
-            page.goto(
+            await page.goto(
                 str(req.url),
-                wait_until=req.wait_until,
+                wait_until="networkidle",
                 timeout=req.timeout_ms,
             )
 
