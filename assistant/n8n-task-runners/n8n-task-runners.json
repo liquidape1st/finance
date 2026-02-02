@@ -32,7 +32,7 @@
 		{
 			"runner-type": "python",
 			"workdir": "/home/runner",
-			"command": "/opt/runners/task-runner-python/.venv/bin/python",
+			"command": "/usr/bin/python3.11",
 			"args": [
 				"-m",
 				"src.main"
