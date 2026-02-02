@@ -10,14 +10,17 @@ USER root
 RUN mkdir -p /opt/runners/task-runner-javascript \
     && mkdir -p /opt/runners/task-runner-python
 
-# Copy Python 3.11 từ stage 1
+# Copy toàn bộ Python 3.11 runtime từ stage 1
 COPY --from=python311 /usr/local/bin/python3.11 /usr/local/bin/python3.11
 COPY --from=python311 /usr/local/lib/python3.11 /usr/local/lib/python3.11
+COPY --from=python311 /usr/local/lib/libpython3.11.so.1.0 /usr/local/lib/libpython3.11.so.1.0
 COPY --from=python311 /usr/local/include/python3.11 /usr/local/include/python3.11
 
-# Tạo symlink và install dependencies cần thiết
-RUN ln -sf /usr/local/bin/python3.11 /usr/local/bin/python311 \
-    && apk add --no-cache libstdc++ gcompat
+# Tạo symlinks cho shared library
+RUN ln -sf /usr/local/lib/libpython3.11.so.1.0 /usr/local/lib/libpython3.11.so \
+    && ln -sf /usr/local/bin/python3.11 /usr/local/bin/python311 \
+    && apk add --no-cache libstdc++ gcompat \
+    && ldconfig /usr/local/lib || true
 
 # Recreate venv của task-runner-python với Python 3.11
 RUN rm -rf /opt/runners/task-runner-python/.venv \
