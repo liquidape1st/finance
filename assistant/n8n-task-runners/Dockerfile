@@ -10,34 +10,45 @@ USER root
 RUN mkdir -p /opt/runners/task-runner-javascript \
     && mkdir -p /opt/runners/task-runner-python
 
-# Copy toàn bộ Python 3.11 runtime từ stage 1
-COPY --from=python311 /usr/local/bin/python3.11 /usr/local/bin/python3.11
-COPY --from=python311 /usr/local/lib/python3.11 /usr/local/lib/python3.11
-COPY --from=python311 /usr/local/lib/libpython3.11.so.1.0 /usr/local/lib/libpython3.11.so.1.0
-COPY --from=python311 /usr/local/include/python3.11 /usr/local/include/python3.11
+# Copy toàn bộ /usr/local từ Python 3.11 image (bao gồm tất cả libs)
+COPY --from=python311 /usr/local /usr/local
 
-# Tạo symlinks cho shared library
-RUN ln -sf /usr/local/lib/libpython3.11.so.1.0 /usr/local/lib/libpython3.11.so \
-    && ln -sf /usr/local/bin/python3.11 /usr/local/bin/python311 \
-    && apk add --no-cache libstdc++ gcompat \
+# Install runtime dependencies
+RUN apk add --no-cache libstdc++ gcompat \
     && ldconfig /usr/local/lib || true
+
+# Backup requirements của task runner gốc (nếu có)
+RUN if [ -f /opt/runners/task-runner-python/requirements.txt ]; then \
+        cp /opt/runners/task-runner-python/requirements.txt /tmp/runner-requirements.txt; \
+    fi
 
 # Recreate venv của task-runner-python với Python 3.11
 RUN rm -rf /opt/runners/task-runner-python/.venv \
     && /usr/local/bin/python3.11 -m venv /opt/runners/task-runner-python/.venv \
     && /opt/runners/task-runner-python/.venv/bin/pip install --upgrade pip
 
+# Cài dependencies của task runner trước (websockets, etc.)
+RUN /opt/runners/task-runner-python/.venv/bin/pip install \
+    websockets \
+    pyzmq \
+    msgpack \
+    || true
+
+# Nếu có requirements.txt gốc thì install
+RUN if [ -f /tmp/runner-requirements.txt ]; then \
+        /opt/runners/task-runner-python/.venv/bin/pip install -r /tmp/runner-requirements.txt; \
+    fi
+
 # Cài đặt các packages JavaScript
 RUN cd /opt/runners/task-runner-javascript \
     && pnpm add moment uuid
 
-# Cài đặt thư viện Python (dùng venv 3.11)
-RUN cd /opt/runners/task-runner-python \
-    && /opt/runners/task-runner-python/.venv/bin/pip install \
-        numpy \
-        pandas \
-        requests \
-        newspaper3k \
-        "lxml[html_clean]"
+# Cài đặt thư viện Python bổ sung của bạn
+RUN /opt/runners/task-runner-python/.venv/bin/pip install \
+    numpy \
+    pandas \
+    requests \
+    newspaper3k \
+    "lxml[html_clean]"
 
 USER runner
