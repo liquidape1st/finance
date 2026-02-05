@@ -4,6 +4,7 @@ import com.example.finance.exception.BusinessException;
 import com.example.finance.mapper.TagTranslationResponseMapper;
 import com.example.finance.model.Blog;
 import com.example.finance.model.BlogTranslation;
+import com.example.finance.model.Tag;
 import com.example.finance.model.TagTranslation;
 import com.example.finance.repository.BlogRepository;
 import com.example.finance.repository.BlogTranslationRepository;
@@ -115,11 +116,11 @@ public class BlogTranslationService {
      * Các điều kiện:
      * - Loại trừ bài viết hiện tại
      * - Chỉ lấy bài đã enabled
-     * - Giới hạn tối đa 6 bài
+     * - Giới hạn tối đa MAX_RELATED_BLOGS bài (random nếu có nhiều hơn)
      */
     @Transactional
     public List<BlogTranslationClientResponse> findRelatedForCurrentBlog(UUID uuid) {
-        final int MAX_RELATED_BLOGS = 6;
+        final int MAX_RELATED_BLOGS = 9;
 
         BlogTranslation currentBlogTranslation = blogTranslationRepository.findById(uuid)
                 .orElseThrow(() -> new BusinessException("Không xác định được bài viết"));
@@ -131,7 +132,7 @@ public class BlogTranslationService {
 
         // Lấy danh sách tag IDs của bài viết hiện tại
         List<UUID> currentTagIds = currentBlog.getTags().stream()
-                .map(tag -> tag.getId())
+                .map(Tag::getId)
                 .toList();
 
         List<BlogTranslationClientResponse> relatedBlogs;
@@ -151,13 +152,20 @@ public class BlogTranslationService {
                     currentTagIds);
         }
 
-        // Giới hạn số lượng bài viết trả về
-        List<BlogTranslationClientResponse> limitedResult = relatedBlogs.stream()
-                .limit(MAX_RELATED_BLOGS)
-                .toList();
+        // Nếu có nhiều hơn MAX_RELATED_BLOGS, random chọn đủ số lượng
+        List<BlogTranslationClientResponse> selectedBlogs;
+        if (relatedBlogs.size() > MAX_RELATED_BLOGS) {
+            // Tạo bản copy để shuffle (vì list gốc có thể immutable)
+            List<BlogTranslationClientResponse> shuffledList = new java.util.ArrayList<>(relatedBlogs);
+            // Sử dụng Random với seed từ thời gian để có kết quả khác nhau mỗi lần
+            Collections.shuffle(shuffledList, new Random());
+            selectedBlogs = shuffledList.subList(0, MAX_RELATED_BLOGS);
+        } else {
+            selectedBlogs = relatedBlogs;
+        }
 
         // Gán tags cho từng bài viết
-        return limitedResult.stream()
+        return selectedBlogs.stream()
                 .map(blog -> assignTags(blog, langCode))
                 .toList();
     }

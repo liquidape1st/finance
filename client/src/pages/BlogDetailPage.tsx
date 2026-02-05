@@ -319,7 +319,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                     </div>
                   </div>
                 ))
-                : related_selected_blog_translation_list.slice(0, 6).map((blog, index) => (
+                : related_selected_blog_translation_list.slice(3, 9).map((blog, index) => (
                   <div key={`${currentLang}-${blog.id}-bottom-related`} className="animate-fade-in" style={{ animationDelay: `${index * 75}ms` }}>
                     <BlogCard
                       blog={blog}
