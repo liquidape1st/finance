@@ -1,47 +1,44 @@
-# Stage 1: Build Stage
-FROM node:20-slim AS builder
+# ---------- Build stage ----------
+FROM node:20 AS build
 WORKDIR /app
 
-# Install build essentials for native modules
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+# Copy configuration files
+COPY package*.json ./
 
-COPY package.json package-lock.json* ./
-
-# Use npm install to allow correct binary resolution for Linux
+# Install all dependencies
 RUN npm install
 
+# Copy source code
 COPY . .
 
+# Build Next.js app
 ENV NEXT_TELEMETRY_DISABLED 1
-
-# Explicitly build for production
 RUN npm run build
 
-# Stage 2: Runner Stage
-FROM node:20-slim AS runner
+# ---------- Run stage ----------
+FROM node:20-slim
 WORKDIR /app
 
+# Cấu hình Timezone
+ENV TZ=Asia/Ho_Chi_Minh
+RUN apt-get update && apt-get install -y tzdata && rm -rf /var/lib/apt/lists/*
+
 ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN groupadd --system --gid 1001 nodejs
-RUN useradd --system --uid 1001 nextjs
+# Copy standalone build and static assets
+COPY --from=build /app/public ./public
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
 
-COPY --from=builder /app/public ./public
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Set permission (đảm bảo hoàn hảo về bảo mật)
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 nextjs && \
+    chown -R nextjs:nodejs /app
 
 USER nextjs
 
+EXPOSE 6866
 ENV PORT 6866
 ENV HOSTNAME "0.0.0.0"
-
-EXPOSE 6866
 
 CMD ["node", "server.js"]
