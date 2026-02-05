@@ -1,1 +1,0 @@
-export const PERSIST_STORE_NAME = 'x68zn'

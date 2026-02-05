@@ -87,8 +87,8 @@ services:
   client:
     container_name: fi_client
     build:
-      context: .
-      dockerfile: client/Dockerfile
+      context: ./client
+      dockerfile: Dockerfile
     profiles:
       - prod
     ports:

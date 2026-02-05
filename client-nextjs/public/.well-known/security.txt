@@ -1,7 +1,0 @@
-# Security.txt for GOInsight
-# https://securitytxt.org/
-
-Contact: mailto:contact@goinsight.org
-Preferred-Languages: vi, en
-Canonical: https://goinsight.org/.well-known/security.txt
-Expires: 2027-01-20T00:00:00.000Z
