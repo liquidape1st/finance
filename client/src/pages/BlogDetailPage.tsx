@@ -267,7 +267,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                         </div>
                       </div>
                     ))
-                    : related_selected_blog_translation_list.slice(0, wordCount < 600 ? 2 : wordCount < 1000 ? 3 : wordCount < 1500 ? 4 : 5).map((blog) => (
+                    : related_selected_blog_translation_list.slice(0, wordCount < 1000 ? 2 : wordCount < 1500 ? 3 : 4).map((blog) => (
                       <BlogCard
                         key={`${currentLang}-${blog.id}-detail`}
                         blog={blog}
