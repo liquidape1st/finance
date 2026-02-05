@@ -8,7 +8,7 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    apiPrefix: 'https://api.goincome.net/api',
+    apiPrefix: 'https://api.goinsight.org/api',
     // apiPrefix: 'http://localhost:8886/api',
     authenticatedEntryPath: '/app/sales/blog-post-list',
     unAuthenticatedEntryPath: '/sign-in',
