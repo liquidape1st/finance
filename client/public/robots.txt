@@ -1,116 +1,39 @@
 # robots.txt for GOInsight
-# https://goinsight.org
-# Optimized for maximum SEO performance
-
-# ============================================
-# Default Rules for All Bots
-# ============================================
 User-agent: *
 Allow: /
 
-# Block API endpoints (backend only)
 Disallow: /api/
-
-# Block admin/private routes
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /private/
-
-# Block development/build files
-Disallow: /node_modules/
-Disallow: /.git/
-Disallow: /*.map$
 Disallow: /_next/webpack-hmr
 
-# Allow important static assets (critical for Google's rendering)
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.png$
 Allow: /*.jpg$
-Allow: /*.jpeg$
-Allow: /*.gif$
 Allow: /*.svg$
 Allow: /*.webp$
-Allow: /*.woff$
-Allow: /*.woff2$
-
-# Allow language query parameters (important for i18n)
 Allow: /*?lang=*
-Allow: /*?locale=*
 
-# ============================================
-# Google Bot (Highest Priority)
-# ============================================
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 
-User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Googlebot-Video
-Allow: /
-
-# ============================================
-# Bing Bot
-# ============================================
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 0
 
-# ============================================
-# AI Crawlers (Important for AI Search)
-# ============================================
-# OpenAI GPTBot (ChatGPT)
 User-agent: GPTBot
 Allow: /
 
-# Anthropic Claude
 User-agent: Claude-Web
 Allow: /
 
-# Perplexity AI
 User-agent: PerplexityBot
 Allow: /
 
-# Google Bard/Gemini
 User-agent: Google-Extended
 Allow: /
 
-# ============================================
-# Social Media Bots
-# ============================================
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: WhatsApp
-Allow: /
-
-# ============================================
-# Other Search Engines
-# ============================================
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-Crawl-delay: 1
-
-# ============================================
-# Sitemaps
-# ============================================
 Sitemap: https://goinsight.org/sitemap.xml
-
-# ============================================
-# General Crawl Delay (Polite Crawling)
-# ============================================
-Crawl-delay: 0
