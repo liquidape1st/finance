@@ -21,8 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -34,16 +32,19 @@ public class BlogTranslationService {
     BlogRepository blogRepository;
 
     @Transactional
-    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category, Pageable pageable, Blog.UiType uiType) {
+    public Page<BlogTranslationClientResponse> findPageBlogTranslation(String query, String langCode, UUID category,
+            Pageable pageable, Blog.UiType uiType) {
         System.out.println("UI Type: " + uiType);
         System.out.println(uiType.getClass().getSimpleName());
         System.out.println("UI Type class: " + uiType.getClass());
-        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, uiType, pageable).map(s -> assignTags(s, langCode));
+        return blogTranslationRepository.findPageBlogTranslation(query, langCode, category, uiType, pageable)
+                .map(s -> assignTags(s, langCode));
     }
 
     @Transactional
     public BlogTranslationClientResponse findBlogTranslationByLangCodeAndSlug(String slug, String langCode) {
-        BlogTranslationClientResponse blogTranslationClientResponse = blogTranslationRepository.findBlogTranslationByLangCodeAndSlug(slug, langCode);
+        BlogTranslationClientResponse blogTranslationClientResponse = blogTranslationRepository
+                .findBlogTranslationByLangCodeAndSlug(slug, langCode);
         if (blogTranslationClientResponse != null) {
             UUID uid = blogTranslationClientResponse.getBlogId();
             blogRepository.findById(uid).ifPresent(blog -> {
@@ -54,13 +55,12 @@ public class BlogTranslationService {
                 for (BlogTranslation blogTranslation : childBlogTranslations) {
                     blogTranslationClientResponse.getSlugs().add(new BlogTranslationClientResponse.Slug(
                             blogTranslation.getSlug(),
-                            blogTranslation.getLangCode()
-                    ));
+                            blogTranslation.getLangCode()));
                     List<TagTranslation> tagTranslationList = tagTranslationRepository.findByBlogIdAndLangCode(
                             blog.getId(),
-                            langCode
-                    );
-                    blogTranslationClientResponse.setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
+                            langCode);
+                    blogTranslationClientResponse
+                            .setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
                 }
             });
         }
@@ -78,20 +78,24 @@ public class BlogTranslationService {
 
         Random random = new Random(seed);
 
-        List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository.findNonFeaturedSameCategory(langCode, category);
+        List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository
+                .findNonFeaturedSameCategory(langCode, category);
         Collections.shuffle(sameCategory, random);
 
         for (var blog : sameCategory) {
-            if (result.size() >= required) break;
+            if (result.size() >= required)
+                break;
             result.add(blog);
         }
 
         if (result.size() < required) {
-            List<BlogTranslationClientResponse> otherCategory = blogTranslationRepository.findNonFeaturedOtherCategory(langCode, category);
+            List<BlogTranslationClientResponse> otherCategory = blogTranslationRepository
+                    .findNonFeaturedOtherCategory(langCode, category);
             Collections.shuffle(otherCategory, random);
 
             for (var blog : otherCategory) {
-                if (result.size() >= required) break;
+                if (result.size() >= required)
+                    break;
                 result.add(blog);
             }
         }
@@ -99,37 +103,73 @@ public class BlogTranslationService {
         return result.stream().map(s -> assignTags(s, langCode)).toList();
     }
 
+    /**
+     * Tìm bài viết liên quan cho bài viết hiện tại
+     * 
+     * Logic ưu tiên:
+     * 1. Bài viết có cùng tags (số tag giống càng nhiều càng ưu tiên)
+     * 2. Bài viết cùng category
+     * 3. Bài viết có nhiều lượt xem (view) cao
+     * 4. Bài viết mới nhất
+     * 
+     * Các điều kiện:
+     * - Loại trừ bài viết hiện tại
+     * - Chỉ lấy bài đã enabled
+     * - Giới hạn tối đa 6 bài
+     */
     @Transactional
     public List<BlogTranslationClientResponse> findRelatedForCurrentBlog(UUID uuid) {
-        BlogTranslation currentBlogTranslation = blogTranslationRepository.findById(uuid).orElseThrow(() -> new BusinessException("Không xác định được bài viết"));
-        Blog currentBlog = currentBlogTranslation.getBlog();
-        List<BlogTranslationClientResponse> relatedBlogList = blogTranslationRepository.findListRelatedBlogTranslationByCategoryAndUiTypeAndContentTypeAndLangCode(
-                currentBlogTranslation.getLangCode(),
-                currentBlog.getCategory().getId(),
-                currentBlog.getUiType()
-        );
-        List<BlogTranslationClientResponse> sameCategory = blogTranslationRepository.findNonFeaturedSameCategory(currentBlogTranslation.getLangCode(), currentBlog.getCategory().getId());
+        final int MAX_RELATED_BLOGS = 6;
 
-        List<BlogTranslationClientResponse> result =  Stream.concat(relatedBlogList.stream(), sameCategory.stream())
-                .collect(Collectors.toMap(
-                        BlogTranslationClientResponse::getId,
-                        item -> item,
-                        (oldVal, newVal) -> oldVal   // nếu trùng, giữ cái cũ
-                ))
-                .values()
-                .stream()
+        BlogTranslation currentBlogTranslation = blogTranslationRepository.findById(uuid)
+                .orElseThrow(() -> new BusinessException("Không xác định được bài viết"));
+
+        Blog currentBlog = currentBlogTranslation.getBlog();
+        String langCode = currentBlogTranslation.getLangCode();
+        UUID currentBlogId = currentBlog.getId();
+        UUID categoryId = currentBlog.getCategory().getId();
+
+        // Lấy danh sách tag IDs của bài viết hiện tại
+        List<UUID> currentTagIds = currentBlog.getTags().stream()
+                .map(tag -> tag.getId())
                 .toList();
 
-        return result.stream().map(s -> assignTags(s, currentBlogTranslation.getLangCode())).toList();
+        List<BlogTranslationClientResponse> relatedBlogs;
+
+        if (currentTagIds.isEmpty()) {
+            // Nếu bài viết không có tags, fallback tìm theo category + view + thời gian
+            relatedBlogs = blogTranslationRepository.findRelatedBlogsWithoutTags(
+                    langCode,
+                    currentBlogId,
+                    categoryId);
+        } else {
+            // Tìm bài liên quan theo tags và category
+            relatedBlogs = blogTranslationRepository.findRelatedBlogs(
+                    langCode,
+                    currentBlogId,
+                    categoryId,
+                    currentTagIds);
+        }
+
+        // Giới hạn số lượng bài viết trả về
+        List<BlogTranslationClientResponse> limitedResult = relatedBlogs.stream()
+                .limit(MAX_RELATED_BLOGS)
+                .toList();
+
+        // Gán tags cho từng bài viết
+        return limitedResult.stream()
+                .map(blog -> assignTags(blog, langCode))
+                .toList();
     }
 
     @Transactional
-    public BlogTranslationClientResponse assignTags(BlogTranslationClientResponse blogTranslationClientResponse, String langCode) {
+    public BlogTranslationClientResponse assignTags(BlogTranslationClientResponse blogTranslationClientResponse,
+            String langCode) {
         List<TagTranslation> tagTranslationList = tagTranslationRepository.findByBlogIdAndLangCode(
                 blogTranslationClientResponse.getBlogId(),
-                langCode
-        );
-        blogTranslationClientResponse.setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
+                langCode);
+        blogTranslationClientResponse
+                .setTags(tagTranslationList.stream().map(tagTranslationResponseMapper::toDTO).toList());
         return blogTranslationClientResponse;
     }
 }
