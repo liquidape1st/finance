@@ -1,0 +1,40 @@
+# robots.txt for GOInsight
+# https://goinsight.org
+
+User-agent: *
+Allow: /
+
+# Block API endpoints
+Disallow: /api/
+
+# Block admin/private routes
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /private/
+
+# Block query parameters to avoid duplicate content
+Disallow: /*?*
+
+# Allow important query parameters for language
+Allow: /*?lang=
+
+# Block development/build files
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /*.map$
+
+# Sitemaps
+Sitemap: https://goinsight.org/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
