@@ -1,7 +1,7 @@
 {
     "name": "GOInsight - Tài Chính Cá Nhân & Đầu Tư",
     "short_name": "GOInsight",
-    "description": "Nền tảng kiến thức tài chính cá nhân, hướng dẫn affiliate forex và hoàn phí sàn giao dịch. Tài nguyên chuyên nghiệp cho nhà đầu tư.",
+    "description": "Nền tảng kiến thức tài chính cá nhân, tin tức cập nhất mới nhất mỗi ngày. Tài nguyên chuyên nghiệp cho nhà đầu tư.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#141414",
