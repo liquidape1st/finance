@@ -11,6 +11,7 @@ import { Navbar } from "../components/Navbar";
 import { RiskWarningDisclosure } from "../components/RiskWarningDisclosure";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
 import SEO from "../components/SEO";
+import { BackToTop } from "../components/BackToTop";
 
 export function HomePage() {
   const dispatch = useAppDispatch()
@@ -192,15 +193,16 @@ export function HomePage() {
         {/* Top Featured Blogs */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {home_page_featured_blog_list.slice(0, 3).map((blog) => (
-              <BlogCard
-                key={`${currentLang}-${blog.id}`}
-                blog={blog}
-                currentLang={currentLang || 'vi'}
-                prefix={getPrefixBlog(blog.uiType)}
-                showBadge={false}
-                showReadMore={true}
-              />
+            {home_page_featured_blog_list.slice(0, 3).map((blog, index) => (
+              <div key={`${currentLang}-${blog.id}`} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+                <BlogCard
+                  blog={blog}
+                  currentLang={currentLang || 'vi'}
+                  prefix={getPrefixBlog(blog.uiType)}
+                  showBadge={false}
+                  showReadMore={true}
+                />
+              </div>
             ))}
           </div>
         </section>
@@ -374,15 +376,16 @@ export function HomePage() {
         {/* All Featured Blogs */}
         <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 border-t border-neutral-800" aria-label="Featured blog posts">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {home_page_featured_blog_list.map((blog) => (
-              <BlogCard
-                key={`${currentLang}-${blog.id}`}
-                blog={blog}
-                currentLang={currentLang || 'vi'}
-                prefix={getPrefixBlog(blog.uiType)}
-                showBadge={false}
-                showReadMore={true}
-              />
+            {home_page_featured_blog_list.map((blog, index) => (
+              <div key={`${currentLang}-${blog.id}`} className="animate-fade-in" style={{ animationDelay: `${index * 75}ms` }}>
+                <BlogCard
+                  blog={blog}
+                  currentLang={currentLang || 'vi'}
+                  prefix={getPrefixBlog(blog.uiType)}
+                  showBadge={false}
+                  showReadMore={true}
+                />
+              </div>
             ))}
           </div>
 
@@ -400,6 +403,7 @@ export function HomePage() {
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 }

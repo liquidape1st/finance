@@ -2,13 +2,15 @@ import appConfig from "@/configs/app.config";
 import { getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector } from "@/store";
 import { setTableData } from "@/store/slices/finance/financeSlice";
 import debounce from "lodash/debounce";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import SEO from "../components/SEO";
 import { useTranslation } from "react-i18next";
 import { BlogCard } from "../components/BlogCard";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
+import { BackToTop } from "../components/BackToTop";
+import { BlogCardSkeleton } from "../components/SkeletonShimmer";
 
 type BlogsPageProps = {
   uiType: 'NEWS' | 'GUIDE' | 'MARKET' | 'LEARN',
@@ -21,6 +23,7 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
   const { blog_translation, category_translation, tableData, isLoadingBlogPostList } = useAppSelector((state) => state.finance)
   const currentLang = useAppSelector((state) => state.locale.currentLang)
   const [search, setSearch] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
 
   // Stable URL that stays cacheable but changes when the image is updated
   const getBlogImageUrl = (fileName: string, updatedAt: string) =>
@@ -28,8 +31,9 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
 
   const debouncedSearch = useMemo(
     () =>
-      debounce((value: string) => {
-        dispatch(setTableData({ ...tableData, query: value }))
+      debounce((value: string, currentTableData: any) => {
+        dispatch(setTableData({ ...currentTableData, query: value, pageIndex: 1 }))
+        setIsSearching(false)
       }, 500),
     [dispatch]
   )
@@ -129,22 +133,29 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
           </div>
 
           {/* Search Bar */}
-          <div className="relative mb-8">
+          <div className="relative mb-8 group">
             <label htmlFor="blog-search" className="sr-only">
               {t('blogs.searchPlaceholder')}
             </label>
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#666666]" aria-hidden="true" />
+            <div className="absolute left-4 top-1/2 -translate-y-1/2">
+              {isSearching ? (
+                <Loader2 className="size-5 text-[#FFD11A] animate-spin" aria-label="Searching..." />
+              ) : (
+                <Search className="size-5 text-[#666666] group-focus-within:text-[#FFD11A] transition-colors" aria-hidden="true" />
+              )}
+            </div>
             <input
               id="blog-search"
               type="search"
               value={search}
               onChange={e => {
                 setSearch(e.target.value)
-                debouncedSearch(e.target.value)
+                setIsSearching(true)
+                debouncedSearch(e.target.value, tableData)
               }}
               placeholder={t('blogs.searchPlaceholder')}
               aria-label={t('blogs.searchPlaceholder')}
-              className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg pl-12 pr-4 py-3.5 text-white placeholder:text-[#666666] focus:border-[#FFD11A]/40 focus:outline-none transition-colors"
+              className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg pl-12 pr-4 py-3.5 text-white placeholder:text-[#666666] focus:border-[#FFD11A]/40 focus:outline-none focus:ring-2 focus:ring-[#FFD11A]/20 transition-all"
             />
           </div>
 
@@ -179,42 +190,18 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={prefix}>
             {isLoadingBlogPostList && blog_translation.length === 0
               ? Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={`skeleton-${index}`}
-                  className="flex flex-col h-full animate-pulse"
-                  aria-hidden="true"
-                >
-                  <div className="relative h-53.75 rounded-[10px] overflow-hidden mb-4 bg-[#1f1f1f]">
-                    <div className="absolute inset-0 bg-linear-to-r from-[#1f1f1f] via-[#262626] to-[#1f1f1f]" />
-                  </div>
-                  <div className="flex flex-col gap-3 flex-1">
-                    <div className="space-y-2">
-                      <div className="h-4 bg-[#262626] rounded w-4/5" />
-                      <div className="h-3 bg-[#1f1f1f] rounded w-2/5" />
-                    </div>
-                    <div className="flex items-center gap-12.5 mt-2">
-                      <div className="flex items-center gap-2">
-                        <div className="bg-[#1a1a1a] border border-[#262626] flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-full">
-                          <div className="size-5 rounded-full bg-[#262626]" />
-                          <div className="h-3 w-10 bg-[#262626] rounded" />
-                        </div>
-                      </div>
-                      <div className="flex-1 bg-[#141414] border border-[#262626] rounded-lg px-5 py-3.5 flex items-center justify-center gap-1">
-                        <div className="h-3 w-20 bg-[#1f1f1f] rounded" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <BlogCardSkeleton key={`skeleton-${index}`} className={`animate-fade-in delay-${index * 75}`} />
               ))
-              : blog_translation.map((blog) => (
-                <BlogCard
-                  key={`${currentLang}-${blog.id}-${blog.updatedAt}-${prefix}`}
-                  blog={blog}
-                  currentLang={currentLang || 'vi'}
-                  prefix={prefix}
-                  showBadge={true}
-                  showReadMore={true}
-                />
+              : blog_translation.map((blog, index) => (
+                <div key={`${currentLang}-${blog.id}-${blog.updatedAt}-${prefix}`} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+                  <BlogCard
+                    blog={blog}
+                    currentLang={currentLang || 'vi'}
+                    prefix={prefix}
+                    showBadge={true}
+                    showReadMore={true}
+                  />
+                </div>
               ))}
           </div>
 
@@ -230,6 +217,7 @@ export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 }

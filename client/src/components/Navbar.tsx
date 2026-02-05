@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import i18n from "../locales/locales";
 import svgPaths from "../imports/svg-f8f5ykhcvu";
@@ -49,7 +48,7 @@ export function Navbar() {
       </div>
 
       {/* Navbar */}
-      <nav className="bg-[#1a1a1a] border-b border-neutral-800 w-full sticky top-0 z-50">
+      <nav className="bg-[#1a1a1a]/95 backdrop-blur-md border-b border-neutral-800 w-full sticky top-0 z-50 transition-all duration-300">
         <div className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-4 sm:py-5 flex items-center justify-between">
           {/* Finance Blog Logo */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3">
@@ -161,97 +160,92 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 hover:bg-[#262626] rounded-lg transition-colors focus-ring"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+            <div className="relative size-6">
+              <span className={`absolute left-0 top-1 w-6 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+              <span className={`absolute left-0 top-3 w-6 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 translate-x-2' : ''}`} />
+              <span className={`absolute left-0 top-5 w-6 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            </div>
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-neutral-800 bg-[#1a1a1a]">
-            <div className="px-4 py-4 flex flex-col gap-4">
-              <Link
-                to="/"
-                className={`text-sm transition-colors py-2 ${currentPage === 'home' ? 'text-white' : 'text-[#7e7e81]'}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t('nav.home')}
-              </Link>
-              <Link
-                to="/news"
-                className={`text-sm transition-colors py-2 ${currentPage === 'news' ? 'text-white' : 'text-[#7e7e81]'}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t('nav.news')}
-              </Link>
-              <Link
-                to="/learn"
-                className={`text-sm transition-colors py-2 ${currentPage === 'learn' ? 'text-white' : 'text-[#7e7e81]'
+        <div
+          className={`
+            md:hidden border-t border-neutral-800 bg-[#1a1a1a]/98 backdrop-blur-md
+            overflow-hidden transition-all duration-300 ease-out
+            ${isMobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
+          `}
+        >
+          <div className="px-4 py-4 flex flex-col gap-3">
+            <Link
+              to="/"
+              className={`text-sm transition-all py-2.5 px-3 rounded-lg ${currentPage === 'home' ? 'text-white bg-[#262626]' : 'text-[#7e7e81] hover:text-white hover:bg-[#1f1f1f]'}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.home')}
+            </Link>
+            <Link
+              to="/news"
+              className={`text-sm transition-all py-2.5 px-3 rounded-lg ${currentPage === 'news' ? 'text-white bg-[#262626]' : 'text-[#7e7e81] hover:text-white hover:bg-[#1f1f1f]'}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.news')}
+            </Link>
+            <Link
+              to="/learn"
+              className={`text-sm transition-all py-2.5 px-3 rounded-lg ${currentPage === 'learn' ? 'text-white bg-[#262626]' : 'text-[#7e7e81] hover:text-white hover:bg-[#1f1f1f]'}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.learn')}
+            </Link>
+            <Link
+              to="/guides"
+              className={`text-sm transition-all py-2.5 px-3 rounded-lg ${currentPage === 'guides' ? 'text-white bg-[#262626]' : 'text-[#7e7e81] hover:text-white hover:bg-[#1f1f1f]'}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.guides')}
+            </Link>
+            <Link
+              to="/market"
+              className={`text-sm transition-all py-2.5 px-3 rounded-lg ${currentPage === 'market' ? 'text-white bg-[#262626]' : 'text-[#7e7e81] hover:text-white hover:bg-[#1f1f1f]'}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.markets')}
+            </Link>
+            <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-lg overflow-hidden mt-2">
+              <button
+                onClick={() => changeLanguage('vi')}
+                className={`flex-1 px-3 py-2.5 text-xs transition-all ${i18n.language === 'vi'
+                  ? 'bg-[#ffd11a] text-[#141414] font-medium'
+                  : 'text-[#98989a] hover:text-white hover:bg-[#1f1f1f]'
                   }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
-                {t('nav.learn')}
-              </Link>
-              <Link
-                to="/guides"
-                className={`text-sm transition-colors py-2 ${currentPage === 'guides' ? 'text-white' : 'text-[#7e7e81]'
+                VN
+              </button>
+              <button
+                onClick={() => changeLanguage('en')}
+                className={`flex-1 px-3 py-2.5 text-xs transition-all ${i18n.language === 'en'
+                  ? 'bg-[#ffd11a] text-[#141414] font-medium'
+                  : 'text-[#98989a] hover:text-white hover:bg-[#1f1f1f]'
                   }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
-                {t('nav.guides')}
-              </Link>
-              <Link
-                to="/market"
-                className={`text-sm transition-colors py-2 ${currentPage === 'market' ? 'text-white' : 'text-[#7e7e81]'
-                  }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t('nav.markets')}
-              </Link>
-              {/* <Link 
-                to="/resources" 
-                className={`px-4 py-2.5 rounded-md text-sm transition-colors text-center ${
-                  currentPage === 'resources' 
-                    ? 'bg-[#262626] border border-[#333333] text-white' 
-                    : 'bg-[#141414] border border-[#333333] text-white'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t('nav.resources')}
-              </Link> */}
-              <div className="flex items-center gap-2 bg-[#141414] border border-[#333333] rounded-md overflow-hidden">
-                <button
-                  onClick={() => changeLanguage('vi')}
-                  className={`flex-1 px-3 py-2 text-xs transition-colors ${i18n.language === 'vi'
-                    ? 'bg-[#ffd11a] text-[#141414]'
-                    : 'text-[#98989a] hover:text-white'
-                    }`}
-                >
-                  VN
-                </button>
-                <button
-                  onClick={() => changeLanguage('en')}
-                  className={`flex-1 px-3 py-2 text-xs transition-colors ${i18n.language === 'en'
-                    ? 'bg-[#ffd11a] text-[#141414]'
-                    : 'text-[#98989a] hover:text-white'
-                    }`}
-                >
-                  EN
-                </button>
-              </div>
-              <Link
-                to="/contact"
-                className="bg-[#ffd11a] px-4 py-2.5 rounded-md text-[#141414] text-sm w-full text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t('nav.contact')}
-              </Link>
+                EN
+              </button>
             </div>
+            <Link
+              to="/contact"
+              className="bg-[#ffd11a] px-4 py-3 rounded-lg text-[#141414] text-sm font-medium w-full text-center hover:bg-[#ffdb4d] transition-colors shadow-lg shadow-[#FFD11A]/20 mt-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t('nav.contact')}
+            </Link>
           </div>
-        )}
+        </div>
       </nav>
     </>
   );

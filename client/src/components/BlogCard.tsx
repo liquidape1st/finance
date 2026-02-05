@@ -37,18 +37,20 @@ export function BlogCard({
         <Link
             to={`/${prefix}/${currentLang}/${blog.slug}`}
             state={{ blog }}
-            className={`group flex flex-col cursor-pointer ${className}`}
+            className={`group flex flex-col cursor-pointer transition-transform duration-300 hover:-translate-y-1 ${className}`}
         >
             <article className="flex flex-row sm:flex-col h-full gap-4 sm:gap-0">
                 {/* Image */}
-                <div className="relative w-40 h-auto sm:w-full sm:h-53.75 rounded-[10px] overflow-hidden bg-[#1a1a1a] shrink-0 sm:mb-4">
+                <div className="relative w-40 h-auto sm:w-full sm:h-53.75 rounded-[10px] overflow-hidden bg-[#1a1a1a] shrink-0 sm:mb-4 shadow-lg group-hover:shadow-xl group-hover:shadow-black/30 transition-shadow duration-300">
                     <img
                         src={getBlogImageUrl(blog.image, blog.updatedAt)}
                         loading="lazy"
                         decoding="async"
                         alt={blog.title}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                     />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     {showBadge && blog.uiType && (
                         <div
                             className={`absolute top-2 right-2 z-30 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-white shadow-xl shadow-black/50 backdrop-blur-sm border border-white/10 ${uiTypeStyles[blog.uiType] || uiTypeStyles.DEFAULT}`}
@@ -113,14 +115,14 @@ export function BlogCard({
                         </div>
 
                         {showReadMore && (
-                            <div className="bg-[#141414] border border-[#262626] rounded-lg px-3 py-2 sm:px-5 sm:py-3.5 flex items-center justify-center gap-1 hover:border-[#FFD11A]/40 hover:bg-[#1a1a1a] transition-all group/btn ml-auto">
+                            <div className="bg-[#141414] border border-[#262626] rounded-lg px-3 py-2 sm:px-5 sm:py-3.5 flex items-center justify-center gap-1 group-hover:border-[#FFD11A]/60 group-hover:bg-[#1a1a1a] transition-all duration-300 ml-auto">
                                 <span
-                                    className="hidden sm:inline text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap"
+                                    className="hidden sm:inline text-[#98989a] text-[14px] tracking-[-0.42px] whitespace-nowrap group-hover:text-white transition-colors"
                                     style={{ fontFamily: 'Inter, sans-serif' }}
                                 >
                                     {t('blogs.readNow', { defaultValue: 'Read Now' })}
                                 </span>
-                                <svg className="size-4 sm:size-5 shrink-0" fill="none" viewBox="0 0 20 20">
+                                <svg className="size-4 sm:size-5 shrink-0 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" viewBox="0 0 20 20">
                                     <path clipRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L10.168 10.5 7.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 01-1.06-.02z" fill="#FFD11A" fillRule="evenodd" />
                                 </svg>
                             </div>

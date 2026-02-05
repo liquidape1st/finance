@@ -14,6 +14,10 @@ import { Breadcrumb } from "../components/Breadcrumb";
 import { ReadingTime } from "../components/ReadingTime";
 import { TableOfContents } from "../components/TableOfContents";
 import { addHeadingIds } from "../utils/contentProcessor";
+import { ReadingProgressBar } from "../components/ReadingProgressBar";
+import { ShareButtons } from "../components/ShareButtons";
+import { BackToTop } from "../components/BackToTop";
+import { BlogCardSkeleton } from "../components/SkeletonShimmer";
 
 const getBlogImageUrl = (fileName: string, updatedAt: string) =>
   `${appConfig.apiPrefix}/s3/stream?fileName=${encodeURIComponent(fileName)}&v=${Date.parse(updatedAt) || 0}`;
@@ -112,9 +116,10 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
         structuredData={[articleSchema, breadcrumbSchema]}
         currentLangOverride={lang === "vi" || lang === "en" ? lang : undefined}
       />
+      <ReadingProgressBar />
       <div className="bg-[#141414] min-h-screen w-full">
         <Navbar />
-        <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16">
+        <main className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 animate-fade-in">
           {/* Breadcrumb Navigation */}
           <Breadcrumb
             items={[
@@ -203,6 +208,13 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                   <ReadingTime
                     content={blog.content || ""}
                     showWordCount={true}
+                    className="mb-4"
+                  />
+
+                  {/* Share Buttons */}
+                  <ShareButtons
+                    url={canonicalUrl}
+                    title={blog.title}
                     className="mb-8"
                   />
 
@@ -267,13 +279,14 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                         </div>
                       </div>
                     ))
-                    : related_selected_blog_translation_list.slice(0, wordCount < 1000 ? 2 : wordCount < 1500 ? 3 : 4).map((blog) => (
-                      <BlogCard
-                        key={`${currentLang}-${blog.id}-detail`}
-                        blog={blog}
-                        currentLang={currentLang || 'vi'}
-                        prefix={prefix}
-                      />
+                    : related_selected_blog_translation_list.slice(0, wordCount < 1000 ? 2 : wordCount < 1500 ? 3 : 4).map((blog, index) => (
+                      <div key={`${currentLang}-${blog.id}-detail`} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+                        <BlogCard
+                          blog={blog}
+                          currentLang={currentLang || 'vi'}
+                          prefix={prefix}
+                        />
+                      </div>
                     ))}
                 </div>
 
@@ -306,20 +319,22 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                     </div>
                   </div>
                 ))
-                : related_selected_blog_translation_list.slice(0, 6).map((blog) => (
-                  <BlogCard
-                    key={`${currentLang}-${blog.id}-bottom-related`}
-                    blog={blog}
-                    currentLang={currentLang || 'vi'}
-                    prefix={prefix}
-                    showBadge={true}
-                  />
+                : related_selected_blog_translation_list.slice(0, 6).map((blog, index) => (
+                  <div key={`${currentLang}-${blog.id}-bottom-related`} className="animate-fade-in" style={{ animationDelay: `${index * 75}ms` }}>
+                    <BlogCard
+                      blog={blog}
+                      currentLang={currentLang || 'vi'}
+                      prefix={prefix}
+                      showBadge={true}
+                    />
+                  </div>
                 ))}
             </div>
           </section>
         </main>
 
         <Footer />
+        <BackToTop />
       </div>
     </>
   );
