@@ -1,24 +1,23 @@
-# Stage 1: Dependencies
-FROM node:20-slim AS deps
-WORKDIR /app
-
-# Install dependencies based on the preferred package manager
-COPY package.json package-lock.json* ./
-RUN npm ci
-
-# Stage 2: Builder
+# Stage 1: Build Stage
 FROM node:20-slim AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+
+# Install build essentials for native modules
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
+COPY package.json package-lock.json* ./
+
+# Use npm install to allow correct binary resolution for Linux
+RUN npm install
+
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Explicitly build for production
 RUN npm run build
 
-# Stage 3: Runner
+# Stage 2: Runner Stage
 FROM node:20-slim AS runner
 WORKDIR /app
 
@@ -35,13 +34,11 @@ RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-# Set port to 6866 as configured in docker-compose.yaml
 ENV PORT 6866
 ENV HOSTNAME "0.0.0.0"
 
