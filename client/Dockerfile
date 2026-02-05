@@ -8,6 +8,9 @@ COPY package*.json ./
 # Install all dependencies
 RUN npm install
 
+# Rebuild native modules để đảm bảo tương thích với Linux
+RUN npm rebuild lightningcss --build-from-source || true
+
 # Copy source code
 COPY . .
 
