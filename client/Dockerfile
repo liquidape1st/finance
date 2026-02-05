@@ -2,14 +2,11 @@
 FROM node:20 AS build
 WORKDIR /app
 
-# Copy configuration files
-COPY package*.json ./
+# Copy only package.json (NOT package-lock.json)
+COPY package.json ./
 
-# Install all dependencies
+# Install dependencies - npm sẽ tự động tạo lock file mới cho Linux
 RUN npm install
-
-# Rebuild native modules để đảm bảo tương thích với Linux
-RUN npm rebuild lightningcss --build-from-source || true
 
 # Copy source code
 COPY . .
