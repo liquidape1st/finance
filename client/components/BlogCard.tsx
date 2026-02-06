@@ -35,9 +35,15 @@ export function BlogCard({
 }: BlogCardProps) {
     const { t } = useTranslation();
 
+    const handleClick = () => {
+        // Cuộn lên đầu trang khi click vào blog card
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <Link
             href={`/${prefix}/${currentLang}/${blog.slug}`}
+            onClick={handleClick}
             className={`group flex flex-col cursor-pointer transition-transform duration-300 hover:-translate-y-1 ${className}`}
         >
             <article className="flex flex-row sm:flex-col h-full gap-4 sm:gap-0">
