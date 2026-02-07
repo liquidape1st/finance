@@ -275,7 +275,7 @@ export function BlogDetailPage({ prefix }: DetailBlogPageProps) {
                             {t('blog.related', { defaultValue: 'Bài viết liên quan' })}
                         </h2>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {isLoadingRelatedBlogPosts && related_selected_blog_translation_list.length === 0
                                 ? Array.from({ length: 3 }).map((_, index) => (
                                     <div

@@ -1,20 +1,20 @@
 "use client";
 
 import appConfig from "@/configs/app.config";
-import {getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector} from "@/store";
-import {setTableData} from "@/store/slices/finance/financeSlice";
+import { getClientBlogTranslationPage, getListClientCategoryTranslation, useAppDispatch, useAppSelector } from "@/store";
+import { setTableData } from "@/store/slices/finance/financeSlice";
 import debounce from "lodash/debounce";
-import {Loader2, Search} from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import { Loader2, Search } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import SEO from "@/components/SEO";
-import {useTranslation} from "react-i18next";
-import {BlogCard} from "@/components/BlogCard";
-import {Footer} from "@/components/Footer";
-import {Navbar} from "@/components/Navbar";
-import {BackToTop} from "@/components/BackToTop";
-import {BlogCardSkeleton} from "@/components/SkeletonShimmer";
-import {useInView} from "react-intersection-observer";
-import {TableQueries} from "@/types";
+import { useTranslation } from "react-i18next";
+import { BlogCard } from "@/components/BlogCard";
+import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
+import { BackToTop } from "@/components/BackToTop";
+import { BlogCardSkeleton } from "@/components/SkeletonShimmer";
+import { useInView } from "react-intersection-observer";
+import { TableQueries } from "@/types";
 
 
 type BlogsPageProps = {
@@ -22,8 +22,8 @@ type BlogsPageProps = {
     prefix: string
 }
 
-export function BlogsPage({uiType, prefix}: BlogsPageProps) {
-    const {t} = useTranslation();
+export function BlogsPage({ uiType, prefix }: BlogsPageProps) {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch()
     const {
         blog_translation,
@@ -44,7 +44,7 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
     const debouncedSearch = useMemo(
         () =>
             debounce((value: string, currentTableData: TableQueries) => {
-                dispatch(setTableData({...currentTableData, query: value, pageIndex: 1}))
+                dispatch(setTableData({ ...currentTableData, query: value, pageIndex: 1 }))
                 setIsSearching(false)
             }, 500),
         [dispatch]
@@ -56,27 +56,31 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
         }
     }, [debouncedSearch])
 
+    // Tối ưu: Gộp logic update uiType và fetch data vào 1 effect
+    // Khi uiType thay đổi: update tableData với uiType mới VÀ gọi API với data đã cập nhật
     useEffect(() => {
-        if (uiType) {
-            dispatch(setTableData({...tableData, uiType: uiType}))
-            dispatch(getListClientCategoryTranslation(uiType))
-        }
-    }, [uiType])
+        if (!uiType) return;
 
-    useEffect(() => {
-        if (tableData.uiType) {
-            dispatch(getClientBlogTranslationPage(tableData))
+        // Kiểm tra xem uiType có thực sự thay đổi không
+        if (tableData.uiType !== uiType) {
+            // uiType thay đổi → update tableData và gọi API với data mới
+            const newTableData = { ...tableData, uiType: uiType };
+            dispatch(setTableData(newTableData));
+            dispatch(getClientBlogTranslationPage(newTableData));
+        } else {
+            // uiType không đổi, chỉ các dependency khác thay đổi → gọi API bình thường
+            dispatch(getClientBlogTranslationPage(tableData));
         }
-    }, [tableData.category, tableData.pageIndex, tableData.query, tableData.uiType, currentLang])
+    }, [tableData.category, tableData.pageIndex, tableData.query, uiType, currentLang])
 
-    const {ref, inView} = useInView({
+    const { ref, inView } = useInView({
         threshold: 0,
         triggerOnce: false
     });
 
     useEffect(() => {
         if (inView && !isLoadingBlogPostList && hasMore) {
-            dispatch(setTableData({...tableData, pageIndex: tableData.pageIndex + 1}))
+            dispatch(setTableData({ ...tableData, pageIndex: tableData.pageIndex + 1 }))
         }
     }, [inView, isLoadingBlogPostList, hasMore, tableData, dispatch])
 
@@ -132,7 +136,7 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                 url={canonicalUrl}
                 structuredData={[structuredData, itemListData]}
             />
-            <Navbar/>
+            <Navbar />
 
             <main>
                 {/* Hero Section */}
@@ -146,7 +150,7 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                             <span className="text-[#98989a] text-xs tracking-wider uppercase">{t('blogs.badge')}</span>
                         </div>
                         <h1 className="text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] mb-3"
-                            style={{fontFamily: 'Plus Jakarta Sans, sans-serif'}}>
+                            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
                             {t(`blogs.${uiType.toLowerCase()}.title`)}
                         </h1>
                         <p className="text-[#7e7e81] text-base sm:text-lg leading-relaxed max-w-2xl">
@@ -161,11 +165,11 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                         </label>
                         <div className="absolute left-4 top-1/2 -translate-y-1/2">
                             {isSearching ? (
-                                <Loader2 className="size-5 text-[#FFD11A] animate-spin" aria-label="Searching..."/>
+                                <Loader2 className="size-5 text-[#FFD11A] animate-spin" aria-label="Searching..." />
                             ) : (
                                 <Search
                                     className="size-5 text-[#666666] group-focus-within:text-[#FFD11A] transition-colors"
-                                    aria-hidden="true"/>
+                                    aria-hidden="true" />
                             )}
                         </div>
                         <input
@@ -189,8 +193,8 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                             className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${tableData.category === ""
                                 ? 'bg-[#FFD11A] text-[#141414]'
                                 : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
-                            }`}
-                            onClick={() => dispatch(setTableData({...tableData, category: ""}))}
+                                }`}
+                            onClick={() => dispatch(setTableData({ ...tableData, category: "" }))}
                         >
                             {t('blogs.categories.all')}
                         </button>
@@ -200,8 +204,8 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                                 className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${tableData.category === category.categoryId
                                     ? 'bg-[#FFD11A] text-[#141414]'
                                     : 'bg-[#1a1a1a] border border-[#262626] text-[#98989a] hover:border-[#FFD11A]/40 hover:text-white'
-                                }`}
-                                onClick={() => dispatch(setTableData({...tableData, category: category.categoryId}))}
+                                    }`}
+                                onClick={() => dispatch(setTableData({ ...tableData, category: category.categoryId }))}
                             >
                                 {category.name}
                             </button>
@@ -213,13 +217,13 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                 <section className="max-w-360 mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-20 sm:pb-24">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" key={prefix}>
                         {isLoadingBlogPostList && blog_translation.length === 0
-                            ? Array.from({length: 6}).map((_, index) => (
+                            ? Array.from({ length: 6 }).map((_, index) => (
                                 <BlogCardSkeleton key={`skeleton-${index}`}
-                                                  className={`animate-fade-in delay-${index * 75}`}/>
+                                    className={`animate-fade-in delay-${index * 75}`} />
                             ))
                             : blog_translation.map((blog, index) => (
-                                <div key={`${currentLang}-${blog.id}-${blog.updatedAt}-${prefix}`}
-                                     className="animate-fade-in" style={{animationDelay: `${index * 50}ms`}}>
+                                <div key={`${currentLang}-${blog.id}-${blog.updatedAt}-${prefix}-${uiType}-${index}`}
+                                    className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
                                     <BlogCard
                                         blog={blog}
                                         currentLang={currentLang || 'vi'}
@@ -234,7 +238,7 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                     {/* Load More / Infinite Scroll Trigger */}
                     <div ref={ref} className="mt-12 text-center h-10 flex items-center justify-center">
                         {isLoadingBlogPostList && hasMore && (
-                            <Loader2 className="size-8 text-[#FFD11A] animate-spin"/>
+                            <Loader2 className="size-8 text-[#FFD11A] animate-spin" />
                         )}
                         {!hasMore && blog_translation.length > 0 && (
                             <p className="text-[#98989a] text-sm">{t('blogs.noMorePosts')}</p>
@@ -244,8 +248,8 @@ export function BlogsPage({uiType, prefix}: BlogsPageProps) {
                 </section>
             </main>
 
-            <Footer/>
-            <BackToTop/>
+            <Footer />
+            <BackToTop />
         </div>
     );
 }
